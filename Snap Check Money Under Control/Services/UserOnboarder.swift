@@ -13,10 +13,13 @@ class UserOnboarder {
     }
     
     static func isOnboarded() -> Bool {
-        return UserDefaults().bool(forKey: OnboardStatus.onboarded.rawValue)
+        let result = UserDefaults().bool(forKey: OnboardStatus.onboarded.rawValue)
+        print("⛴️ Onboarded?: \(result)")
+        return result
     }
     
     static func setOnboarded() {
         UserDefaults().set(true, forKey: OnboardStatus.onboarded.rawValue)
+        print("⛴️ onboarded")
     }
 }
