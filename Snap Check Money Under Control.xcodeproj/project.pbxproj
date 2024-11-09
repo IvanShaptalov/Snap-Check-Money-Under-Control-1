@@ -24,22 +24,9 @@
 		8D8010202CDD3DE300B957C2 /* Snap Check Money Under Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Snap Check Money Under Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		8DC45A1F2CE00E97002322B9 /* Exceptions for "Snap Check Money Under Control" folder in "Snap Check Money Under Control" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Snap-Check-Money-Under-Control-Info.plist",
-			);
-			target = 8D80101F2CDD3DE300B957C2 /* Snap Check Money Under Control */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8D8010222CDD3DE300B957C2 /* Snap Check Money Under Control */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				8DC45A1F2CE00E97002322B9 /* Exceptions for "Snap Check Money Under Control" folder in "Snap Check Money Under Control" target */,
-			);
 			path = "Snap Check Money Under Control";
 			sourceTree = "<group>";
 		};

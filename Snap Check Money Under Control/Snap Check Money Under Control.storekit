@@ -1,0 +1,215 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "AAA5D63C",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6737919509",
+    "_developerTeamID" : "8HZT3TR2ZJ",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 752883834.68871701,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21579203",
+      "localizations" : [
+
+      ],
+      "name" : "Snap Check Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "1.99",
+          "familyShareable" : false,
+          "groupNumber" : 4,
+          "internalID" : "6738013023",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Discount Unlimited Snap Checks Export, no ads",
+              "displayName" : "Unlimited Access(1 month)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "sc_199",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Discount Snap Check Pro 1 Month",
+          "subscriptionGroupID" : "21579203",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "11.99",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "6738013041",
+          "introductoryOffer" : {
+            "internalID" : "3061F169",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "Discount Free trial,Unlimited checks export",
+              "displayName" : "Unlimited Access (1 year)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "sc_1199_3d0",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Discount Snap Check Pro 3 day free",
+          "subscriptionGroupID" : "21579203",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "2.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6738012852",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Unlimited Snap Checks Export, no ads",
+              "displayName" : "Unlimited Access(1 month)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "sc_299_1m",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Snap Check Pro 1 Month",
+          "subscriptionGroupID" : "21579203",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "16.0",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "6738012760",
+          "introductoryOffer" : {
+            "internalID" : "E9DDDD61",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "Free trial,Unlimited checks export, no ads",
+              "displayName" : "Unlimited Access (1 year)",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "sc_1600_1y_3d0",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Snap Check Pro 3 day free trial",
+          "subscriptionGroupID" : "21579203",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "subscriptionOffersKeyPair" : {
+    "id" : "37B0D12F",
+    "privateKey" : "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgpM0FoWDNqYwYIDImX5qcnAeAR1RUC4QY6eVY6WXtDzygCgYIKoZIzj0DAQehRANCAARegAnxEcoLr8IaWBgWYCgXT/3wWieOD9xH9SzM+4ktRWB/5jJtDr5DOb+vRQ1ggsjT/hB5QzXdmtfLW6yv5xrp"
+  },
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}
