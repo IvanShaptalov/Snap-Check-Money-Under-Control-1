@@ -10,7 +10,10 @@ struct ExpenseListView: View {
     var body: some View {
         List {
             ForEach(groupedExpensesByMonth.keys.sorted(by: >), id: \.self) { month in
-                Section(header: Text(monthHeader(for: month))
+                // Вычисляем общую сумму трат за месяц
+                let totalSpent = groupedExpensesByMonth[month]?.reduce(0) { $0 + $1.amount } ?? 0.0
+                
+                Section(header: Text("\(monthHeader(for: month)) \( AppConfig.showYearFormat ? " - \(String(format: "%.2f", totalSpent))" : "")")
                     .font(.headline)
                     .foregroundColor(.primary)) {
                         ForEach(groupedExpensesByMonth[month] ?? []) { expense in
@@ -18,7 +21,6 @@ struct ExpenseListView: View {
                                 onEditExpense(expense)
                             })
                             .listRowBackground(Color.secondary.opacity(0.15))
-                            
                         }
                         .onDelete { offsets in
                             // Удаление элементов через замыкание onDeleteExpense
@@ -31,10 +33,10 @@ struct ExpenseListView: View {
                         }
                     }
             }
-            
         }
         .scrollContentBackground(.hidden)
         .listStyle(InsetGroupedListStyle())
+        
         
     }
     
@@ -49,7 +51,7 @@ struct ExpenseListView: View {
     // Возвращает заголовок для месяца
     private func monthHeader(for date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM yyyy"
+        formatter.dateFormat = "MMMM"
         return formatter.string(from: date)
     }
     
