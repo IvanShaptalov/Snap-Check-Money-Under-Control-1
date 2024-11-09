@@ -6,13 +6,40 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8DC4598F2CE00DCB002322B9 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC4598E2CE00DCB002322B9 /* FirebaseAnalytics */; };
+		8DC459912CE00DCB002322B9 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459902CE00DCB002322B9 /* FirebaseAppCheck */; };
+		8DC459932CE00DCB002322B9 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459922CE00DCB002322B9 /* FirebaseCore */; };
+		8DC459952CE00DCB002322B9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459942CE00DCB002322B9 /* FirebaseCrashlytics */; };
+		8DC459972CE00DCB002322B9 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459962CE00DCB002322B9 /* FirebaseDatabase */; };
+		8DC459992CE00DCB002322B9 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459982CE00DCB002322B9 /* FirebaseFirestoreCombine-Community */; };
+		8DC4599B2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC4599A2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community */; };
+		8DC4599D2CE00DCB002322B9 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC4599C2CE00DCB002322B9 /* FirebaseRemoteConfig */; };
+		8DC4599F2CE00DCB002322B9 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC4599E2CE00DCB002322B9 /* FirebaseStorageCombine-Community */; };
+		8DC459A22CE00DE1002322B9 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459A12CE00DE1002322B9 /* RevenueCat */; };
+		8DC459A42CE00DE1002322B9 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459A32CE00DE1002322B9 /* RevenueCatUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		8D8010202CDD3DE300B957C2 /* Snap Check Money Under Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Snap Check Money Under Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8DC45A1F2CE00E97002322B9 /* Exceptions for "Snap Check Money Under Control" folder in "Snap Check Money Under Control" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Snap-Check-Money-Under-Control-Info.plist",
+			);
+			target = 8D80101F2CDD3DE300B957C2 /* Snap Check Money Under Control */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8D8010222CDD3DE300B957C2 /* Snap Check Money Under Control */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8DC45A1F2CE00E97002322B9 /* Exceptions for "Snap Check Money Under Control" folder in "Snap Check Money Under Control" target */,
+			);
 			path = "Snap Check Money Under Control";
 			sourceTree = "<group>";
 		};
@@ -23,6 +50,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DC4599B2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community in Frameworks */,
+				8DC459972CE00DCB002322B9 /* FirebaseDatabase in Frameworks */,
+				8DC459A22CE00DE1002322B9 /* RevenueCat in Frameworks */,
+				8DC459A42CE00DE1002322B9 /* RevenueCatUI in Frameworks */,
+				8DC459912CE00DCB002322B9 /* FirebaseAppCheck in Frameworks */,
+				8DC459952CE00DCB002322B9 /* FirebaseCrashlytics in Frameworks */,
+				8DC459992CE00DCB002322B9 /* FirebaseFirestoreCombine-Community in Frameworks */,
+				8DC459932CE00DCB002322B9 /* FirebaseCore in Frameworks */,
+				8DC4598F2CE00DCB002322B9 /* FirebaseAnalytics in Frameworks */,
+				8DC4599F2CE00DCB002322B9 /* FirebaseStorageCombine-Community in Frameworks */,
+				8DC4599D2CE00DCB002322B9 /* FirebaseRemoteConfig in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +103,17 @@
 			);
 			name = "Snap Check Money Under Control";
 			packageProductDependencies = (
+				8DC4598E2CE00DCB002322B9 /* FirebaseAnalytics */,
+				8DC459902CE00DCB002322B9 /* FirebaseAppCheck */,
+				8DC459922CE00DCB002322B9 /* FirebaseCore */,
+				8DC459942CE00DCB002322B9 /* FirebaseCrashlytics */,
+				8DC459962CE00DCB002322B9 /* FirebaseDatabase */,
+				8DC459982CE00DCB002322B9 /* FirebaseFirestoreCombine-Community */,
+				8DC4599A2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community */,
+				8DC4599C2CE00DCB002322B9 /* FirebaseRemoteConfig */,
+				8DC4599E2CE00DCB002322B9 /* FirebaseStorageCombine-Community */,
+				8DC459A12CE00DE1002322B9 /* RevenueCat */,
+				8DC459A32CE00DE1002322B9 /* RevenueCatUI */,
 			);
 			productName = "Snap Check Money Under Control";
 			productReference = 8D8010202CDD3DE300B957C2 /* Snap Check Money Under Control.app */;
@@ -94,6 +143,10 @@
 			);
 			mainGroup = 8D8010172CDD3DE300B957C2;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				8DC459A02CE00DE1002322B9 /* XCRemoteSwiftPackageReference "purchases-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8D8010212CDD3DE300B957C2 /* Products */;
 			projectDirPath = "";
@@ -177,7 +230,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -234,7 +287,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -255,11 +308,16 @@
 				DEVELOPMENT_TEAM = 8HZT3TR2ZJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Snap-Check-Money-Under-Control-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Snap Check";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take check photos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For Checks in from photo library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -284,11 +342,16 @@
 				DEVELOPMENT_TEAM = 8HZT3TR2ZJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Snap-Check-Money-Under-Control-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Snap Check";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take check photos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For Checks in from photo library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -324,6 +387,83 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.4.0;
+			};
+		};
+		8DC459A02CE00DE1002322B9 /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8DC4598E2CE00DCB002322B9 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		8DC459902CE00DCB002322B9 /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
+		};
+		8DC459922CE00DCB002322B9 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		8DC459942CE00DCB002322B9 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		8DC459962CE00DCB002322B9 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		8DC459982CE00DCB002322B9 /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
+		};
+		8DC4599A2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFunctionsCombine-Community";
+		};
+		8DC4599C2CE00DCB002322B9 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+		8DC4599E2CE00DCB002322B9 /* FirebaseStorageCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseStorageCombine-Community";
+		};
+		8DC459A12CE00DE1002322B9 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DC459A02CE00DE1002322B9 /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCat;
+		};
+		8DC459A32CE00DE1002322B9 /* RevenueCatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DC459A02CE00DE1002322B9 /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCatUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8D8010182CDD3DE300B957C2 /* Project object */;
 }
