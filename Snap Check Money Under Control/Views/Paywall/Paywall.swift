@@ -108,7 +108,8 @@ struct PaywallView: View {
                     self.subscriptions = allSubscriptions
                     self.selectedPackage = subscriptions.first?.package
                 case .failure(let error):
-                    errorMessage = ErrorWrapper(message:"Failed to load subscriptions: \(error.localizedDescription)")
+                    print(error.localizedDescription)
+                    errorMessage = ErrorWrapper(message:"Failed to load subscriptions")
                 }
             }
         } else {
