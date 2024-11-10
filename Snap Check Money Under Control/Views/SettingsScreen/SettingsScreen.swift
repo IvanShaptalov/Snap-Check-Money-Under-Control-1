@@ -113,7 +113,7 @@ struct SettingsScreen: View {
             MailView(isShowing: self.$viewModel.isShowingMailView, result: self.$viewModel.result)
         }
         .sheet(isPresented: $showingPaywall) {
-            PaywallView() // Present the paywall view
+            PaywallView(subType: "default") // Present the paywall view
         }
         .sheet(isPresented: $showingCategories) {
             ExpenseCategorySettingsView()

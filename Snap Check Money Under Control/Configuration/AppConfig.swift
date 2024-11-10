@@ -107,7 +107,7 @@ class AppConfig {
     // MARK: - RevenueCat
     static var revenuecat_project_apple_api_key = "appl_dDdGjupmvVZBgJEvVIMALJsNwqJ"
     
-    static var rcOfferingIds = ["a", "b", "c", "d", "e"]
+    static var rcOfferingIds = ["default", "sale"]
     
     // MARK: - SomeAPI
     static var someApiKey = "someApi"
