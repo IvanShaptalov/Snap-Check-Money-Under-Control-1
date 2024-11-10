@@ -62,9 +62,6 @@ class AppConfig {
     
     static var showYearFormat: Bool {
         get {
-            if UserDefaults.standard.object(forKey: AppStorageKeys.showYearFormatKey) == nil {
-                return true
-            }
             // Получаем сохранённое состояние из UserDefaults
             return UserDefaults.standard.bool(forKey: AppStorageKeys.showYearFormatKey)
         }
