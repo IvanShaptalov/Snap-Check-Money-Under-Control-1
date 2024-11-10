@@ -31,7 +31,7 @@ class ExpenseManagerViewModel: ObservableObject {
                 ExpenseData(title: "4. swipe left to remove something", date: Date().addingTimeInterval(-86400 * 3), amount: 1, currency: AppConfig.mainCurrency, category: "Export"),
                 ExpenseData(title: "5. enjoy 😋", date: Date().addingTimeInterval(-86400 * 5), amount: 4, currency: AppConfig.mainCurrency, category: "Enjoy"),
                 ExpenseData(title: "ps. tap twice Expenses in \(DateFormatterService.getCurrentYear()) 😉", date: Date().addingTimeInterval(-86400 * 6), amount: 1, currency: AppConfig.mainCurrency, category: "Enjoy"),
-                ExpenseData(title: "Two formats: Year, Month \(DateFormatterService.getCurrentYear()) 😉", date: Date().addingTimeInterval(-86400 * 32), amount: 1, currency: AppConfig.mainCurrency, category: "Enjoy"),
+                ExpenseData(title: "Two view formats: Year, Month", date: Date().addingTimeInterval(-86400 * 32), amount: 1, currency: AppConfig.mainCurrency, category: "Enjoy"),
             ]
             addOrUpdateExpense(tutorialExpenses, modelContext: modelContext)
             UserOnboarder.setOnboarded()
