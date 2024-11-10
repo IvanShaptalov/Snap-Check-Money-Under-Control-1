@@ -23,7 +23,9 @@ struct PaywallView: View {
             
             // Subscription Options
             if subscriptions.isEmpty {
+                Spacer()
                 ProgressView()
+                Spacer()
             } else {
                 ForEach(subscriptions, id: \.title) { subscription in
                     if subscription.package == selectedPackage {
