@@ -7,6 +7,8 @@ struct SettingsScreen: View {
     @StateObject var viewModel = SettingsScreenViewModel()
     @Environment(\.openURL) private var openURL
     @State private var showingPaywall = false // State variable to control the paywall
+    @State private var proposeDiscountedPaywall = false
+    @State private var discountedPaywall = false
     @State private var showingCategories = false
     @State private var selectedCurrency: Currency = AppConfig.mainCurrency {
         didSet {
@@ -113,8 +115,28 @@ struct SettingsScreen: View {
             MailView(isShowing: self.$viewModel.isShowingMailView, result: self.$viewModel.result)
         }
         .sheet(isPresented: $showingPaywall) {
-            PaywallView(subType: "default") // Present the paywall view
+            PaywallView(subType: "default").onDisappear {
+                if !MonetizationConfig.isPremiumAccount {
+                    print("no premium and paywall dismissed - show discount")
+                    proposeDiscountedPaywall = true
+                }
+            }
         }
+        .sheet(isPresented: $discountedPaywall) {
+            PaywallView(subType: "sale")
+        }
+        .confirmationDialog("Discount for You!", isPresented: $proposeDiscountedPaywall, actions: {
+            Button("Apply Discount") {
+                // Применить скидку
+                discountedPaywall = true // После применения скидки показываем предложение
+                print("Discount applied!")
+            }
+            Button("Not Now", role: .cancel) {
+                // Отказаться от скидки
+                discountedPaywall = false // Скрыть предложение о скидке
+                print("Discount not applied")
+            }
+        })
         .sheet(isPresented: $showingCategories) {
             ExpenseCategorySettingsView()
         }

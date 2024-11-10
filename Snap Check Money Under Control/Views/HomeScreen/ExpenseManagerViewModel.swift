@@ -29,8 +29,8 @@ class ExpenseManagerViewModel: ObservableObject {
                 ExpenseData(title: "2. tap expense for editing", date: Date().addingTimeInterval(-86400), amount: 3, currency: AppConfig.mainCurrency, category: "Edit"),
                 ExpenseData(title: "3. use share menu for export", date: Date().addingTimeInterval(-86400 * 2), amount: 2, currency: AppConfig.mainCurrency, category: "Export"),
                 ExpenseData(title: "4. swipe left to remove something", date: Date().addingTimeInterval(-86400 * 3), amount: 1, currency: AppConfig.mainCurrency, category: "Remove"),
-                ExpenseData(title: "5. enjoy 😋", date: Date().addingTimeInterval(-86400 * 5), amount: 4, currency: AppConfig.mainCurrency, category: "Enjoy"),
-                ExpenseData(title: "6. set your categories in settings ⚙️", date: Date().addingTimeInterval(-86400 * 4), amount: 4, currency: AppConfig.mainCurrency, category: "Customize"),
+                ExpenseData(title: "6. enjoy 😋", date: Date().addingTimeInterval(-86400 * 5), amount: 4, currency: AppConfig.mainCurrency, category: "Enjoy"),
+                ExpenseData(title: "5. set your categories in settings ⚙️", date: Date().addingTimeInterval(-86400 * 4), amount: 4, currency: AppConfig.mainCurrency, category: "Customize"),
                 ExpenseData(title: "ps. tap twice Expenses in \(DateFormatterService.getCurrentYear()) 😉", date: Date().addingTimeInterval(-86400 * 6), amount: 1, currency: AppConfig.mainCurrency, category: "Tutorial"),
             ]
             addOrUpdateExpense(tutorialExpenses, modelContext: modelContext)

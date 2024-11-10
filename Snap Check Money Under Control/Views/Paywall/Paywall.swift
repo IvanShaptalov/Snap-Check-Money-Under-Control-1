@@ -12,7 +12,7 @@ struct PaywallView: View {
     var body: some View {
         VStack(spacing: 20) {
             // Header
-            Text(MonetizationConfig.isPremiumAccount ? "Already Pro 😎" : subType == "sale" ? "💰 Discounted Upgrade to Pro" : "Upgrade to Pro")
+            Text(MonetizationConfig.isPremiumAccount ? "Already Pro 😎" : subType == "sale" ? "💰 Discounted Pro" : "Upgrade to Pro")
                 .font(.largeTitle)
                 .bold()
                 .padding(.top, 20)
@@ -23,7 +23,7 @@ struct PaywallView: View {
             
             // Subscription Options
             if subscriptions.isEmpty {
-                Text("Loading subscriptions...")
+                ProgressView()
             } else {
                 ForEach(subscriptions, id: \.title) { subscription in
                     if subscription.package == selectedPackage {
@@ -34,7 +34,7 @@ struct PaywallView: View {
                             }
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.cyan, lineWidth: 1)
+                                    .stroke(Color.cyan, lineWidth: 2)
                             )
                             .background(Color(uiColor: UIColor.secondarySystemBackground))
                             .cornerRadius(10)
@@ -91,7 +91,6 @@ struct PaywallView: View {
         .alert(item: $errorMessage) { errorWrapper in
             Alert(title: Text("Info"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
         }
-        
     }
     
     // Load subscriptions from RevenueCatService
@@ -103,15 +102,18 @@ struct PaywallView: View {
                     var allSubscriptions: [SubscriptionObj] = []
                     if let subs = offerings[subType] {
                         allSubscriptions.append(contentsOf: subs)
+                        
                     }
                     
                     self.subscriptions = allSubscriptions
+                    self.selectedPackage = subscriptions.first?.package
                 case .failure(let error):
                     errorMessage = ErrorWrapper(message:"Failed to load subscriptions: \(error.localizedDescription)")
                 }
             }
         } else {
             self.subscriptions = RevenueCatService.offerings[subType] ?? []
+            self.selectedPackage = subscriptions.first?.package
         }
     }
     
