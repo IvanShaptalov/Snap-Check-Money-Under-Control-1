@@ -144,6 +144,7 @@ struct PaywallView: View {
         RevenueCatService.restorePurchase { success in
             if success {
                 showPurchaseSuccess = true
+                errorMessage = ErrorWrapper(message: "Purchases restored ✅")
             } else {
                 errorMessage = ErrorWrapper(message:"Failed to restore purchases.")
             }
