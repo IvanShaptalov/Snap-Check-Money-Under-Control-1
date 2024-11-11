@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D92F7CD2CE26E2000288423 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 8D92F7CC2CE26E2000288423 /* GoogleMobileAds */; };
 		8DC4598F2CE00DCB002322B9 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC4598E2CE00DCB002322B9 /* FirebaseAnalytics */; };
 		8DC459912CE00DCB002322B9 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459902CE00DCB002322B9 /* FirebaseAppCheck */; };
 		8DC459932CE00DCB002322B9 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459922CE00DCB002322B9 /* FirebaseCore */; };
@@ -37,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D92F7CD2CE26E2000288423 /* GoogleMobileAds in Frameworks */,
 				8DC4599B2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community in Frameworks */,
 				8DC459972CE00DCB002322B9 /* FirebaseDatabase in Frameworks */,
 				8DC459A22CE00DE1002322B9 /* RevenueCat in Frameworks */,
@@ -101,6 +103,7 @@
 				8DC4599E2CE00DCB002322B9 /* FirebaseStorageCombine-Community */,
 				8DC459A12CE00DE1002322B9 /* RevenueCat */,
 				8DC459A32CE00DE1002322B9 /* RevenueCatUI */,
+				8D92F7CC2CE26E2000288423 /* GoogleMobileAds */,
 			);
 			productName = "Snap Check Money Under Control";
 			productReference = 8D8010202CDD3DE300B957C2 /* Snap Check Money Under Control.app */;
@@ -133,6 +136,7 @@
 			packageReferences = (
 				8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				8DC459A02CE00DE1002322B9 /* XCRemoteSwiftPackageReference "purchases-ios" */,
+				8D92F7CB2CE26E2000288423 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8D8010212CDD3DE300B957C2 /* Products */;
@@ -199,7 +203,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -290,7 +294,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Snap Check Money Under Control/Preview Content\"";
 				DEVELOPMENT_TEAM = 8HZT3TR2ZJ;
 				ENABLE_PREVIEWS = YES;
@@ -324,7 +328,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Snap Check Money Under Control/Preview Content\"";
 				DEVELOPMENT_TEAM = 8HZT3TR2ZJ;
 				ENABLE_PREVIEWS = YES;
@@ -376,6 +380,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8D92F7CB2CE26E2000288423 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.12.0;
+			};
+		};
 		8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -395,6 +407,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8D92F7CC2CE26E2000288423 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8D92F7CB2CE26E2000288423 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
 		8DC4598E2CE00DCB002322B9 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

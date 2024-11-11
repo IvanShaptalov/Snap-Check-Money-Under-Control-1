@@ -2,7 +2,7 @@ import Foundation
 
 
 class MonetizationConfig {
-    static var isPremiumAccount: Bool = true
+    static var isPremiumAccount: Bool = false
     
     static var freePlays: Int = 5
     

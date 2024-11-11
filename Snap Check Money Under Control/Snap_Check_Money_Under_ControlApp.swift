@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 import FirebaseCore
 import RevenueCat
+import GoogleMobileAds
 
 @main
 struct Snap_Check_Money_Under_ControlApp: App {
@@ -15,6 +16,7 @@ struct Snap_Check_Money_Under_ControlApp: App {
         
         Purchases.logLevel = .info
         Purchases.configure(withAPIKey: AppConfig.revenuecat_project_apple_api_key)
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
     }
     
     var body: some Scene {

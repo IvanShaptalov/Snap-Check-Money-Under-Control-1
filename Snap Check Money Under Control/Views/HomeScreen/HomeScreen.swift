@@ -11,9 +11,10 @@ struct HomeScreen: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject var expenseManagerVM = ExpenseManagerViewModel()
     @State var tmpExpensesFromJson: [ExpenseData] = []
+    @State private var intAdsVm = InterstitialViewModel()
     @State var expenses: [ExpenseData] = [
     ].sorted(by: { $0.date > $1.date })
-    
+    @State private var showInterstitialAds = false
     var totalSpent: Double {
         withAnimation {
             expenses.map { $0.amount }.reduce(0, +)
@@ -44,6 +45,9 @@ struct HomeScreen: View {
         .onAppear {
             loadExpenses()
         }
+        .task {
+            await intAdsVm.loadAd()
+        }
         .actionSheet(isPresented: $homeScreenVM.showActionSheetFromCreating) {
             actionSheetCheckAdding
         }
@@ -63,6 +67,10 @@ struct HomeScreen: View {
             expenseSheetFromJson.onDisappear {
                 print("json view sheet dissapeared")
                 cleanResourses()
+                if showInterstitialAds {
+                    intAdsVm.showAd()
+                    print("show ad 💰")
+                }
             }
             .onAppear{
                 loadExpenses()
@@ -169,12 +177,10 @@ struct HomeScreen: View {
             .default(Text("Camera")) {
                 homeScreenVM.sourceType = .camera
                 homeScreenVM.showImagePicker = true
-                
             },
             .default(Text("Photo Library")) {
                 homeScreenVM.sourceType = .photoLibrary
                 homeScreenVM.showImagePicker = true
-                
             },
             .default(Text("Create Manually")) {
                 homeScreenVM.showCreateExpenceSheet = true
@@ -201,7 +207,6 @@ struct HomeScreen: View {
         viewModel.onSave = { newExpenses in
             addOrUpdateExpenses(newExpenses)
             hideCreatingSheet()
-            ReviewService.requestReview()
         }
         
         viewModel.onCancel = {
@@ -219,11 +224,14 @@ struct HomeScreen: View {
         viewModel.onSave = { newExpenses in
             addOrUpdateExpenses(newExpenses)
             hideCreatingSheet()
-            ReviewService.requestReview()
+            showInterstitialAds = true
+
         }
         
         viewModel.onCancel = {
             hideCreatingSheet()
+            showInterstitialAds = true
+
         }
         
         // Pass the ViewModel to the `ExpensesSheetView`
