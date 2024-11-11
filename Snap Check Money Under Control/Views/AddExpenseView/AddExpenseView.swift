@@ -13,11 +13,15 @@ struct AddExpenseView: View {
             .navigationTitle(viewModel.expenseToEdit == nil ? "Add Expense" : "Edit Expense")
             .navigationBarItems(
                 leading: Button("Cancel") {
+                    AnalyticsManager.shared.logEvent(eventType: .checkEditedCancelled)
+
                     presentationMode.wrappedValue.dismiss()
                 }
                     .frame(width: 44, height: 44), // Увеличьте размер кнопки,
                 trailing: Button("Save") {
                     viewModel.saveExpense()
+                    AnalyticsManager.shared.logEvent(eventType: .checkEditedSaved)
+
                 }
                     .frame(width: 44, height: 44) // Увеличьте размер кнопки
             )
@@ -26,6 +30,9 @@ struct AddExpenseView: View {
             }
             .sheet(isPresented: $viewModel.showImagePicker) {
                 ImagePicker(image: $viewModel.temporaryImage, sourceType: .photoLibrary)
+            }
+            .onAppear {
+                AnalyticsManager.shared.logEvent(eventType: .checkEdited)
             }
         }
     }

@@ -73,6 +73,7 @@ struct ExpensesSheetView: View {
                 HStack {
                     Button(action: {
                         viewModel.handleCancel()
+                        AnalyticsManager.shared.logEvent(eventType: .creatingCheckCancelled)
                     }) {
                         Text("Cancel")
                             .font(.headline) // Установите шрифт

@@ -18,35 +18,47 @@ final class AnalyticsManager {
     }
 }
 
-
 enum EventType: String {
     case
-    eventCreated = "event_created",
-    anniversaryCreated = "anniversary_created",
-    birthdayCreated = "birthday_created",
-    eventDeleted = "event_deleted",
-    anniversaryDeleted = "anniversary_deleted",
-    birthdayDeleted = "birthday_deleted",
-    congratsGenerated = "congrats_generated",
-    openProPage = "open_pro_page",
-    rateAppImplicitA = "rate_app_implicit",
-    rateAppDirect = "rate_app_direct",
-    contactUsOpened = "contact_us",
-    setUpTimeNotifications = "set_up_time_notifications",
-    subscriptionButtonTapped = "sub_button_tapped",
-    subContinueWithPlan = "sub_continue_with_plan",
-    wishStartGenerating = "wish_start_generating",
-    wishGenerated = "wish_generated",
-    wishNotGenerated = "wish_not_generated",
-    eventsImportedCalendarReminders = "import_from_calendar_reminders",
-    manualImport = "manual_import",
-    blockCellSelected = "blocked_cell_selected",
-    exportText = "exportText",
-    exportClipboard = "exportClipboard",
-    exportTable = "exportTable",
-    exportCalendar = "exportCalendar",
-    exportReminders = "exportReminders",
-    iconChanged = "iconChanged",
-    tryIconChange = "tryIconChange",
-    premiumEndedIconRestored = "premiumEndedIconRestored"
+    contactUsOpened = "contact_us_opened", // +
+    showFormatEdited = "show_format_edited", // +
+    currencyChanged = "currency_changed", // +
+    rateDirectlyOpened = "rate_directly_opened", // +
+    discountProProposed = "discount_pro_proposed", // +
+    settingsScreen = "settings_screen", // +
+    homeScreen = "home_screen", // +
+    categoriesEdited = "categories_edited", // +
+
+    shareScreen = "share_screen", // +
+
+
+    checkEdited = "check_edited", // +
+    checkEditedSaved = "check_edited_saved", // +
+    checkEditedCancelled = "check_edited_cancelled", // +
+    
+    createCheckFromLibrary = "create_check_from_library", // +
+    createCheckManually = "create_check_manually", // +
+    createCheckFromCamera = "create_check_from_camera", // +
+    creatingCheckCancelled = "creating_check_cancelled", // +
+
+    
+    proPurchaseFailed = "pro_purchase_failed", // +
+    proPurchaseRestoreFailed = "pro_restore_failed", // +,
+    proDirectOpen = "pro_direct_open", // +
+    proPageClosed = "pro_page_closed", // +
+    proPurchase = "pro_purchase", // +
+    proPurchaseRestored = "pro_purchase_restored", // +
+
+    
+    
+    discountProClosed = "discount_pro_closed", // +
+    discountProPurchase = "discount_pro_purchase", // +
+    discountProOpened = "discountProOpened", // +
+    discountProNotNow = "discount_pro_not_now", // +
+    discountPurchased = "discount_purchased", // +
+    
+    ad_showed = "interstitial_ad_showed", // +
+    ad_clicked = "interstitial_ad_clicked", // +
+    ad_cancelled = "interstitial_ad_cancelled" // +
+    
 }

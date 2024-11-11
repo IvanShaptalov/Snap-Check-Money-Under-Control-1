@@ -25,6 +25,8 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
     }
     
     func adDidRecordClick(_ ad: GADFullScreenPresentingAd) {
+        AnalyticsManager.shared.logEvent(eventType: .ad_clicked)
+
         print("\(#function) called")
     }
     
@@ -44,6 +46,8 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
     }
     
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        AnalyticsManager.shared.logEvent(eventType: .ad_cancelled)
+
         print("\(#function) called")
         // Clear the interstitial ad.
         interstitialAd = nil
@@ -60,6 +64,8 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
         }
         
         interstitialAd.present(fromRootViewController: nil)
+        AnalyticsManager.shared.logEvent(eventType: .ad_showed)
+
     }
     
 }

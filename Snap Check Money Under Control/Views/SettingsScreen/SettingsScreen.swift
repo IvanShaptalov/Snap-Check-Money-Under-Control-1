@@ -12,6 +12,7 @@ struct SettingsScreen: View {
     @State private var showingCategories = false
     @State private var selectedCurrency: Currency = AppConfig.mainCurrency {
         didSet {
+            AnalyticsManager.shared.logEvent(eventType: .currencyChanged)
             AppConfig.updateMainCurrency(to: selectedCurrency)
             print("Selected currency changed to: \(selectedCurrency.rawValue)") // Debugging print
         }
@@ -46,7 +47,8 @@ struct SettingsScreen: View {
                         
                         Toggle("Show Year Format", isOn: Binding(
                             get: { AppConfig.showYearFormat },
-                            set: { _ in AppConfig.toggleIsShowYearFormat() }
+                            set: { _ in
+                                AppConfig.toggleIsShowYearFormat() }
                         ))
                         
                         SectionButton(title: "Expense Categories") {
@@ -57,6 +59,8 @@ struct SettingsScreen: View {
                     Section(header: Text("Feedback")) {
                         SectionButton(title: "Rate Snap Check") {
                             openURL(AppConfig.appURL)
+                            AnalyticsManager.shared.logEvent(eventType: .rateDirectlyOpened)
+
                         }
                         
                         SectionButton(title: "Contact us") {
@@ -65,6 +69,7 @@ struct SettingsScreen: View {
                             } else {
                                 openURL(AppConfig.contactUsURL)
                             }
+                            AnalyticsManager.shared.logEvent(eventType: .contactUsOpened)
                         }
                     }
                     
@@ -119,26 +124,36 @@ struct SettingsScreen: View {
                 if !MonetizationConfig.isPremiumAccount {
                     print("no premium and paywall dismissed - show discount")
                     proposeDiscountedPaywall = true
+                    AnalyticsManager.shared.logEvent(eventType: .discountProProposed)
                 }
             }
         }
         .sheet(isPresented: $discountedPaywall) {
-            PaywallView(subType: "sale")
+
+            return PaywallView(subType: "sale")
         }
         .confirmationDialog("Discount for You!", isPresented: $proposeDiscountedPaywall, actions: {
             Button("Apply Discount") {
                 // Применить скидку
                 discountedPaywall = true // После применения скидки показываем предложение
                 print("Discount applied!")
+                AnalyticsManager.shared.logEvent(eventType: .discountProOpened)
+
             }
             Button("Not Now", role: .cancel) {
                 // Отказаться от скидки
                 discountedPaywall = false // Скрыть предложение о скидке
                 print("Discount not applied")
+                AnalyticsManager.shared.logEvent(eventType: .discountProNotNow)
+
             }
         })
         .sheet(isPresented: $showingCategories) {
             ExpenseCategorySettingsView()
+        }
+        .onAppear {
+            AnalyticsManager.shared.logEvent(eventType: .settingsScreen)
+
         }
         .navigationTitle(Text("Settings"))
     }

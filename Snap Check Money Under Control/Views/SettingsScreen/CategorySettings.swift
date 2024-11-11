@@ -70,7 +70,9 @@ struct AddCategoryView: View {
             }
             .navigationTitle("Add Category")
             .navigationBarItems(trailing: Button("Done") {
+                addCategory()
                 isPresented = false
+                
             })
         }
     }
@@ -81,6 +83,7 @@ struct AddCategoryView: View {
             updateAppConfiguration()
             newCategory = ""
             isPresented = false
+            AnalyticsManager.shared.logEvent(eventType: .categoriesEdited)
         }
     }
 

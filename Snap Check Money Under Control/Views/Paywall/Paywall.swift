@@ -89,9 +89,27 @@ struct PaywallView: View {
             Spacer()
         }
         .padding()
-        .onAppear(perform: loadSubscriptions)
+        .onAppear {
+            loadSubscriptions()
+            if subType == "default" {
+                AnalyticsManager.shared.logEvent(eventType: .proDirectOpen)
+            }
+            if subType == "sale" {
+                AnalyticsManager.shared.logEvent(eventType: .discountProProposed)
+            }
+
+            
+        }
         .alert(item: $errorMessage) { errorWrapper in
             Alert(title: Text("Info"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
+        }
+        .onDisappear {
+            if subType == "default" {
+                AnalyticsManager.shared.logEvent(eventType: .proPageClosed)
+            }
+            if subType == "sale" {
+                AnalyticsManager.shared.logEvent(eventType: .discountProClosed)
+            }
         }
     }
     
@@ -125,6 +143,12 @@ struct PaywallView: View {
         guard let package = selectedPackage else { errorMessage = ErrorWrapper(message: "Select Plan Firstly")
             return}
         isProcessingPurchase = true
+        if subType == "default" {
+            AnalyticsManager.shared.logEvent(eventType: .proPurchase)
+        }
+        if subType == "sale" {
+            AnalyticsManager.shared.logEvent(eventType: .discountProPurchase)
+        }
         
         RevenueCatService.makePurchase(package: package) { status in
             isProcessingPurchase = false
@@ -133,11 +157,16 @@ struct PaywallView: View {
                 showPurchaseSuccess = true
             case .PurchaseCancelled:
                 print("Puchase was cancelled")
-//                errorMessage = ErrorWrapper(message: "Purchase was cancelled.")
+                
+                AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
             case .PurchaseNotAllowedError:
                 errorMessage = ErrorWrapper(message:"Purchase not allowed on this device.")
+                AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
+
             case .PurchaseInvalidError:
                 errorMessage = ErrorWrapper(message:"Invalid purchase. Please try again.")
+                AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
+
             default:
                print("defaull : all ok")
             }
@@ -150,7 +179,10 @@ struct PaywallView: View {
             if success {
                 showPurchaseSuccess = true
                 errorMessage = ErrorWrapper(message: "Purchases restored ✅")
+                AnalyticsManager.shared.logEvent(eventType: .proPurchaseRestored)
+
             } else {
+                AnalyticsManager.shared.logEvent(eventType: .proPurchaseRestoreFailed)
                 errorMessage = ErrorWrapper(message:"Failed to restore purchases.")
             }
         }

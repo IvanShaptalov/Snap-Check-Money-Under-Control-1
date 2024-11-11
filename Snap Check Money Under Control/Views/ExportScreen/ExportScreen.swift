@@ -20,5 +20,9 @@ struct ExportScreen: View {
             
             Spacer()
         }
+        .onAppear {
+            AnalyticsManager.shared.logEvent(eventType: .shareScreen)
+
+        }
     }
 }

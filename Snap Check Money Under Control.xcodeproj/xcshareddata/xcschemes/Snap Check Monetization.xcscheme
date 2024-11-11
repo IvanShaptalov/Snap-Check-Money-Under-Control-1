@@ -50,6 +50,12 @@
             ReferencedContainer = "container:Snap Check Money Under Control.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-FIRDebugEnabled"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <StoreKitConfigurationFileReference
          identifier = "../../Snap Check Money Under Control/Snap Check Money Under Control.storekit">
       </StoreKitConfigurationFileReference>

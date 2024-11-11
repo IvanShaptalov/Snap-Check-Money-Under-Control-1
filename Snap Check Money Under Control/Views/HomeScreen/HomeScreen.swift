@@ -74,6 +74,7 @@ struct HomeScreen: View {
             }
             .onAppear{
                 loadExpenses()
+                AnalyticsManager.shared.logEvent(eventType: .homeScreen)
             }
         }
         .onChange(of: homeScreenVM.inputImage) { previousImage, newImage in
@@ -177,13 +178,18 @@ struct HomeScreen: View {
             .default(Text("Camera")) {
                 homeScreenVM.sourceType = .camera
                 homeScreenVM.showImagePicker = true
+                AnalyticsManager.shared.logEvent(eventType: .createCheckFromCamera)
+
             },
             .default(Text("Photo Library")) {
                 homeScreenVM.sourceType = .photoLibrary
                 homeScreenVM.showImagePicker = true
+                AnalyticsManager.shared.logEvent(eventType: .createCheckFromLibrary)
+
             },
             .default(Text("Create Manually")) {
                 homeScreenVM.showCreateExpenceSheet = true
+                AnalyticsManager.shared.logEvent(eventType: .createCheckManually)
             },
             .cancel()
         ])

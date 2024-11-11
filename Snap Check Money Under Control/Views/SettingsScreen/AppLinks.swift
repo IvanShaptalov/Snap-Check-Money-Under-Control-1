@@ -22,3 +22,4 @@ struct AppLinks: View {
         .foregroundStyle(Color(.label))
     }
 }
+

@@ -77,6 +77,7 @@ class AppConfig {
     
     
     static func toggleIsShowYearFormat() {
+        AnalyticsManager.shared.logEvent(eventType: .showFormatEdited)
         showYearFormat.toggle()
     }
     
@@ -95,7 +96,7 @@ class AppConfig {
     static var aiBirthdayURL = URL(string: "https://apps.apple.com/us/app/ai-birthday-reminder-calendar/id6477883190")!
     static var triviaURL = URL(string: "https://apps.apple.com/ua/app/guess-the-song-in-music-trivia/id6503480745")!
     // TODO change appURL to real and add it in firebase as appURL
-    static var appURL = URL(string: "https://apps.apple.com/us/app/jktemplate/id6475350565")!
+    static var appURL = URL(string: "https://apps.apple.com/us/app/ai-birthday-reminder-calendar/id6477883190")!
     static var dailyUpURL = URL(string: "https://apps.apple.com/us/app/daily-up/id6475350565")!
     
     
