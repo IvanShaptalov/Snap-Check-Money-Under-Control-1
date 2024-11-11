@@ -9,8 +9,8 @@ class ChatViewModel: ObservableObject {
 
     private let api: ChatGPTAPI
 
-    init(apiKey: String) {
-        self.api = ChatGPTAPI(apiKey: apiKey)
+    init() {
+        self.api = ChatGPTAPI()
     }
 
     func addMessage(_ message: ChatGPTRequest.ChatMessage) {

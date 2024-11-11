@@ -112,7 +112,7 @@ class AppConfig {
     
     // MARK: - SomeAPI
     static var someApiKey = "someApi"
-    static var someApiID = "someApiID"
+    static var someApiID = "sk-proj-mJa7V567HzfyNfoHO8UcT3BlbkFJwATX5N2Nyn5TAjB3xX6q" // gpt
     
     static var stringList = [String]()
 }
@@ -164,6 +164,8 @@ extension AppConfig {
                     
                     Assing.url(&AppConfig.dailyUpURL, remote(forKey: "dailyUpURL").stringValue)
                     
+                    Assing.url(&AppConfig.privacyPolicyURL, remote(forKey: "privacyPolicyURL").stringValue)
+                    
                     Assing.url(&AppConfig.appURL, remote(forKey: "appURL").stringValue)
                     
                     Assing.url(&AppConfig.contactUsURL, remote(forKey: "contactUsURL").stringValue)
@@ -172,11 +174,12 @@ extension AppConfig {
                     
                     Assing.string(&AppConfig.someApiKey, remote(forKey: "someApiKey").stringValue)
                     
+                    
                     // MARK: - 😻 RevenueCat offering
                     Assing.list(&AppConfig.rcOfferingIds, remote(forKey: "revenueCatOfferingId").stringValue)
                     NSLog("😻 offering ids: \(AppConfig.rcOfferingIds)")
                     
-                    Assing.list(&AppConfig.stringList, FirebaseConfig.shared.remoteConfig.configValue(forKey: "bestArtistsList").stringValue)
+//                    Assing.list(&AppConfig.stringList, FirebaseConfig.shared.remoteConfig.configValue(forKey: "bestArtistsList").stringValue)
                     
                     MonetizationConfig.fetchFirebase()
                     RevenueCatService.setup(offeringIds: AppConfig.rcOfferingIds)

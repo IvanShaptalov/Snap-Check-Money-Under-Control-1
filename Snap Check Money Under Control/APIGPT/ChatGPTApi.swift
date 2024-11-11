@@ -42,12 +42,7 @@ struct ChatGPTResponse: Codable {
 }
 
 class ChatGPTAPI {
-    private let apiKey: String
     private let endpoint = "https://api.openai.com/v1/chat/completions"
-    
-    init(apiKey: String) {
-        self.apiKey = apiKey
-    }
     
     func sendRequest(messages: [ChatGPTRequest.ChatMessage]) async throws -> ChatGPTResponse {
         let request = ChatGPTRequest(model: "gpt-3.5-turbo", messages: messages)
@@ -59,7 +54,7 @@ class ChatGPTAPI {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        urlRequest.setValue("Bearer \(AppConfig.someApiKey)", forHTTPHeaderField: "Authorization")
         
         let jsonData = try JSONEncoder().encode(request)
         urlRequest.httpBody = jsonData
