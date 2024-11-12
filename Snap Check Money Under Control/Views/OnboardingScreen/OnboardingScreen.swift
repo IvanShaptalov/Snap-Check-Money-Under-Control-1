@@ -87,7 +87,17 @@ struct OnboardingView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        if viewModel.currentIndex < viewModel.screens.count - 1 {
+                        if viewModel.currentIndex == viewModel.respectIndex {
+                            Button {
+                                withAnimation {
+                                    viewModel.next()
+                                }
+                            } label: {
+                                Text("Get discount 💰")
+                                    .font(.title2)
+                                    .padding()
+                            }
+                        } else if viewModel.currentIndex < viewModel.screens.count - 1 {
                             Button {
                                 withAnimation {
                                     viewModel.next()
@@ -98,7 +108,8 @@ struct OnboardingView: View {
                                     .padding()
                             }
                             
-                        } else {
+                        }
+                        else {
                             Button {
                                 withAnimation {
                                     self.isOnboardingCompleted = true
@@ -128,8 +139,10 @@ struct OnboardingView: View {
                         if (showButton && viewModel.currentIndex == viewModel.paywallIndex) ||
                             (showDiscountButton && viewModel.currentIndex == viewModel.discountIndex)  {
                             Button(action: {
-                                print("clicked")
-                                viewModel.next()
+                                withAnimation {
+                                    print("clicked")
+                                    viewModel.next()
+                                }
                             }) {
                                 Image(systemName: "xmark.circle")
                                     .resizable()

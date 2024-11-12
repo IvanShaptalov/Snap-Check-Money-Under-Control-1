@@ -40,22 +40,20 @@ struct PaywallView: View {
                             )
                             .background(Color(uiColor: UIColor.secondarySystemBackground))
                             .cornerRadius(10)
-
+                        
                         
                     }
                     else {
                         SubscriptionRow(subscription: subscription)
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                selectedPackage = subscription.package
+                                withAnimation {
+                                    selectedPackage = subscription.package
+                                }
                             }
                             .background(Color(uiColor: UIColor.secondarySystemBackground))
                             .cornerRadius(10)
-
-                        
-                        
                     }
-                    
                 }
             }
             
@@ -90,25 +88,27 @@ struct PaywallView: View {
         }
         .padding()
         .onAppear {
-            loadSubscriptions()
-            if subType == "default" {
-                AnalyticsManager.shared.logEvent(eventType: .proDirectOpen)
+            withAnimation {
+                loadSubscriptions()
+                if subType == "default" {
+                    AnalyticsManager.shared.logEvent(eventType: .proDirectOpen)
+                }
+                if subType == "sale" {
+                    AnalyticsManager.shared.logEvent(eventType: .discountProProposed)
+                }
             }
-            if subType == "sale" {
-                AnalyticsManager.shared.logEvent(eventType: .discountProProposed)
-            }
-
-            
         }
         .alert(item: $errorMessage) { errorWrapper in
             Alert(title: Text("Info"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
         }
         .onDisappear {
-            if subType == "default" {
-                AnalyticsManager.shared.logEvent(eventType: .proPageClosed)
-            }
-            if subType == "sale" {
-                AnalyticsManager.shared.logEvent(eventType: .discountProClosed)
+            withAnimation {
+                if subType == "default" {
+                    AnalyticsManager.shared.logEvent(eventType: .proPageClosed)
+                }
+                if subType == "sale" {
+                    AnalyticsManager.shared.logEvent(eventType: .discountProClosed)
+                }
             }
         }
     }
@@ -140,50 +140,54 @@ struct PaywallView: View {
     
     // Make a purchase
     private func makePurchase() {
-        guard let package = selectedPackage else { errorMessage = ErrorWrapper(message: "Select Plan Firstly")
-            return}
-        isProcessingPurchase = true
-        if subType == "default" {
-            AnalyticsManager.shared.logEvent(eventType: .proPurchase)
-        }
-        if subType == "sale" {
-            AnalyticsManager.shared.logEvent(eventType: .discountProPurchase)
-        }
-        
-        RevenueCatService.makePurchase(package: package) { status in
-            isProcessingPurchase = false
-            switch status {
-            case .Success:
-                showPurchaseSuccess = true
-            case .PurchaseCancelled:
-                print("Puchase was cancelled")
-                
-                AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
-            case .PurchaseNotAllowedError:
-                errorMessage = ErrorWrapper(message:"Purchase not allowed on this device.")
-                AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
-
-            case .PurchaseInvalidError:
-                errorMessage = ErrorWrapper(message:"Invalid purchase. Please try again.")
-                AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
-
-            default:
-               print("defaull : all ok")
+        withAnimation {
+            guard let package = selectedPackage else { errorMessage = ErrorWrapper(message: "Select Plan Firstly")
+                return}
+            isProcessingPurchase = true
+            if subType == "default" {
+                AnalyticsManager.shared.logEvent(eventType: .proPurchase)
+            }
+            if subType == "sale" {
+                AnalyticsManager.shared.logEvent(eventType: .discountProPurchase)
+            }
+            
+            RevenueCatService.makePurchase(package: package) { status in
+                isProcessingPurchase = false
+                switch status {
+                case .Success:
+                    showPurchaseSuccess = true
+                case .PurchaseCancelled:
+                    print("Puchase was cancelled")
+                    
+                    AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
+                case .PurchaseNotAllowedError:
+                    errorMessage = ErrorWrapper(message:"Purchase not allowed on this device.")
+                    AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
+                    
+                case .PurchaseInvalidError:
+                    errorMessage = ErrorWrapper(message:"Invalid purchase. Please try again.")
+                    AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
+                    
+                default:
+                    print("defaull : all ok")
+                }
             }
         }
     }
     
     // Restore purchases
     private func restorePurchases() {
-        RevenueCatService.restorePurchase { success in
-            if success {
-                showPurchaseSuccess = true
-                errorMessage = ErrorWrapper(message: "Purchases restored ✅")
-                AnalyticsManager.shared.logEvent(eventType: .proPurchaseRestored)
-
-            } else {
-                AnalyticsManager.shared.logEvent(eventType: .proPurchaseRestoreFailed)
-                errorMessage = ErrorWrapper(message:"Failed to restore purchases.")
+        withAnimation {
+            RevenueCatService.restorePurchase { success in
+                if success {
+                    showPurchaseSuccess = true
+                    errorMessage = ErrorWrapper(message: "Purchases restored ✅")
+                    AnalyticsManager.shared.logEvent(eventType: .proPurchaseRestored)
+                    
+                } else {
+                    AnalyticsManager.shared.logEvent(eventType: .proPurchaseRestoreFailed)
+                    errorMessage = ErrorWrapper(message:"Failed to restore purchases.")
+                }
             }
         }
     }
@@ -216,7 +220,7 @@ struct FeatureItemView: View {
             
             Spacer()
                 .frame(width: 10)
-
+            
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.headline)
@@ -227,7 +231,7 @@ struct FeatureItemView: View {
             }
             
             Spacer()
-
+            
         }
     }
 }
