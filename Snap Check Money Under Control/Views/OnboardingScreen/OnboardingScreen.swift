@@ -89,7 +89,9 @@ struct OnboardingView: View {
                         Spacer()
                         if viewModel.currentIndex < viewModel.screens.count - 1 {
                             Button {
-                                viewModel.next()
+                                withAnimation {
+                                    viewModel.next()
+                                }
                             } label: {
                                 Text("Next")
                                     .font(.title2)

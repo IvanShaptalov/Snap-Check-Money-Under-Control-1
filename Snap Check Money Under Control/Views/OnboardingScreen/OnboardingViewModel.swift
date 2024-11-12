@@ -44,7 +44,7 @@ class OnboardingViewModel: ObservableObject {
         AnyView(PaywallView(subType: "default")),
         
         AnyView(OnboardingScreen(
-            title: "Smart Choice!",
+            title: "Smart Choice 💰",
             description: "By waiting, you've made a smart decision! You are now eligible for a special discount. Enjoy your savings and make the most of your expense tracking.",
             imageName: "leprecon" // Используем системное изображение для похвалы
         )),
