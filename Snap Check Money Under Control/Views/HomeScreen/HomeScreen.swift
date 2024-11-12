@@ -69,7 +69,6 @@ struct HomeScreen: View {
                 cleanResourses()
                 if showInterstitialAds {
                     intAdsVm.showAd()
-                    print("show ad 💰")
                 }
             }
             .onAppear{

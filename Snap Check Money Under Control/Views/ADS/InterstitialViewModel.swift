@@ -4,6 +4,10 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
     private var interstitialAd: GADInterstitialAd?
     
     func loadAd() async {
+        guard AppConfig.isShowAds == 1 else {
+            print("ads loading disabled from firebase remote config")
+            return
+        }
         if MonetizationConfig.isPremiumAccount {
             print("premium 😎, f ads to pay respect")
         } else {
@@ -54,8 +58,12 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
     }
     
     func showAd() {
+        guard AppConfig.isShowAds == 1 else {
+            print("ads disabled from firebase remote config ‼️")
+            return
+        }
         guard MonetizationConfig.isPremiumAccount == false else {
-            print("premium 😎, f ads to pay respect")
+            print("premium 😎, f ads to pay respect, not showing")
             return
         }
         

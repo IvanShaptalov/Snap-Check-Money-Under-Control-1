@@ -3,7 +3,7 @@ import Foundation
 
 class Assing {
     static func number(_ to: inout Int, _ from: Int?) {
-        guard let from = from, from == 0 else {
+        guard let from = from else {
             return
         }
         

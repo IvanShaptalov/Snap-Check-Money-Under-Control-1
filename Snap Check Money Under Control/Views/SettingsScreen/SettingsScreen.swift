@@ -120,10 +120,13 @@ struct SettingsScreen: View {
         }
         .sheet(isPresented: $showingPaywall) {
             PaywallView(subType: "default").onDisappear {
-                if !MonetizationConfig.isPremiumAccount {
-                    print("no premium and paywall dismissed - show discount")
-                    proposeDiscountedPaywall = true
-                    AnalyticsManager.shared.logEvent(eventType: .discountProProposed)
+                // 1 second delay for request to revenue cat - not propose discount to user that already purchased normal version
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    if !MonetizationConfig.isPremiumAccount {
+                        print("no premium and paywall dismissed - show discount")
+                        proposeDiscountedPaywall = true
+                        AnalyticsManager.shared.logEvent(eventType: .discountProProposed)
+                    }
                 }
             }
         }

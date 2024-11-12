@@ -110,6 +110,8 @@ class AppConfig {
     
     static var rcOfferingIds = ["default", "sale"]
     
+    static var isShowAds = 1
+    
     // MARK: - SomeAPI
     static var someApiKey = "someApi"
     static var someApiID = "sk-proj-mJa7V567HzfyNfoHO8UcT3BlbkFJwATX5N2Nyn5TAjB3xX6q" // gpt
@@ -174,7 +176,9 @@ extension AppConfig {
                     
                     Assing.string(&AppConfig.someApiKey, remote(forKey: "someApiKey").stringValue)
                     
+                    Assing.number(&AppConfig.isShowAds, Int(remote(forKey: "isShowAds").stringValue) ?? 1)  // show ads by default
                     
+                    print("AppConfig.isShowAds: \(AppConfig.isShowAds)")
                     // MARK: - 😻 RevenueCat offering
                     Assing.list(&AppConfig.rcOfferingIds, remote(forKey: "revenueCatOfferingId").stringValue)
                     NSLog("😻 offering ids: \(AppConfig.rcOfferingIds)")
