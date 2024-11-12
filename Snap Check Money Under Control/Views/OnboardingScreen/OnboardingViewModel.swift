@@ -20,25 +20,25 @@ class OnboardingViewModel: ObservableObject {
         AnyView(OnboardingScreen(
             title: "Welcome to Snap Check!",
             description: "Learn how our app will help you save and earn money. \n\n1. Quick expense tracking \n2. Full control of your data \n3. Save and earn money!",
-            imageName: "star.fill" // Используем системное изображение
+            imageName: "SnapCheck"
         )),
         
         AnyView(OnboardingScreen(
             title: "How it works",
             description: "Take a photo of your receipt, save the data, and export if needed. Easily and efficiently manage your expenses.",
-            imageName: "camera.fill" // Используем системное изображение
+            imageName: "photoCheck" // Используем системное изображение
         )),
         
         AnyView(OnboardingScreen(
             title: "Your data is safe",
             description: "We don’t use your data. All of it is stored on your device for maximum privacy.",
-            imageName: "lock.shield.fill" // Используем системное изображение
+            imageName: "safe" // Используем системное изображение
         )),
         
         AnyView(OnboardingScreen(
             title: "Set your currency",
             description: "Choose the currency that's most convenient for you. Convenient expense tracking anywhere in the world.",
-            imageName: "dollarsign.circle.fill" // Используем системное изображение
+            imageName: "currency" // Используем системное изображение
         )),
 
         AnyView(PaywallView(subType: "default")),
@@ -46,7 +46,7 @@ class OnboardingViewModel: ObservableObject {
         AnyView(OnboardingScreen(
             title: "Smart Choice!",
             description: "By waiting, you've made a smart decision! You are now eligible for a special discount. Enjoy your savings and make the most of your expense tracking.",
-            imageName: "star.fill" // Используем системное изображение для похвалы
+            imageName: "leprecon" // Используем системное изображение для похвалы
         )),
 
         AnyView(PaywallView(subType: "sale")),
@@ -54,7 +54,7 @@ class OnboardingViewModel: ObservableObject {
         AnyView(OnboardingScreen(
             title: "Your Journey to Financial Independence",
             description: "Wishing you a smooth and swift path towards financial freedom. Track your expenses easily and take control of your financial future.",
-            imageName: "map.fill" // Используем системное изображение карты, символизирующее путь
+            imageName: "map" // Используем системное изображение карты, символизирующее путь
         ))
     ]
 

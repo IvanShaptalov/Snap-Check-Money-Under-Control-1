@@ -13,36 +13,32 @@ struct OnboardingScreen: View {
             print("Selected currency changed to: \(selectedCurrency.rawValue)") // Debugging print
         }
     }
-    @State private var scale: CGFloat = 1.0
     
     var body: some View {
         VStack(spacing: 20) {
             Spacer().frame(height: UIScreen.main.bounds.height * 0.05)
-            Image(systemName: imageName)
+            
+            // Используем изображение из ассетов
+            Image(imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(height: 200)
-                .scaleEffect(scale) // Увеличение масштаба
-                .onAppear {
-                    withAnimation(.easeIn(duration: 0.5)) {
-                        scale = 1.1 // Плавное увеличение изображения при появлении
-                    }
-                }
+                .frame(height: 300)
+                .clipShape(.buttonBorder)
             
             Text(title)
                 .font(.title)
                 .fontWeight(.bold)
-                .foregroundColor(.primary) // Использование стандартного цвета для текста
+                .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
                 .animation(.easeIn(duration: 0.3), value: title)
             
             Text(description)
                 .font(.body)
-                .foregroundColor(.secondary) // Более мягкий цвет для описания
+                .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding([.horizontal, .bottom])
-                .lineLimit(nil) // Поддержка многострочного текста
+                .lineLimit(nil)
                 .animation(.easeIn(duration: 0.3), value: description)
             
             if title == "Set your currency" {
@@ -52,14 +48,15 @@ struct OnboardingScreen: View {
                     }
                 }
                 .pickerStyle(.wheel)
-                .onChange(of: selectedCurrency) { _,newValue in
-                    print("Picker selection changed to: \(newValue.description)") // Debugging print
+                .onChange(of: selectedCurrency) { _, newValue in
+                    print("Picker selection changed to: \(newValue.description)")
                     selectedCurrency = newValue
                 }
             }
             
             Spacer()
         }
+        .padding()
     }
 }
 
@@ -108,14 +105,14 @@ struct OnboardingView: View {
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
                             }
-                           
+                            
                             Spacer()
                         }
                     }
                     .padding()
                     Spacer()
                         .frame(height: 20)
-
+                    
                 } else {
                     
                     HStack {
