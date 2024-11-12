@@ -18,7 +18,6 @@ struct SettingsScreen: View {
         }
     }
     
-    
     var body: some View {
         
         VStack {

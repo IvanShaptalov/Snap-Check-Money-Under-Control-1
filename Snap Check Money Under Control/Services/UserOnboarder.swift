@@ -9,17 +9,30 @@ import Foundation
 
 class UserOnboarder {
     enum OnboardStatus: String {
-        case onboarded = "onboarded"
+        case
+        tutorialOnboarded = "tutorial_onboarded",
+        welcomeOnboard = "welcome_onboard"
     }
     
-    static func isOnboarded() -> Bool {
-        let result = UserDefaults().bool(forKey: OnboardStatus.onboarded.rawValue)
-        print("⛴️ Onboarded?: \(result)")
+    static func isTutorialOnboarded() -> Bool {
+        let result = UserDefaults().bool(forKey: OnboardStatus.tutorialOnboarded.rawValue)
+        print("⛴️ Tutorial Onboarded?: \(result)")
         return result
     }
     
-    static func setOnboarded() {
-        UserDefaults().set(true, forKey: OnboardStatus.onboarded.rawValue)
-        print("⛴️ onboarded")
+    static func setTutorialOnboarded() {
+        UserDefaults().set(true, forKey: OnboardStatus.tutorialOnboarded.rawValue)
+        print("⛴️ Tutorial onboarded")
+    }
+    
+    static func isWelcomeOnboarded() -> Bool {
+        let result = UserDefaults().bool(forKey: OnboardStatus.welcomeOnboard.rawValue)
+        print("⛴️ Welcome Onboarded?: \(result)")
+        return result
+    }
+    
+    static func setWelcomeOnboarded() {
+        UserDefaults().set(true, forKey: OnboardStatus.welcomeOnboard.rawValue)
+        print("⛴️ Welcome onboarded")
     }
 }
