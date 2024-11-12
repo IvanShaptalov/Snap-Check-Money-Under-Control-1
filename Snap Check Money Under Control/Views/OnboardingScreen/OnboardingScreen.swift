@@ -139,10 +139,16 @@ struct OnboardingView: View {
                         if (showButton && viewModel.currentIndex == viewModel.paywallIndex) ||
                             (showDiscountButton && viewModel.currentIndex == viewModel.discountIndex)  {
                             Button(action: {
-                                withAnimation {
+                                if showDiscountButton == false && MonetizationConfig.isPremiumAccount {
                                     print("clicked")
                                     viewModel.next()
+                                } else {
+                                    withAnimation {
+                                        print("clicked")
+                                        viewModel.next()
+                                    }
                                 }
+                                
                             }) {
                                 Image(systemName: "xmark.circle")
                                     .resizable()
@@ -159,6 +165,7 @@ struct OnboardingView: View {
                     .onAppear {
                         if showButton {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                
                                 withAnimation {
                                     showDiscountButton = true
                                 }

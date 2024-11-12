@@ -60,6 +60,7 @@ class OnboardingViewModel: ObservableObject {
 
     func next() {
         print("next index: \(currentIndex)")
+        analyze()
         if currentIndex < screens.count - 1 {
             if currentIndex + 1 == respectIndex && !MonetizationConfig.isPremiumAccount {
                 print("next index: \(currentIndex)")
@@ -70,11 +71,42 @@ class OnboardingViewModel: ObservableObject {
             if currentIndex + 1 == respectIndex && MonetizationConfig.isPremiumAccount {
                 currentIndex = journeyIndex
                 print("to journey index: \(currentIndex)")
-
+                
                 return
             }
             print("plus 1: \(currentIndex)")
             currentIndex += 1
+        }
+    }
+    
+    func analyze() {
+        switch currentIndex {
+        case 0:
+            AnalyticsManager.shared.logEvent(eventType: .onboard_intro_1)
+            break
+        case 1:
+            AnalyticsManager.shared.logEvent(eventType: .onboard_how_it_works_2)
+            break
+        case 2:
+            AnalyticsManager.shared.logEvent(eventType: .onboard_data_safe_3)
+            break
+        case 3:
+            AnalyticsManager.shared.logEvent(eventType: .onboard_currency_4)
+            break
+        case 4:
+            AnalyticsManager.shared.logEvent(eventType: .onboard_premium_5)
+            break
+        case 5:
+            AnalyticsManager.shared.logEvent(eventType: .onboard_premium_cancelled_leprecon_6)
+            break
+        case 6:
+            AnalyticsManager.shared.logEvent(eventType: .onboard_premium_discount_7)
+            break
+        case 7:
+            AnalyticsManager.shared.logEvent(eventType: .onboard_start_journey_8)
+            break
+        default:
+            break
         }
     }
 

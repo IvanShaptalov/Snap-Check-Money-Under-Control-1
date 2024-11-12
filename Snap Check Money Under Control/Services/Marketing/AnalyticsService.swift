@@ -59,6 +59,14 @@ enum EventType: String {
     
     ad_showed = "interstitial_ad_showed", // +
     ad_clicked = "interstitial_ad_clicked", // +
-    ad_cancelled = "interstitial_ad_cancelled" // +
+    ad_cancelled = "interstitial_ad_cancelled", // +
     
+    onboard_intro_1 = "onboard_intro_1",   // +
+    onboard_how_it_works_2 = "onboard_how_it_works_2",  // +
+    onboard_data_safe_3 = "onboard_data_safe_3",  // +
+    onboard_currency_4 = "onboard_currency_4",  // +
+    onboard_premium_5 = "onboard_premium_5",  // +
+    onboard_premium_cancelled_leprecon_6 = "onboard_premium_cancelled_leprecon_6",  // +
+    onboard_premium_discount_7 = "onboard_premium_discount_7",  // +
+    onboard_start_journey_8 = "onboard_start_journey_8"  // +
 }
