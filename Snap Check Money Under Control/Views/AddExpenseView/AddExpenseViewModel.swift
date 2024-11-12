@@ -39,11 +39,11 @@ class AddExpenseViewModel: ObservableObject {
     /// Save or update the expense after validation
     func saveExpense() {
         guard validateInputs() else { return }  // Early exit if validation fails
-        print("Inputs validated ✅")
+        NSLog("Inputs validated ✅")
         
         // Parse amount
         let amountValue = Double(amount.replacingOccurrences(of: ",", with: ".")) ?? 0
-        print("Set amount ✅")
+        NSLog("Set amount ✅")
 
         let newExpense = ExpenseData(
             id: expenseToEdit?.id ?? UUID().uuidString,
@@ -53,7 +53,7 @@ class AddExpenseViewModel: ObservableObject {
             currency: currency,
             category: category
         )
-        print("Expense saved")
+        NSLog("Expense saved")
         onSave?(newExpense)
         
         resetFieldsAfterSave()

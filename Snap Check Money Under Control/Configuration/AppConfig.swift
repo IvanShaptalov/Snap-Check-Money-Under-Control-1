@@ -102,7 +102,7 @@ class AppConfig {
     
     // MARK: - EULA & PrivacyPolicy
     static var termsOfUseURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
-    static var privacyPolicyURL = URL(string: "https://t.me/guessTheSongPrivacyPolicy")!
+    static var privacyPolicyURL = URL(string: "https://t.me/snapCheckPrivacyPolicy")!
     
     
     // MARK: - RevenueCat
@@ -116,7 +116,12 @@ class AppConfig {
     static var someApiKey = "someApi"
     static var someApiID = "sk-proj-mJa7V567HzfyNfoHO8UcT3BlbkFJwATX5N2Nyn5TAjB3xX6q" // gpt
     
-    static var stringList = [String]()
+    static var daysAndTimesStr: [String] = [
+        "Monday-08:30",   // Monday at 08:30
+        "Tuesday-11:40",  // Tuesday at 11:40
+        "Thursday-18:30", // Thursday at 18:30
+        "Sunday-19:00"    // Sunday at 19:00
+    ]
 }
 
 
@@ -178,13 +183,15 @@ extension AppConfig {
                     
                     Assing.number(&AppConfig.isShowAds, Int(remote(forKey: "isShowAds").stringValue) ?? 1)  // show ads by default
                     
-                    print("AppConfig.isShowAds: \(AppConfig.isShowAds)")
+                    NSLog("AppConfig.isShowAds: \(AppConfig.isShowAds)")
                     // MARK: - 😻 RevenueCat offering
                     Assing.list(&AppConfig.rcOfferingIds, remote(forKey: "revenueCatOfferingId").stringValue)
                     NSLog("😻 offering ids: \(AppConfig.rcOfferingIds)")
                     
-//                    Assing.list(&AppConfig.stringList, FirebaseConfig.shared.remoteConfig.configValue(forKey: "bestArtistsList").stringValue)
-                    
+                    Assing.list(&AppConfig.daysAndTimesStr, FirebaseConfig.shared.remoteConfig.configValue(forKey: "daysAndTimesStr").stringValue)
+                    // after assing
+                    NotificationManager.scheduleCheckNotifications()
+
                     MonetizationConfig.fetchFirebase()
                     RevenueCatService.setup(offeringIds: AppConfig.rcOfferingIds)
                 }

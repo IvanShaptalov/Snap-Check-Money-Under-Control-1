@@ -25,7 +25,7 @@ class ChatViewModel: ObservableObject {
                 let response = try await api.sendRequest(messages: messages)
                 handleResponse(response)
             } catch {
-                print(error.localizedDescription)
+                NSLog(error.localizedDescription)
                 handleError(error)
             }
             DispatchQueue.main.async { [weak self] in
@@ -37,7 +37,7 @@ class ChatViewModel: ObservableObject {
     private func handleResponse(_ response: ChatGPTResponse) {
         guard let choice = response.choices.first else { return }
         DispatchQueue.main.async { [weak self] in
-            print("response from chatgpt ")
+            NSLog("response from chatgpt ")
             print(choice.message)
             self?.resultResponse = choice.message
         }

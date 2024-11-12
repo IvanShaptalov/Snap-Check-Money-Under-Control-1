@@ -32,8 +32,9 @@ class Assing {
             NSLog("Parsed list empty, leave old: \(to)")
             return
         }
-        NSLog("assined value: \(to)")
         to = splitted
+        NSLog("assined value: \(to)")
+
     }
     
     static func url(_ to: inout URL,_ from: String?) {

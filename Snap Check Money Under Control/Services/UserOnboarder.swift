@@ -16,23 +16,23 @@ class UserOnboarder {
     
     static func isTutorialOnboarded() -> Bool {
         let result = UserDefaults().bool(forKey: OnboardStatus.tutorialOnboarded.rawValue)
-        print("⛴️ Tutorial Onboarded?: \(result)")
+        NSLog("⛴️ Tutorial Onboarded?: \(result)")
         return result
     }
     
     static func setTutorialOnboarded() {
         UserDefaults().set(true, forKey: OnboardStatus.tutorialOnboarded.rawValue)
-        print("⛴️ Tutorial onboarded")
+        NSLog("⛴️ Tutorial onboarded")
     }
     
     static func isWelcomeOnboarded() -> Bool {
         let result = UserDefaults().bool(forKey: OnboardStatus.welcomeOnboard.rawValue)
-        print("⛴️ Welcome Onboarded?: \(result)")
+        NSLog("⛴️ Welcome Onboarded?: \(result)")
         return result
     }
     
     static func setWelcomeOnboarded() {
         UserDefaults().set(true, forKey: OnboardStatus.welcomeOnboard.rawValue)
-        print("⛴️ Welcome onboarded")
+        NSLog("⛴️ Welcome onboarded")
     }
 }

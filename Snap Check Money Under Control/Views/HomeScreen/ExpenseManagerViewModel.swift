@@ -56,7 +56,7 @@ class ExpenseManagerViewModel: ObservableObject {
         do {
             return try expenseManager.fetchExpenses(from: startDate, to: endDate, context: modelContext)
         } catch {
-            print("Ошибка загрузки расходов: \(error)")
+            NSLog("Ошибка загрузки расходов: \(error)")
             return []
         }
     }
@@ -68,7 +68,7 @@ class ExpenseManagerViewModel: ObservableObject {
                 try expenseManager.addOrUpdateExpense(data: expense, context: modelContext)
             }
         } catch {
-            print("Ошибка при добавлении или обновлении расходов: \(error)")
+            NSLog("Ошибка при добавлении или обновлении расходов: \(error)")
         }
     }
     
@@ -77,7 +77,7 @@ class ExpenseManagerViewModel: ObservableObject {
         do {
             try expenseManager.deleteExpense(byId: id, context: modelContext)
         } catch {
-            print("Ошибка удаления расхода: \(error)")
+            NSLog("Ошибка удаления расхода: \(error)")
         }
     }
 }

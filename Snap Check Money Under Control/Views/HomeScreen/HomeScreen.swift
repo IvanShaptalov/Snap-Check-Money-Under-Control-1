@@ -44,6 +44,7 @@ struct HomeScreen: View {
         )
         .onAppear {
             loadExpenses()
+            NotificationManager.requestNotificationPermission()
         }
         .task {
             await intAdsVm.loadAd()
@@ -56,7 +57,7 @@ struct HomeScreen: View {
         }
         .sheet(isPresented: $homeScreenVM.showCreateExpenceSheet) {
             expenseSheetFromCreating.onDisappear {
-                print("creating view sheet dissapeared")
+                NSLog("creating view sheet dissapeared")
                 cleanResourses()
             }
             .onAppear{
@@ -65,7 +66,7 @@ struct HomeScreen: View {
         }
         .sheet(isPresented: $homeScreenVM.showActionSheetFromJson) {
             expenseSheetFromJson.onDisappear {
-                print("json view sheet dissapeared")
+                NSLog("json view sheet dissapeared")
                 cleanResourses()
                 if showInterstitialAds {
                     intAdsVm.showAd()
@@ -91,7 +92,7 @@ struct HomeScreen: View {
             loadExpenses()
         }
         .alert(item: Binding<ErrorWrapper?>.combine($chatVM.errorMessage, $textRecognitionVM.errorMessage)) { errorWrapper in
-            print("alert")
+            NSLog("alert")
             return Alert(title: Text("Error"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
         }
         
@@ -104,7 +105,7 @@ struct HomeScreen: View {
     func decodeAndAddExpenses(from newResult: ChatGPTRequest.ChatMessage?, to expenses: inout [ExpenseData]) {
         // Ensure that newResult exists and contains content
         guard let resultContent = newResult?.content else {
-            print("Нет контента в resultResponse")
+            NSLog("Нет контента в resultResponse")
             return
         }
         
@@ -124,12 +125,12 @@ struct HomeScreen: View {
                 // Add new expenses to editing and show action sheet
                 tmpExpensesFromJson = newExpenses
                 homeScreenVM.showActionSheetFromJson = true
-                print("Расходы успешно декодированы и добавлены: \(newExpenses)")
+                NSLog("Расходы успешно декодированы и добавлены: \(newExpenses)")
             } catch {
-                print("Ошибка декодирования данных: \(error)")
+                NSLog("Ошибка декодирования данных: \(error)")
             }
         } else {
-            print("Ошибка преобразования строки в данные")
+            NSLog("Ошибка преобразования строки в данные")
         }
     }
     
@@ -142,7 +143,7 @@ struct HomeScreen: View {
         guard let inputImage = newImage else { return }
         
         textRecognitionVM.recognizeText(from: inputImage) // Recognize text from image
-        print("recognized")
+        NSLog("recognized")
         chatVM.isLoading = false
         DispatchQueue.main.async {
             if textRecognitionVM.errorMessage == nil {
@@ -244,7 +245,7 @@ struct HomeScreen: View {
     }
     
     private func editExpense(_ expense: ExpenseData) {
-        print("add expence to edit: \(expense)")
+        NSLog("add expence to edit: \(expense)")
         tmpExpensesFromJson = [expense]
         homeScreenVM.showActionSheetFromJson = true
     }
@@ -255,7 +256,7 @@ struct HomeScreen: View {
     }
     
     fileprivate func cleanResourses() {
-        print("clean resourses 🧹 scannedTotalAmount, tmp from json, tmp from creating")
+        NSLog("clean resourses 🧹 scannedTotalAmount, tmp from json, tmp from creating")
         scannedTotalAmount = nil
         tmpExpensesFromJson = []
         tmpExpensesForCreating = []

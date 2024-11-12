@@ -14,7 +14,7 @@ struct SettingsScreen: View {
         didSet {
             AnalyticsManager.shared.logEvent(eventType: .currencyChanged)
             AppConfig.updateMainCurrency(to: selectedCurrency)
-            print("Selected currency changed to: \(selectedCurrency.rawValue)") // Debugging print
+            NSLog("Selected currency changed to: \(selectedCurrency.rawValue)") // Debugging NSLog
         }
     }
     
@@ -39,7 +39,7 @@ struct SettingsScreen: View {
                         }
                         .pickerStyle(MenuPickerStyle())
                         .onChange(of: selectedCurrency) { _,newValue in
-                            print("Picker selection changed to: \(newValue.description)") // Debugging print
+                            NSLog("Picker selection changed to: \(newValue.description)") // Debugging NSLog
                             selectedCurrency = newValue
                         }
                         
@@ -123,7 +123,7 @@ struct SettingsScreen: View {
                 // 1 second delay for request to revenue cat - not propose discount to user that already purchased normal version
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     if !MonetizationConfig.isPremiumAccount {
-                        print("no premium and paywall dismissed - show discount")
+                        NSLog("no premium and paywall dismissed - show discount")
                         proposeDiscountedPaywall = true
                         AnalyticsManager.shared.logEvent(eventType: .discountProProposed)
                     }
@@ -138,14 +138,14 @@ struct SettingsScreen: View {
             Button("Apply Discount") {
                 // Применить скидку
                 discountedPaywall = true // После применения скидки показываем предложение
-                print("Discount applied!")
+                NSLog("Discount applied!")
                 AnalyticsManager.shared.logEvent(eventType: .discountProOpened)
 
             }
             Button("Not Now", role: .cancel) {
                 // Отказаться от скидки
                 discountedPaywall = false // Скрыть предложение о скидке
-                print("Discount not applied")
+                NSLog("Discount not applied")
                 AnalyticsManager.shared.logEvent(eventType: .discountProNotNow)
 
             }

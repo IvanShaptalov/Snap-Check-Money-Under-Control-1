@@ -11,7 +11,7 @@ class UpdateChecker: ObservableObject {
                   let currentVersion = info["CFBundleShortVersionString"] as? String,
                   let identifier = info["CFBundleIdentifier"] as? String,
                   let url = URL(string: "https://itunes.apple.com/lookup?bundleId=\(identifier)") else {
-                print("🧐 version check > error while creating url")
+                NSLog("🧐 version check > error while creating url")
                 isUpdateAvailable = false
                 return
             }
@@ -21,18 +21,18 @@ class UpdateChecker: ObservableObject {
             
             guard let result = (json?["results"] as? [Any])?.first as? [String: Any],
                   let version = result["version"] as? String else {
-                print("🧐 version check > error while parsing results")
+                NSLog("🧐 version check > error while parsing results")
                 isUpdateAvailable = false
                 return
             }
             
             // Обновляем состояние isUpdateAvailable на основе сравнения версий
-            print("🧐 version check > \(version) != \(currentVersion)")
+            NSLog("🧐 version check > \(version) != \(currentVersion)")
             isUpdateAvailable = version != currentVersion
             
             
         } catch {
-            print("🧐 version check > error: \(error.localizedDescription)")
+            NSLog("🧐 version check > error: \(error.localizedDescription)")
             isUpdateAvailable = false
         }
     }

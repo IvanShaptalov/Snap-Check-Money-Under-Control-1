@@ -23,7 +23,7 @@ class Prompts {
     static func preparePrompt(_ message: String) -> String {
         let wrapper = premiumPromtWithItems
         let combinedMessage = [wrapper, message, promptWrapper].joined(separator: " ")
-        print("🍪 Prepared prompt: \(combinedMessage)")
+        NSLog("🍪 Prepared prompt: \(combinedMessage)")
         return combinedMessage
     }
 }

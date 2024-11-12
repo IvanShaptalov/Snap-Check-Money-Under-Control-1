@@ -8,7 +8,7 @@ class JsonDecoder {
             let decodedData = try decoder.decode([T].self, from: data)
             return decodedData
         } catch {
-            print("Ошибка декодирования: \(error)")
+            NSLog("Ошибка декодирования: \(error)")
             return nil
         }
     }

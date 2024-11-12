@@ -14,7 +14,7 @@ class ExpensesSheetViewModel: ObservableObject {
         self.expensesForSave = expenses
         self.temporaryImage = temporaryImage
         self.scannedTotalAmount = scannedTotalAmount
-        print("scanned total amount 🪙: \(scannedTotalAmount ?? -1)")
+        NSLog("scanned total amount 🪙: \(scannedTotalAmount ?? -1)")
         if self.scannedTotalAmount != nil {
             addExpenseEquilibratingOthers()
         }
@@ -37,7 +37,7 @@ class ExpensesSheetViewModel: ObservableObject {
     
     private func addExpenseEquilibratingOthers() {
         guard !self.expensesForSave.isEmpty else {
-            print("expenses empty - no need Equilibrating")
+            NSLog("expenses empty - no need Equilibrating")
             return
         }
         
@@ -60,7 +60,7 @@ class ExpensesSheetViewModel: ObservableObject {
             
             // Add the new expense to the expenses array
             expensesForSave.append(balancingExpense)
-            print("Added balancing expense: \(balancingExpense)")
+            NSLog("Added balancing expense: \(balancingExpense)")
         }
         
         // Sort expenses to keep "Check Adjustment" last

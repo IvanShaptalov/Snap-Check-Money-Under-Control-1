@@ -128,7 +128,7 @@ struct PaywallView: View {
                     self.subscriptions = allSubscriptions
                     self.selectedPackage = subscriptions.first?.package
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    NSLog(error.localizedDescription)
                     errorMessage = ErrorWrapper(message:"Failed to load subscriptions")
                 }
             }
@@ -157,7 +157,7 @@ struct PaywallView: View {
                 case .Success:
                     showPurchaseSuccess = true
                 case .PurchaseCancelled:
-                    print("Puchase was cancelled")
+                    NSLog("Puchase was cancelled")
                     
                     AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
                 case .PurchaseNotAllowedError:
@@ -169,7 +169,7 @@ struct PaywallView: View {
                     AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
                     
                 default:
-                    print("defaull : all ok")
+                    NSLog("defaull : all ok")
                 }
             }
         }

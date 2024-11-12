@@ -59,22 +59,22 @@ class OnboardingViewModel: ObservableObject {
     ]
 
     func next() {
-        print("next index: \(currentIndex)")
+        NSLog("next index: \(currentIndex)")
         analyze()
         if currentIndex < screens.count - 1 {
             if currentIndex + 1 == respectIndex && !MonetizationConfig.isPremiumAccount {
-                print("next index: \(currentIndex)")
+                NSLog("next index: \(currentIndex)")
                 currentIndex += 1
                 return
             }
             // skip discount + respect
             if currentIndex + 1 == respectIndex && MonetizationConfig.isPremiumAccount {
                 currentIndex = journeyIndex
-                print("to journey index: \(currentIndex)")
+                NSLog("to journey index: \(currentIndex)")
                 
                 return
             }
-            print("plus 1: \(currentIndex)")
+            NSLog("plus 1: \(currentIndex)")
             currentIndex += 1
         }
     }

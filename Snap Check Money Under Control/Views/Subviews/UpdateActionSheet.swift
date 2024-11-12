@@ -25,7 +25,7 @@ struct UpdateActionSheet: View {
     private func onCancelAction() {
         updateChecker.isUpdateAvailable = false
             // Вставьте здесь код, который должен выполняться при отмене
-            print("Update was canceled")
+            NSLog("Update was canceled")
             // Можно добавить другие действия, такие как изменение состояния
     }
     

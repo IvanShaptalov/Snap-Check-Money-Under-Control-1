@@ -10,7 +10,7 @@ struct OnboardingScreen: View {
         didSet {
             AnalyticsManager.shared.logEvent(eventType: .currencyChanged)
             AppConfig.updateMainCurrency(to: selectedCurrency)
-            print("Selected currency changed to: \(selectedCurrency.rawValue)") // Debugging print
+            NSLog("Selected currency changed to: \(selectedCurrency.rawValue)") // Debugging NSLog
         }
     }
     
@@ -52,7 +52,7 @@ struct OnboardingScreen: View {
                 }
                 .pickerStyle(.wheel)
                 .onChange(of: selectedCurrency) { _, newValue in
-                    print("Picker selection changed to: \(newValue.description)")
+                    NSLog("Picker selection changed to: \(newValue.description)")
                     selectedCurrency = newValue
                 }
             }
@@ -140,11 +140,11 @@ struct OnboardingView: View {
                             (showDiscountButton && viewModel.currentIndex == viewModel.discountIndex)  {
                             Button(action: {
                                 if showDiscountButton == false && MonetizationConfig.isPremiumAccount {
-                                    print("clicked")
+                                    NSLog("clicked")
                                     viewModel.next()
                                 } else {
                                     withAnimation {
-                                        print("clicked")
+                                        NSLog("clicked")
                                         viewModel.next()
                                     }
                                 }
