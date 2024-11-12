@@ -14,6 +14,8 @@ struct OnboardingScreen: View {
         }
     }
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         VStack(spacing: 20) {
             Spacer().frame(height: UIScreen.main.bounds.height * 0.05)
@@ -24,6 +26,7 @@ struct OnboardingScreen: View {
                 .scaledToFit()
                 .frame(height: 300)
                 .clipShape(.buttonBorder)
+                .opacity(colorScheme == .dark ? 0.7 : 1) // Базовая прозрачность
             
             Text(title)
                 .font(.title)
@@ -73,6 +76,7 @@ struct OnboardingView: View {
             ForEach(0..<viewModel.screens.count, id: \.self) { index in
                 viewModel.screens[index]
                     .tag(index)
+                    .contentShape(Rectangle()).gesture(DragGesture())
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -94,8 +98,10 @@ struct OnboardingView: View {
                             
                         } else {
                             Button {
-                                UserOnboarder.setWelcomeOnboarded()
-                                self.isOnboardingCompleted = true
+                                withAnimation {
+                                    self.isOnboardingCompleted = true
+                                    UserOnboarder.setWelcomeOnboarded()
+                                }
                             } label: {
                                 Text("Start")
                                     .bold()
