@@ -68,9 +68,20 @@ struct HomeScreen: View {
             expenseSheetFromJson.onDisappear {
                 NSLog("json view sheet dissapeared")
                 cleanResourses()
-                if showInterstitialAds {
-                    intAdsVm.showAd()
+                let rand = Int.random(in: 0...10)
+                if rand == 7 || rand == 3 {
+                    NSLog("review 🤌")
+                    ReviewService.requestReview()
+                } else {
+                    if showInterstitialAds {
+                        NSLog("ads 🤮")
+                        intAdsVm.showAd()
+                    } else {
+                        NSLog("review 🤌")
+                        ReviewService.requestReview()
+                    }
                 }
+                
             }
             .onAppear{
                 loadExpenses()
