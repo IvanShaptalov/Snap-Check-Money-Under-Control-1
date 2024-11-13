@@ -139,7 +139,7 @@ struct OnboardingView: View {
                         if (showButton && viewModel.currentIndex == viewModel.paywallIndex) ||
                             (showDiscountButton && viewModel.currentIndex == viewModel.discountIndex)  {
                             Button(action: {
-                                if showDiscountButton == false && MonetizationConfig.isPremiumAccount {
+                                if viewModel.currentIndex == viewModel.paywallIndex && MonetizationConfig.isPremiumAccount {
                                     NSLog("clicked")
                                     viewModel.next()
                                 } else {
