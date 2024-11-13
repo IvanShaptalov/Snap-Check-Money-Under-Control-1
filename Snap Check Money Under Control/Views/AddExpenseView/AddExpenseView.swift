@@ -48,7 +48,7 @@ struct AddExpenseView: View {
                 }
             }
             Picker("Category", selection: $viewModel.category) {
-                ForEach(AppConfig.basicCategories, id: \.self) { category in
+                ForEach(AppConfig.getBasicCategories(), id: \.self) { category in
                     Text(category).tag(category)
                 }
             }

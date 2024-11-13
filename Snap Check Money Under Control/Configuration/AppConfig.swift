@@ -4,12 +4,12 @@ import FirebaseRemoteConfigInternal
 
 class AppConfig {
     
-    static var basicCategories: [String] {
-        get {
+    static func getBasicCategories() -> [String] {
             // Получаем сохранённые категории из UserDefaults
             if let data = UserDefaults.standard.data(forKey: AppStorageKeys.categoriesKey) {
                 let decoder = JSONDecoder()
                 if let categories = try? decoder.decode([String].self, from: data) {
+                    NSLog(" categories: \(categories)")
                     return categories
                 }
             }
@@ -25,13 +25,13 @@ class AppConfig {
                 "Clothes",
                 "Other"
             ]
-        }
-        set {
-            // Сохраняем новые категории в UserDefaults
-            let encoder = JSONEncoder()
-            if let data = try? encoder.encode(newValue) {
-                UserDefaults.standard.set(data, forKey: AppStorageKeys.categoriesKey)
-            }
+    }
+    
+    static func setBasicCategories(_ newValue: [String]) {
+        // Сохраняем новые категории в UserDefaults
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(newValue) {
+            UserDefaults.standard.set(data, forKey: AppStorageKeys.categoriesKey)
         }
     }
     

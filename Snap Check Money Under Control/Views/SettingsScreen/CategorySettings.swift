@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ExpenseCategorySettingsView: View {
-    @State private var categories = AppConfig.basicCategories
+    @State private var categories = AppConfig.getBasicCategories()
     @State private var newCategory: String = ""
     @State private var isShowingAddCategorySheet = false
 
@@ -48,7 +48,8 @@ struct ExpenseCategorySettingsView: View {
     }
 
     private func updateAppConfiguration() {
-        AppConfig.basicCategories = categories
+        AppConfig.setBasicCategories(categories)
+        print("new categories 🍪 \(AppConfig.getBasicCategories())")
     }
 }
 
@@ -88,6 +89,6 @@ struct AddCategoryView: View {
     }
 
     private func updateAppConfiguration() {
-        AppConfig.basicCategories = categories
+        AppConfig.setBasicCategories(categories)
     }
 }

@@ -163,19 +163,11 @@ struct OnboardingView: View {
                     .frame(maxWidth: .infinity, alignment: .topTrailing) // выравнивание по правому верхнему углу
                     .animation(.easeInOut(duration: 0.3), value: viewModel.currentIndex)
                     .onAppear {
-                        if showButton {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                                
-                                withAnimation {
-                                    showDiscountButton = true
-                                }
-                            }
-                        }
-                        
                         // Задержка в 3 секунды перед появлением кнопки
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation {
                                 showButton = true
+                                showDiscountButton = true
                             }
                         }
                         
