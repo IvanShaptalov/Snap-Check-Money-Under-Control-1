@@ -6,7 +6,7 @@ class AddExpenseViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var date: Date = Date()
     @Published var amount: String = ""
-    @Published var currency: Currency = .usd
+    @Published var currency: Currency = AppConfig.mainCurrency
     @Published var category: String = "Other"
     @Published var temporaryImage: UIImage?
     @Published var showAlert = false
