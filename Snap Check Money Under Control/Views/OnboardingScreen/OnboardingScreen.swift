@@ -50,7 +50,7 @@ struct OnboardingScreen: View {
                         Text(currency.description)
                     }
                 }
-                .pickerStyle(.wheel)
+                .pickerStyle(.menu)
                 .onChange(of: selectedCurrency) { _, newValue in
                     NSLog("Picker selection changed to: \(newValue.description)")
                     selectedCurrency = newValue

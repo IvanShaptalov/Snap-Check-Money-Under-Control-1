@@ -14,10 +14,10 @@ enum ExportSortType: String, CaseIterable {
     case amount = "Amount"
 }
 
-enum ExportFormat {
-    case pdf,
-    numbers,
-    csv
+enum ExportFormat:String, CaseIterable {
+    case pdf = "PDF"
+    case numbers = "Numbers"
+    case csv = "CSV"
 }
 
 

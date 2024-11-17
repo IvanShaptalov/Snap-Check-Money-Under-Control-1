@@ -19,14 +19,22 @@ struct ExportScreen: View {
                     TextField("Report Name", text: $viewModel.reportName)
                         .textFieldStyle(DefaultTextFieldStyle())
                 }
-                
-                Section(header: Text("Sort Options")) {
-                    Picker("Sort Type", selection: $viewModel.selectedSortType) {
+
+                Section(header: Text("Properties")) {
+                    
+                    Picker("Format", selection: $viewModel.selectedExportFormat) {
+                        ForEach(ExportFormat.allCases, id: \.self) { sortType in
+                            Text(sortType.rawValue)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    
+                    Picker("Sort By", selection: $viewModel.selectedSortType) {
                         ForEach(ExportSortType.allCases, id: \.self) { sortType in
                             Text(sortType.rawValue)
                         }
                     }
-                    .pickerStyle(SegmentedPickerStyle())
+                    .pickerStyle(MenuPickerStyle())
                 }
                 
                 Section(header: Text("Date Range")) {
@@ -92,7 +100,7 @@ struct DateSelectionSheet: View {
                 
                 DatePicker("Start Date", selection: $viewModel.startDate,in: ...Date(), displayedComponents: .date)
                     .padding()
-                DatePicker("End Date", selection: $viewModel.endDate,in: ...Date(), displayedComponents: .date)
+                DatePicker("End Date", selection: $viewModel.endDate, displayedComponents: .date)
                     .padding()
                 
                 Button("Done") {
