@@ -4,6 +4,7 @@ import SwiftUI
 
 struct FloatingActionButton: View {
     @Binding var showActionSheet: Bool
+    var imageName: String = "plus"
     
     var body: some View {
         Button(action: {
@@ -11,7 +12,7 @@ struct FloatingActionButton: View {
                 showActionSheet = true // Trigger action sheet
             }
         }) {
-            Image(systemName: "plus") // Use a "+" icon
+            Image(systemName: imageName) // Use a "+" icon
                 .font(.title)
                 .padding()
                 .background(Color.blue)
