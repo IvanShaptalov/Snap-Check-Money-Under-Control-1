@@ -1,19 +1,19 @@
 import SwiftUI
 
 
+import SwiftUI
+
 struct ExportScreen: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel = ExportViewModel()
     @State private var fileURL: FileURL? = nil
     @State private var alertError: ErrorWrapper?
 
-    
     struct FileURL: Identifiable {
         let id = UUID()
         let url: URL
     }
-    
-    
+
     private var floatingButton: some View {
         GeometryReader { geometry in
             FloatingActionButton(showActionSheet: $viewModel.showActionSheet, imageName: "square.and.arrow.up")
@@ -21,7 +21,7 @@ struct ExportScreen: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
     var body: some View {
         NavigationView {
             Form {
@@ -34,14 +34,13 @@ struct ExportScreen: View {
                         }
                 }
                 Section(header: Text("Properties")) {
-                    
                     Picker("Format", selection: $viewModel.selectedExportFormat) {
                         ForEach(ExportFormat.allCases, id: \.self) { sortType in
                             Text(sortType.rawValue)
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
-                    
+
                     Picker("Sort By", selection: $viewModel.selectedSortType) {
                         ForEach(ExportSortType.allCases, id: \.self) { sortType in
                             Text(sortType.rawValue)
@@ -49,7 +48,7 @@ struct ExportScreen: View {
                     }
                     .pickerStyle(MenuPickerStyle())
                 }
-                
+
                 Section(header: Text("Date Range")) {
                     HStack {
                         Text("Start Date")
@@ -57,19 +56,19 @@ struct ExportScreen: View {
                         Text(DateFormatter.localizedString(from: viewModel.startDate, dateStyle: .short, timeStyle: .none))
                             .foregroundColor(.gray)
                     }
-                    
+
                     HStack {
                         Text("End Date")
                         Spacer()
                         Text(DateFormatter.localizedString(from: viewModel.endDate, dateStyle: .short, timeStyle: .none))
                             .foregroundColor(.gray)
                     }
-                    
+
                     Button("Select Date Range") {
                         viewModel.showDateSelectionSheet = true
                     }
                 }
-                
+
                 Section(header: Text("Categories")) {
                     Button("Select Categories") {
                         viewModel.showCategorySelectionSheet = true
@@ -85,7 +84,8 @@ struct ExportScreen: View {
             }
             .sheet(isPresented: $viewModel.showActionSheet) {
                 VStack {
-                    if let file = fileURL {
+                    if let file = fileURL{
+                        // Безопасно извлекаем и показываем ShareLink, если fileURL не nil
                         ShareLink(item: file.url) {
                             VStack {
                                 Spacer()
@@ -113,17 +113,17 @@ struct ExportScreen: View {
                             includedCategories: viewModel.categories
                         )
                     )
-                    
+
                     do {
                         // Получаем URL файла
                         guard let fileURL = try manager.export(context: modelContext) else {
                             alertError = .init(message: "File not found")
                             return
                         }
-                        
+
                         // Сохраняем файл URL в состоянии
                         self.fileURL = .init(url: fileURL)
-                        print(self.fileURL ?? "иди нахуй")
+                        print(self.fileURL?.url ?? "File URL not found")
                     } catch {
                         alertError = .init(message: "Export failed: \(error.localizedDescription)")
                         print("Export failed: \(error)")
