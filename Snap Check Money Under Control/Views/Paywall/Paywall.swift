@@ -195,7 +195,7 @@ struct PaywallView: View {
 struct PremiumFeaturesView: View {
     var body: some View {
         VStack(spacing: 20) {
-            FeatureItemView(iconName: "arrow.down.doc", title: "Unlimited Checks Export", description: "Export checks to Excel, text, Numbers, and PDF.")
+            FeatureItemView(iconName: "arrow.down.doc", title: "Unlimited Checks Export", description: "Export checks to Excel,Numbers as Items and Categories")
             
             FeatureItemView(iconName: "nosign", title: "No Ads", description: "Enjoy a seamless experience without interruptions or ads.")
             

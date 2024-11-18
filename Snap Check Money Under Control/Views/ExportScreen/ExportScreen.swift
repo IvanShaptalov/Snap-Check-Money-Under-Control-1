@@ -8,6 +8,7 @@ struct ExportScreen: View {
     @StateObject private var viewModel = ExportViewModel()
     @State private var fileURL: FileURL? = nil
     @State private var alertError: ErrorWrapper?
+    @State private var showPayWall = false
 
     struct FileURL: Identifiable {
         let id = UUID()
@@ -85,6 +86,9 @@ struct ExportScreen: View {
                             .fontWeight(.bold)
                             .foregroundColor(.blue)
                             .padding(.top, 20)
+                            .onAppear {
+                                AnalyticsManager.shared.logEvent(eventType: .startExport)
+                            }
                         
                         VStack(alignment: .leading, spacing: 12) {
                             // Название отчета
@@ -125,9 +129,24 @@ struct ExportScreen: View {
                     Spacer()
                     if let file = fileURL{
                         // Безопасно извлекаем и показываем ShareLink, если fileURL не nil
-                        ShareLink(item: file.url) {
-                            VStack {
-                                Spacer()
+                        if MonetizationConfig.isPremiumAccount {
+                            ShareLink(item: file.url) {
+                                
+                                    Text("Share Report")
+                                        .bold()
+                                        .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
+                                        .padding()
+                                        .background(Color.blue)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(10)
+                                
+                            }.onAppear {
+                                AnalyticsManager.shared.logEvent(eventType: .exportExpenses)
+                            }
+                        } else {
+                            Button {
+                                showPayWall = true
+                            } label: {
                                 Text("Share Report")
                                     .bold()
                                     .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
@@ -137,6 +156,7 @@ struct ExportScreen: View {
                                     .cornerRadius(10)
                             }
                         }
+                        
                     } else {
                         ProgressView()
                     }
@@ -167,6 +187,9 @@ struct ExportScreen: View {
                         print("Export failed: \(error)")
                     }
                 }
+                .sheet(isPresented: $showPayWall) {
+                    PaywallView(subType: "default")
+                }
             }
         }
         .overlay(floatingButton
@@ -175,6 +198,7 @@ struct ExportScreen: View {
             NSLog("alert")
             return Alert(title: Text("Error"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
         }
+        
     }
 }
 

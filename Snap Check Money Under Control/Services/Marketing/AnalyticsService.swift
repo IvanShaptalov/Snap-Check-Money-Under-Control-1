@@ -48,6 +48,9 @@ enum EventType: String {
     proPageClosed = "pro_page_closed", // +
     proPurchase = "pro_purchase", // +
     proPurchaseRestored = "pro_purchase_restored", // +
+    
+    exportExpenses = "exportExpensesSuccess",
+    startExport = "startExport",
 
     
     
