@@ -77,119 +77,7 @@ struct ExportScreen: View {
                 CategorySelectionSheet(viewModel: viewModel)
             }
             .sheet(isPresented: $viewModel.showActionSheet) {
-                VStack {
-                    // Добавление сводки с текущими настройками отчета
-                    VStack(alignment: .leading, spacing: 16) {
-                        // Заголовок сводки
-                        Text("Report Summary")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.blue)
-                            .padding(.top, 20)
-                            .onAppear {
-                                AnalyticsManager.shared.logEvent(eventType: .startExport)
-                            }
-                        
-                        VStack(alignment: .leading, spacing: 12) {
-                            // Название отчета
-                            HStack {
-                                Image(systemName: "doc.text")
-                                    .foregroundColor(.blue)
-                                Text("Report Name: \(viewModel.reportName.isEmpty ? "No name provided" : viewModel.reportName)")
-                                    .font(.title3)
-                                    .lineLimit(1)
-                                    .foregroundColor(.primary)
-                            }
-                            
-                            // Тип сортировки
-                            HStack {
-                                Image(systemName: "arrow.up.arrow.down.circle")
-                                    .foregroundColor(.blue)
-                                Text("Sort By: \(viewModel.selectedSortType.rawValue)")
-                                    .font(.title3)
-                                    .lineLimit(1)
-                                    .foregroundColor(.primary)
-                            }
-                            
-                            // Категории
-                            HStack {
-                                Image(systemName: "tag")
-                                    .foregroundColor(.blue)
-                                Text("Categories: \(viewModel.selectedCategories.isEmpty ? "None" : viewModel.selectedCategories.joined(separator: ", "))")
-                                    .font(.title3)
-                                    .lineLimit(10)
-                                    .foregroundColor(.primary)
-                            }
-                        }
-                        .padding()
-                        .shadow(radius: 5)
-                        .padding([.horizontal, .bottom], 10)
-                    }
-                    .padding([.top, .horizontal])
-                    Spacer()
-                    if let file = fileURL{
-                        // Безопасно извлекаем и показываем ShareLink, если fileURL не nil
-                        if MonetizationConfig.isPremiumAccount {
-                            ShareLink(item: file.url) {
-                                
-                                    Text("Share Report")
-                                        .bold()
-                                        .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
-                                        .padding()
-                                        .background(Color.blue)
-                                        .foregroundColor(.white)
-                                        .cornerRadius(10)
-                                
-                            }.onAppear {
-                                AnalyticsManager.shared.logEvent(eventType: .exportExpenses)
-                            }
-                        } else {
-                            Button {
-                                showPayWall = true
-                            } label: {
-                                Text("Share Report")
-                                    .bold()
-                                    .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
-                                    .padding()
-                                    .background(Color.blue)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
-                            }
-                        }
-                        
-                    } else {
-                        ProgressView()
-                    }
-                }
-                .onAppear {
-                    let manager = ExpenseExportManager(
-                        expenseExport: ExpenseExport(
-                            reportName: viewModel.reportName,
-                            reportStartDate: viewModel.startDate,
-                            reportFinishDate: viewModel.endDate,
-                            sortType: viewModel.selectedSortType,
-                            includedCategories: viewModel.selectedCategories
-                        )
-                    )
-
-                    do {
-                        // Получаем URL файла
-                        guard let fileURL = try manager.export(context: modelContext) else {
-                            alertError = .init(message: "File not found")
-                            return
-                        }
-
-                        // Сохраняем файл URL в состоянии
-                        self.fileURL = .init(url: fileURL)
-                        print(self.fileURL?.url ?? "File URL not found")
-                    } catch {
-                        alertError = .init(message: "Export failed: \(error.localizedDescription)")
-                        print("Export failed: \(error)")
-                    }
-                }
-                .sheet(isPresented: $showPayWall) {
-                    PaywallView(subType: "default")
-                }
+                exportOrPaywall()
             }
         }
         .overlay(floatingButton
@@ -199,6 +87,122 @@ struct ExportScreen: View {
             return Alert(title: Text("Error"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
         }
         
+    }
+    
+    private func exportOrPaywall() -> some View {
+        VStack {
+            // Добавление сводки с текущими настройками отчета
+            VStack(alignment: .leading, spacing: 16) {
+                // Заголовок сводки
+                Text("Report Summary")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.blue)
+                    .padding(.top, 20)
+                    .onAppear {
+                        AnalyticsManager.shared.logEvent(eventType: .startExport)
+                    }
+                
+                VStack(alignment: .leading, spacing: 12) {
+                    // Название отчета
+                    HStack {
+                        Image(systemName: "doc.text")
+                            .foregroundColor(.blue)
+                        Text("Report Name: \(viewModel.reportName.isEmpty ? "No name provided" : viewModel.reportName)")
+                            .font(.title3)
+                            .lineLimit(1)
+                            .foregroundColor(.primary)
+                    }
+                    
+                    // Тип сортировки
+                    HStack {
+                        Image(systemName: "arrow.up.arrow.down.circle")
+                            .foregroundColor(.blue)
+                        Text("Sort By: \(viewModel.selectedSortType.rawValue)")
+                            .font(.title3)
+                            .lineLimit(1)
+                            .foregroundColor(.primary)
+                    }
+                    
+                    // Категории
+                    HStack {
+                        Image(systemName: "tag")
+                            .foregroundColor(.blue)
+                        Text("Categories: \(viewModel.selectedCategories.isEmpty ? "None" : viewModel.selectedCategories.joined(separator: ", "))")
+                            .font(.title3)
+                            .lineLimit(10)
+                            .foregroundColor(.primary)
+                    }
+                }
+                .padding()
+                .shadow(radius: 5)
+                .padding([.horizontal, .bottom], 10)
+            }
+            .padding([.top, .horizontal])
+            Spacer()
+            if let file = fileURL{
+                // Безопасно извлекаем и показываем ShareLink, если fileURL не nil
+                if MonetizationConfig.isPremiumAccount {
+                    ShareLink(item: file.url) {
+                        
+                            Text("Share Report")
+                                .bold()
+                                .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                        
+                    }.onAppear {
+                        AnalyticsManager.shared.logEvent(eventType: .exportExpenses)
+                    }
+                } else {
+                    Button {
+                        showPayWall = true
+                    } label: {
+                        Text("Share Report")
+                            .bold()
+                            .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                }
+                
+            } else {
+                ProgressView()
+            }
+        }
+        .onAppear {
+            let manager = ExpenseExportManager(
+                expenseExport: ExpenseExport(
+                    reportName: viewModel.reportName,
+                    reportStartDate: viewModel.startDate,
+                    reportFinishDate: viewModel.endDate,
+                    sortType: viewModel.selectedSortType,
+                    includedCategories: viewModel.selectedCategories
+                )
+            )
+
+            do {
+                // Получаем URL файла
+                guard let fileURL = try manager.export(context: modelContext) else {
+                    alertError = .init(message: "File not found")
+                    return
+                }
+
+                // Сохраняем файл URL в состоянии
+                self.fileURL = .init(url: fileURL)
+                print(self.fileURL?.url ?? "File URL not found")
+            } catch {
+                alertError = .init(message: "Export failed: \(error.localizedDescription)")
+                print("Export failed: \(error)")
+            }
+        }
+        .sheet(isPresented: $showPayWall) {
+            PaywallView(subType: "default")
+        }
     }
 }
 
