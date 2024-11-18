@@ -74,9 +74,10 @@ struct ExportScreen: View {
                 Text("Export")
             }
             .overlay(floatingButton)
-            .onTapGesture {
-                KeyboardHider.hideKeyboard()
-            }
+            
+        }
+        .onTapGesture {
+            KeyboardHider.hideKeyboard()
         }
     }
 }
