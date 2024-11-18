@@ -18,8 +18,11 @@ struct ExportScreen: View {
                 Section(header: Text("Report Details")) {
                     TextField("Report Name", text: $viewModel.reportName)
                         .textFieldStyle(DefaultTextFieldStyle())
+                        .submitLabel(.done)
+                        .onSubmit {
+                            hideKeyboard()
+                        }
                 }
-                
                 Section(header: Text("Properties")) {
                     
                     Picker("Format", selection: $viewModel.selectedExportFormat) {
@@ -74,11 +77,10 @@ struct ExportScreen: View {
                 Text("Export")
             }
             .overlay(floatingButton)
+
             
         }
-        .onTapGesture {
-            KeyboardHider.hideKeyboard()
-        }
+        
     }
 }
 
@@ -146,3 +148,4 @@ struct CategorySelectionSheet: View {
         }
     }
 }
+

@@ -14,14 +14,14 @@ struct AddExpenseView: View {
             .navigationBarItems(
                 leading: Button("Cancel") {
                     AnalyticsManager.shared.logEvent(eventType: .checkEditedCancelled)
-
+                    
                     presentationMode.wrappedValue.dismiss()
                 }
                     .frame(width: 44, height: 44), // Увеличьте размер кнопки,
                 trailing: Button("Save") {
                     viewModel.saveExpense()
                     AnalyticsManager.shared.logEvent(eventType: .checkEditedSaved)
-
+                    
                 }
                     .frame(width: 44, height: 44) // Увеличьте размер кнопки
             )
@@ -35,17 +35,28 @@ struct AddExpenseView: View {
                 AnalyticsManager.shared.logEvent(eventType: .checkEdited)
             }
             
-        }
-        .onTapGesture {
-            KeyboardHider.hideKeyboard()
+            
         }
     }
     
     private var expenseDetailsSection: some View {
         Section(header: Text("Expense Details")) {
             TextField("Title", text: $viewModel.title)
+                .submitLabel(.done)
+                .onSubmit {
+                    hideKeyboard()
+                }
             TextField("Amount", text: $viewModel.amount)
                 .keyboardType(.decimalPad)
+                .submitLabel(.done)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button("Done") {
+                            hideKeyboard()
+                        }
+                    }
+                }
             Picker("Currency", selection: $viewModel.currency) {
                 ForEach(Currency.allCases, id: \.self) { currency in
                     Text(currency.description).tag(currency)

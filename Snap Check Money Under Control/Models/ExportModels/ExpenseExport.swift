@@ -9,9 +9,8 @@ import Foundation
 
 // Замените ExportSortType и другие типы на ваши собственные
 enum ExportSortType: String, CaseIterable {
-    case date = "Date"
     case category = "Category"
-    case amount = "Amount"
+    case items = "Items"
 }
 
 enum ExportFormat:String, CaseIterable {
@@ -64,13 +63,4 @@ struct ExpenseExport {
         self.exportFormat = exportFormat
         self.includedCategories = includedCategories
     }
-}
-
-
-protocol ExporterProtocol {
-    var expenseExport: ExpenseExport {get}
-    
-    func export()
-    
-    func fetchExpensesFromDatabase()
 }

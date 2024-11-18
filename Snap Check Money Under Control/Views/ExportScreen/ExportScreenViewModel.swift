@@ -7,7 +7,7 @@ class ExportViewModel: ObservableObject {
     @Published var showDateSelectionSheet = false
     @Published var showCategorySelectionSheet = false
     @Published var reportName: String = ""
-    @Published var selectedSortType: ExportSortType = .date
+    @Published var selectedSortType: ExportSortType = .items
     @Published var selectedCategories: [String] = AppConfig.getBasicCategories()
     @Published var selectedExportFormat: ExportFormat = .numbers
     @Published var startDate: Date = Date()
