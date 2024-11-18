@@ -8,129 +8,170 @@ import UIKit
 // MARK: - JsonToNumbersManager
 class JsonToNumbersManager {
     
-    func convertJsonToNumbers(json: [String: Any], sortType: ExportSortType) -> Data? {
-        // Проверка, что JSON имеет правильную структуру для конвертации
-        print(json)
-        guard let months = json["months"] as? [String: Any] else {
-            print("Invalid JSON structure.")
-            return nil
+    func convertExpensesToNumbers(expenses: [ExpenseData], expenseExport: ExpenseExport) -> Data? {
+        var data: Data?
+        let includedCategories = expenseExport.includedCategories
+        switch expenseExport.sortType {
+        
+        case .category:
+            data = convertAsCategories(expenses, includedCategories: includedCategories)
+        case .items:
+            data = convertAsItems(expenses, includedCategories: includedCategories)
         }
         
-        // Создаем заголовки CSV
-        let headers = ["Month", "Year", "Category", "Item ID", "Date", "Item Name", "Expense Amount", "Currency"]
-        
-        // Создаем строку с заголовками
-        var csvString = headers.joined(separator: ",") + "\n"
-        
-        var totalExpenseAllMonths: Double = 0.0
-        
-        // Перебираем каждый месяц
-        for (month, monthData) in months {
-            guard let monthDict = monthData as? [String: Any],
-                  let categories = monthDict["categories"] as? [[String: Any]] else {
-                continue
-            }
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMMM yyyy"
-            let monthDate = dateFormatter.date(from: month)
-            let monthYearString = dateFormatter.string(from: monthDate ?? Date())
-            
-            var totalExpenseForMonth: Double = 0.0 // Для каждого месяца
+        return data
+    }
+    // MARK: - AS CATEGORIES
+    // MARK: - AS CATEGORIES
+    func convertAsCategories(_ expenses: [ExpenseData], includedCategories: [String]) -> Data? {
+        // Словарь для хранения данных по месяцам и категориям
+        var monthlyData: [String: [String: Double]] = [:] // Ключ - месяц, Значение - категории и суммы
 
-            // Перебираем все категории в месяце
-            for category in categories {
-                guard let categoryName = category["category_name"] as? String,
-                      let items = category["items"] as? [[String: Any]] else {
-                    continue
-                }
-                
-                var categoryTotalExpense: Double = 0.0 // Для каждой категории
-                
-                // Сортировка по элементам (items)
-                if sortType == .items {
-                    for item in items {
-                        guard let itemId = item["item_id"] as? String,
-                              let itemDate = item["date"] as? String,
-                              let itemName = item["item_name"] as? String,
-                              let expenseAmount = item["expense_amount"] as? Double,
-                              let currency = item["currency"] as? String else {
-                            continue
-                        }
-                        
-                        // Строка для каждого элемента
-                        let row = [
-                            monthYearString,  // Месяц и год
-                            categoryName,     // Категория
-                            itemId,           // ID элемента
-                            itemDate,         // Дата
-                            itemName,         // Название элемента
-                            "\(expenseAmount)",// Сумма
-                            currency          // Валюта
-                        ]
-                        
-                        // Добавляем строку в CSV
-                        csvString += row.joined(separator: ",") + "\n"
-                        
-                        // Добавляем сумму для категории
-                        categoryTotalExpense += expenseAmount
-                        totalExpenseForMonth += expenseAmount
-                        totalExpenseAllMonths += expenseAmount
-                    }
-                }
-                
-                // Сортировка по категориям (categories)
-                if sortType == .category {
-                    // Для категории total записываем только сумму всех элементов
-                    let categoryTotalRow = [
-                        monthYearString, // Месяц и год
-                        categoryName,    // Категория
-                        "total",         // Тотал
-                        "",              // ID элемента
-                        "",              // Дата
-                        "",              // Название элемента
-                        "\(categoryTotalExpense)", // Сумма
-                        ""               // Валюта
-                    ]
-                    
-                    // Добавляем строку для total категории
-                    csvString += categoryTotalRow.joined(separator: ",") + "\n"
-                    
-                    // Добавляем сумму категории к общей сумме месяца
-                    totalExpenseForMonth += categoryTotalExpense
-                }
+        // Перебираем все расходы и группируем по месяцам и категориям
+        for expense in expenses {
+            // Получаем месяц в формате "YYYY-MM"
+            let month = getMonthString(from: expense.date)
+
+            // Инициализация словаря для месяца, если его еще нет
+            if monthlyData[month] == nil {
+                monthlyData[month] = [:]
             }
-            
-            // Добавляем строку для общего итога по месяцу
-            let monthTotalRow = [
-                monthYearString,  // Месяц и год
-                "Total",          // Тотал
-                "",               // Категория
-                "",               // ID элемента
-                "",               // Дата
-                "",               // Название элемента
-                "\(totalExpenseForMonth)", // Сумма
-                ""                // Валюта
-            ]
-            
-            csvString += monthTotalRow.joined(separator: ",") + "\n"
+
+            // Если категория включена, добавляем сумму
+            if includedCategories.contains(expense.category) {
+                monthlyData[month]?[expense.category, default: 0] += expense.amount
+            }
+        }
+
+        // Создаем заголовок с месяцем и категориями
+        let header: [String] = ["Month"] + includedCategories + ["Total"]
+
+        // Массив строк для таблицы, первая строка — это заголовки
+        var rows: [[String: Any]] = [header.reduce(into: [:]) { $0[$1] = nil }]
+
+        // Сортируем месяцы в порядке убывания (новые сверху)
+        let sortedMonths = monthlyData.keys.sorted(by: >)
+
+        // Перебираем данные по месяцам в отсортированном порядке
+        for month in sortedMonths {
+            var row: [String: Any] = ["Month": month]
+            var total: Double = 0
+
+            // Заполняем строки для каждой категории
+            for category in includedCategories {
+                let amount = monthlyData[month]?[category] ?? 0
+                row[category] = amount
+                total += amount
+            }
+
+            // Добавляем сумму по всем категориям в последнюю колонку
+            row["Total"] = total
+
+            rows.append(row)
+        }
+
+        // Преобразуем строки в CSV или другой формат
+        return convertRowsToData(header: header, rows: rows)
+    }
+    
+    // MARK: - AS ITEMS
+    // MARK: - AS ITEMS
+    private func convertAsItems(_ expenses: [ExpenseData], includedCategories: [String]) -> Data? {
+        // Словарь для хранения данных по месяцам и расходам
+        var monthlyData: [String: [ExpenseData]] = [:]
+
+        // Группируем все расходы по месяцам, фильтруя по включенным категориям
+        for expense in expenses {
+            // Проверяем, включена ли категория
+            if includedCategories.contains(expense.category) {
+                // Получаем месяц в формате "MMMM"
+                let month = getMonthString(from: expense.date)
+                monthlyData[month, default: []].append(expense)
+            }
+        }
+
+        // Создаем заголовок
+        let header: [String] = ["Month", "Date", "Item", "Item Price", "Total"]
+
+        // Массив строк для таблицы, первая строка — это заголовки
+        var rows: [[String: Any]] = [header.reduce(into: [:]) { $0[$1] = "" }]
+
+        // Перебираем данные по месяцам
+        for (month, expenses) in monthlyData {
+            var total: Double = 0
+
+            // Сортируем расходы по дате в порядке возрастания
+            let sortedExpenses = expenses.sorted { $0.date < $1.date }
+
+            // Добавляем строку с названием месяца и пустыми значениями для других столбцов
+            rows.append(["Month": month, "Date": " ", "Item": " ", "Item Price": " ", "Total": " "])
+
+            // Перебираем все расходы в этом месяце
+            for expense in sortedExpenses {
+                let itemDateString = getItemDateString(from: expense.date)
+                let dayOfWeek = getDayOfWeek(from: expense.date)
+
+                // Формируем строку даты и дня недели, заменяя запятые на пробелы (или любой другой символ)
+                let formattedDate = "\(itemDateString) \(dayOfWeek)".replacingOccurrences(of: ",", with: " ")
+
+                let itemRow: [String: Any] = [
+                    "Month": "".replacingOccurrences(of: ",", with: " "),
+                    "Date": formattedDate.replacingOccurrences(of: ",", with: " "), // Замененная строка
+                    "Item": expense.title.replacingOccurrences(of: ",", with: " "),
+                    "Item Price": String(format: "%.2f", expense.amount).replacingOccurrences(of: ",", with: " "),
+                    "Total": "".replacingOccurrences(of: ",", with: " ")
+                ]
+                rows.append(itemRow)
+                total += expense.amount
+            }
+
+            // Добавляем строку с итоговой суммой и пустыми значениями для других столбцов
+            rows.append(["Month": "", "Date": "-", "Item": "-", "Item Price": "-", "Total": String(format: "%.2f", total)])
+        }
+
+        // Преобразуем строки в CSV или другой формат
+        return convertRowsToData(header: header, rows: rows)
+    }
+
+    
+    // MARK: - HELPING METHODS
+
+    // Вспомогательная функция для получения дня недели
+    private func getDayOfWeek(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEE" // Краткий формат дня недели, например: "Tue", "Wed"
+        return formatter.string(from: date)
+    }
+
+    // Вспомогательная функция для получения дня месяца
+    private func getItemDateString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d" // Формат дня месяца: "10", "11", и т.д.
+        return formatter.string(from: date)
+    }
+
+    // Вспомогательная функция для получения месяца
+    private func getMonthString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM" // Формат месяца: "November"
+        return formatter.string(from: date)
+    }
+    
+
+    func convertRowsToData(header: [String], rows: [[String: Any]]) -> Data? {
+        var csvString = header.joined(separator: ",") + "\n"
+        
+        for row in rows {
+            let rowString = header.map { key in
+                if let value = row[key] as? Double {
+                    return String(format: "%.2f", value)
+                } else {
+                    return "\(row[key] ?? "")"
+                }
+            }.joined(separator: ",")
+            csvString.append(rowString + "\n")
         }
         
-        // Добавляем общий итог по всем месяцам в конце
-        let allMonthsTotalRow = [
-            "All months",     // Название для всех месяцев
-            "Total",          // Тотал
-            "",               // Категория
-            "",               // ID элемента
-            "",               // Дата
-            "",               // Название элемента
-            "\(totalExpenseAllMonths)", // Общая сумма
-            ""                // Валюта
-        ]
-        
-        csvString += allMonthsTotalRow.joined(separator: ",") + "\n"
-        
-        // Преобразуем строку CSV в Data
         return csvString.data(using: .utf8)
     }
     

@@ -148,7 +148,7 @@ struct ExportScreen: View {
                             reportStartDate: viewModel.startDate,
                             reportFinishDate: viewModel.endDate,
                             sortType: viewModel.selectedSortType,
-                            includedCategories: viewModel.categories
+                            includedCategories: viewModel.selectedCategories
                         )
                     )
 
