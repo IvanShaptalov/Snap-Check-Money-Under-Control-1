@@ -73,7 +73,7 @@ class ExpenseExportManager: ExporterProtocol {
 
                 print("Numbers file saved at: \(numbersURL)")
                 
-            case .csv:
+            case .excel:
                 let csvManager = JsonToExcelManager()
                 guard let csvData = csvManager.convertJsonToExcel(json: jsonExpenses) else {
                     throw ExportErrors.failedToConvertData

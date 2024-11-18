@@ -2,7 +2,17 @@ import SwiftUI
 
 
 struct ExportScreen: View {
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel = ExportViewModel()
+    @State private var fileURL: FileURL? = nil
+    @State private var alertError: ErrorWrapper?
+
+    
+    struct FileURL: Identifiable {
+        let id = UUID()
+        let url: URL
+    }
+    
     
     private var floatingButton: some View {
         GeometryReader { geometry in
@@ -74,15 +84,62 @@ struct ExportScreen: View {
                 CategorySelectionSheet(viewModel: viewModel)
             }
             .sheet(isPresented: $viewModel.showActionSheet) {
-                Text("Export")
+                VStack {
+                    if let file = fileURL {
+                        ShareLink(item: file.url) {
+                            VStack {
+                                Spacer()
+                                Text("Share Report")
+                                    .bold()
+                                    .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
+                                    .padding()
+                                    .background(Color.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                            }
+                        }
+                    } else {
+                        ProgressView()
+                    }
+                }
+                .onAppear {
+                    let manager = ExpenseExportManager(
+                        expenseExport: .init(
+                            reportName: viewModel.reportName,
+                            reportStartDate: viewModel.startDate,
+                            reportFinishDate: viewModel.endDate,
+                            sortType: viewModel.selectedSortType,
+                            exportFormat: viewModel.selectedExportFormat,
+                            includedCategories: viewModel.categories
+                        )
+                    )
+                    
+                    do {
+                        // Получаем URL файла
+                        guard let fileURL = try manager.export(context: modelContext) else {
+                            alertError = .init(message: "File not found")
+                            return
+                        }
+                        
+                        // Сохраняем файл URL в состоянии
+                        self.fileURL = .init(url: fileURL)
+                        print(self.fileURL ?? "иди нахуй")
+                    } catch {
+                        alertError = .init(message: "Export failed: \(error.localizedDescription)")
+                        print("Export failed: \(error)")
+                    }
+                }
             }
-            .overlay(floatingButton)
-
-            
         }
-        
+        .overlay(floatingButton
+            .opacity(0.9))
+        .alert(item: Binding<ErrorWrapper?>.combine($alertError)) { errorWrapper in
+            NSLog("alert")
+            return Alert(title: Text("Error"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
+        }
     }
 }
+
 
 // Sheet для выбора диапазона дат с пресетами
 struct DateSelectionSheet: View {

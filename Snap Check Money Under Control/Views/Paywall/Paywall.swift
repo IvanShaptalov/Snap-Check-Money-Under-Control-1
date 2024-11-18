@@ -69,7 +69,6 @@ struct PaywallView: View {
                         .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(10)
-                    
                 }
             }
             .padding(.top)
@@ -82,7 +81,6 @@ struct PaywallView: View {
             Link("Privacy Policy", destination: AppConfig.privacyPolicyURL)
                 .padding(.top, 5)
                 .foregroundColor(.blue)
-            
             
             Spacer()
         }

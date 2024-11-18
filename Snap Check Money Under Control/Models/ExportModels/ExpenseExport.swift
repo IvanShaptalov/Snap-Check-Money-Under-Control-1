@@ -16,7 +16,7 @@ enum ExportSortType: String, CaseIterable {
 enum ExportFormat:String, CaseIterable {
     case pdf = "PDF"
     case numbers = "Numbers"
-    case csv = "CSV"
+    case excel = "Excel"
 }
 
 
