@@ -77,6 +77,26 @@ class ExpensesSheetViewModel: ObservableObject {
         editingExpense = nil
     }
     
+    func updateDates() {
+        // Создаем новые объекты с обновленной датой
+        let updatedExpenses = expensesForSave.map { expense in
+            ExpenseData(title: expense.title, date: .now, amount: expense.amount, currency: expense.currency, category: expense.category)
+        }
+
+        // Присваиваем обновленные расходы обратно
+        expensesForSave = updatedExpenses
+    }
+    
+    func updateCurrency() {
+        // Создаем новые объекты с обновленной датой
+        let updatedExpenses = expensesForSave.map { expense in
+            ExpenseData(title: expense.title, date: expense.date, amount: expense.amount, currency: AppConfig.mainCurrency, category: expense.category)
+        }
+
+        // Присваиваем обновленные расходы обратно
+        expensesForSave = updatedExpenses
+    }
+    
     func editExpense(_ expense: ExpenseData) {
         editingExpense = expense
         showingAddExpense.toggle()

@@ -109,12 +109,26 @@ struct ExpensesSheetView: View {
                 .padding()
             }
             .navigationTitle("Expenses: \(totalAmount(), specifier: "%.2f") \((viewModel.expensesForSave.first?.currency ?? .usd).rawValue)")
-            .navigationBarItems(trailing: Button(action: {
-                viewModel.addExpense()
+            .navigationBarItems(leading: Button(action: {
+                viewModel.updateDates()
             }) {
-                Image(systemName: "plus")
-                    .imageScale(.large)
-                    .frame(width: 44, height: 44) // Увеличьте размер кнопки
+                Text("Set as Today")
+            },trailing: HStack {
+                // Кнопка Apply с отображением валюты
+                Button(action: {
+                    viewModel.updateCurrency()
+                }) {
+                    Text("Apply \(AppConfig.mainCurrency.description)")
+                }
+                
+                Button(action: {
+                    viewModel.addExpense()
+                }) {
+                    Image(systemName: "plus")
+                        .imageScale(.large)
+                        .frame(width: 44, height: 44) // Увеличьте размер кнопки
+                }
+                
             })
         }
         .sheet(isPresented: $viewModel.showingAddExpense) {
