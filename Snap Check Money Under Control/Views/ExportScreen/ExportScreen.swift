@@ -9,12 +9,12 @@ struct ExportScreen: View {
     @State private var fileURL: FileURL? = nil
     @State private var alertError: ErrorWrapper?
     @State private var showPayWall = false
-
+    
     struct FileURL: Identifiable {
         let id = UUID()
         let url: URL
     }
-
+    
     private var floatingButton: some View {
         GeometryReader { geometry in
             FloatingActionButton(showActionSheet: $viewModel.showActionSheet, imageName: "square.and.arrow.up")
@@ -22,7 +22,7 @@ struct ExportScreen: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-
+    
     var body: some View {
         NavigationView {
             Form {
@@ -42,7 +42,7 @@ struct ExportScreen: View {
                     }
                     .pickerStyle(MenuPickerStyle())
                 }
-
+                
                 Section(header: Text("Date Range")) {
                     HStack {
                         Text("Start Date")
@@ -50,19 +50,19 @@ struct ExportScreen: View {
                         Text(DateFormatter.localizedString(from: viewModel.startDate, dateStyle: .short, timeStyle: .none))
                             .foregroundColor(.gray)
                     }
-
+                    
                     HStack {
                         Text("End Date")
                         Spacer()
                         Text(DateFormatter.localizedString(from: viewModel.endDate, dateStyle: .short, timeStyle: .none))
                             .foregroundColor(.gray)
                     }
-
+                    
                     Button("Select Date Range") {
                         viewModel.showDateSelectionSheet = true
                     }
                 }
-
+                
                 Section(header: Text("Categories")) {
                     Button("Select Categories") {
                         viewModel.showCategorySelectionSheet = true
@@ -145,13 +145,13 @@ struct ExportScreen: View {
                 if MonetizationConfig.isPremiumAccount {
                     ShareLink(item: file.url) {
                         
-                            Text("Share Report")
-                                .bold()
-                                .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
-                                .padding()
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
+                        Text("Share Report")
+                            .bold()
+                            .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                         
                     }.onAppear {
                         AnalyticsManager.shared.logEvent(eventType: .exportExpenses)
@@ -184,14 +184,14 @@ struct ExportScreen: View {
                     includedCategories: viewModel.selectedCategories
                 )
             )
-
+            
             do {
                 // Получаем URL файла
                 guard let fileURL = try manager.export(context: modelContext) else {
                     alertError = .init(message: "File not found")
                     return
                 }
-
+                
                 // Сохраняем файл URL в состоянии
                 self.fileURL = .init(url: fileURL)
                 print(self.fileURL?.url ?? "File URL not found")
@@ -202,6 +202,9 @@ struct ExportScreen: View {
         }
         .sheet(isPresented: $showPayWall) {
             PaywallView(subType: "default")
+                .onDisappear {
+                    viewModel.showActionSheet = false
+                }
         }
     }
 }
