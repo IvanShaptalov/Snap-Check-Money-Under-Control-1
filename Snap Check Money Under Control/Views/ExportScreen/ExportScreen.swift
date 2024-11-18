@@ -19,7 +19,7 @@ struct ExportScreen: View {
                     TextField("Report Name", text: $viewModel.reportName)
                         .textFieldStyle(DefaultTextFieldStyle())
                 }
-
+                
                 Section(header: Text("Properties")) {
                     
                     Picker("Format", selection: $viewModel.selectedExportFormat) {
@@ -73,8 +73,10 @@ struct ExportScreen: View {
             .sheet(isPresented: $viewModel.showActionSheet) {
                 Text("Export")
             }
-            
             .overlay(floatingButton)
+            .onTapGesture {
+                KeyboardHider.hideKeyboard()
+            }
         }
     }
 }

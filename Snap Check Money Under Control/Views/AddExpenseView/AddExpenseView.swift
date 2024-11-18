@@ -34,6 +34,10 @@ struct AddExpenseView: View {
             .onAppear {
                 AnalyticsManager.shared.logEvent(eventType: .checkEdited)
             }
+            
+        }
+        .onTapGesture {
+            KeyboardHider.hideKeyboard()
         }
     }
     
