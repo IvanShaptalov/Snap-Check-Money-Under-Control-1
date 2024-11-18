@@ -22,54 +22,51 @@ class JsonToNumbersManager {
         return data
     }
     // MARK: - AS CATEGORIES
-    // MARK: - AS CATEGORIES
     func convertAsCategories(_ expenses: [ExpenseData], includedCategories: [String]) -> Data? {
+        let sortedExpenses = expenses.sorted(by: {$0.date < $1.date})
         // Словарь для хранения данных по месяцам и категориям
         var monthlyData: [String: [String: Double]] = [:] // Ключ - месяц, Значение - категории и суммы
-
+        
         // Перебираем все расходы и группируем по месяцам и категориям
-        for expense in expenses {
+        for expense in sortedExpenses {
             // Получаем месяц в формате "YYYY-MM"
             let month = getMonthString(from: expense.date)
-
+            
             // Инициализация словаря для месяца, если его еще нет
             if monthlyData[month] == nil {
                 monthlyData[month] = [:]
             }
-
+            
             // Если категория включена, добавляем сумму
             if includedCategories.contains(expense.category) {
                 monthlyData[month]?[expense.category, default: 0] += expense.amount
             }
         }
-
+        
         // Создаем заголовок с месяцем и категориями
         let header: [String] = ["Month"] + includedCategories + ["Total"]
-
+        
         // Массив строк для таблицы, первая строка — это заголовки
         var rows: [[String: Any]] = [header.reduce(into: [:]) { $0[$1] = nil }]
-
-        // Сортируем месяцы в порядке убывания (новые сверху)
-        let sortedMonths = monthlyData.keys.sorted(by: >)
-
-        // Перебираем данные по месяцам в отсортированном порядке
-        for month in sortedMonths {
+        
+        // Перебираем данные по месяцам
+        for (month, categories) in monthlyData {
             var row: [String: Any] = ["Month": month]
             var total: Double = 0
-
+            
             // Заполняем строки для каждой категории
             for category in includedCategories {
-                let amount = monthlyData[month]?[category] ?? 0
+                let amount = categories[category] ?? 0
                 row[category] = amount
                 total += amount
             }
-
+            
             // Добавляем сумму по всем категориям в последнюю колонку
             row["Total"] = total
-
+            
             rows.append(row)
         }
-
+        
         // Преобразуем строки в CSV или другой формат
         return convertRowsToData(header: header, rows: rows)
     }
