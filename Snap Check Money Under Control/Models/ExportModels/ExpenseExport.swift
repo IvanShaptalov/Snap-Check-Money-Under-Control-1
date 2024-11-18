@@ -13,12 +13,6 @@ enum ExportSortType: String, CaseIterable {
     case items = "Items"
 }
 
-enum ExportFormat:String, CaseIterable {
-    case pdf = "PDF"
-    case numbers = "Numbers"
-    case excel = "Excel"
-}
-
 
 struct ExpenseExport {
     
@@ -46,10 +40,9 @@ struct ExpenseExport {
     }
     
     var sortType: ExportSortType
-    var exportFormat: ExportFormat
     var includedCategories: [String]
     
-    init(reportName: String, reportStartDate: Date, reportFinishDate: Date, sortType: ExportSortType, exportFormat: ExportFormat, includedCategories: [String]) {
+    init(reportName: String, reportStartDate: Date, reportFinishDate: Date, sortType: ExportSortType, includedCategories: [String]) {
         self.reportName = reportName
         // Валидируем даты в инициализаторе
         if reportStartDate > reportFinishDate {
@@ -60,7 +53,6 @@ struct ExpenseExport {
             self.reportFinishDate = reportFinishDate
         }
         self.sortType = sortType
-        self.exportFormat = exportFormat
         self.includedCategories = includedCategories
     }
 }

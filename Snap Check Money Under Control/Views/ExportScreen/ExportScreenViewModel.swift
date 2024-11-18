@@ -9,8 +9,13 @@ class ExportViewModel: ObservableObject {
     @Published var reportName: String = ""
     @Published var selectedSortType: ExportSortType = .items
     @Published var selectedCategories: [String] = AppConfig.getBasicCategories()
-    @Published var selectedExportFormat: ExportFormat = .numbers
-    @Published var startDate: Date = Date()
+    @Published var startDate: Date = {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        // Получаем первое число текущего месяца
+        let firstDayOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate))!
+        return firstDayOfMonth
+    }()
     @Published var endDate: Date = Date()
 
     var categories: [String] {
@@ -39,14 +44,6 @@ class ExportViewModel: ObservableObject {
             startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
             endDate = calendar.date(byAdding: .month, value: 1, to: startDate)!
             endDate = calendar.date(byAdding: .day, value: -1, to: endDate)!
-//        case .thisQuarter:
-//            let currentMonth = calendar.component(.month, from: now)
-//            let quarter = (currentMonth - 1) / 3 + 1
-//            let quarterStartMonth = (quarter - 1) * 3 + 1
-//            let startOfQuarter = calendar.date(from: DateComponents(year: calendar.component(.year, from: now), month: quarterStartMonth))!
-//            startDate = startOfQuarter
-//            endDate = calendar.date(byAdding: .month, value: 3, to: startOfQuarter)!
-//            endDate = calendar.date(byAdding: .day, value: -1, to: endDate)!
         case .thisYear:
             startDate = calendar.date(from: calendar.dateComponents([.year], from: now))!
             endDate = calendar.date(byAdding: .year, value: 1, to: startDate)!

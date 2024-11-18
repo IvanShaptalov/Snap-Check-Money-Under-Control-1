@@ -23,13 +23,13 @@ protocol ExporterProtocol {
 
 // NumbersExporter implementation
 class ExpenseExportManager: ExporterProtocol {
-  
+    
     var expenseExport: ExpenseExport
-
+    
     init(expenseExport: ExpenseExport) {
         self.expenseExport = expenseExport
     }
-
+    
     // Method to export data
     func export(context: ModelContext) throws -> URL? {
         // Fetch expenses from the database
@@ -45,46 +45,22 @@ class ExpenseExportManager: ExporterProtocol {
             // Create filename with the specified format
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MMM_dd_yyyy" // Format: month_day_year
-            let dateStr = dateFormatter.string(from: Date())
+            let dateStr = dateFormatter.string(from: expenseExport.reportStartDate)
             let fileName = "\(expenseExport.reportName)_\(dateStr)"
             var targetUrl: URL?
             // Switch based on the desired export format
-            switch expenseExport.exportFormat {
-            case .pdf:
-                let pdfManager = JsonToPDFManager()
-                guard let pdfData = pdfManager.convertJsonToPDF(json: jsonExpenses) else {
-                    throw ExportErrors.failedToConvertData
-                }
-                guard let pdfURL = pdfManager.savePDFFile(data: pdfData, fileName: fileName) else {
-                    throw ExportErrors.failedToSaveData
-                }
-                targetUrl = pdfURL
-                print("PDF file saved at: \(pdfURL)")
-                
-            case .numbers:
-                let numbersManager = JsonToNumbersManager()
-                guard let numbersData = numbersManager.convertJsonToNumbers(json: jsonExpenses) else {
-                    throw ExportErrors.failedToConvertData
-                }
-                guard let numbersURL = numbersManager.saveNumbersFile(data: numbersData, fileName: fileName) else {
-                    throw ExportErrors.failedToSaveData
-                }
-                targetUrl = numbersURL
-
-                print("Numbers file saved at: \(numbersURL)")
-                
-            case .excel:
-                let csvManager = JsonToExcelManager()
-                guard let csvData = csvManager.convertJsonToExcel(json: jsonExpenses) else {
-                    throw ExportErrors.failedToConvertData
-                }
-                guard let csvURL = csvManager.saveExcelFile(data: csvData, fileName: fileName) else {
-                    throw ExportErrors.failedToSaveData
-                }
-                targetUrl = csvURL
-
-                print("CSV file saved at: \(csvURL)")
+            
+            let numbersManager = JsonToNumbersManager()
+            guard let numbersData = numbersManager.convertJsonToNumbers(json: jsonExpenses, sortType: expenseExport.sortType) else {
+                throw ExportErrors.failedToConvertData
             }
+            guard let numbersURL = numbersManager.saveNumbersFile(data: numbersData, fileName: fileName) else {
+                throw ExportErrors.failedToSaveData
+            }
+            targetUrl = numbersURL
+            
+            print("Numbers file saved at: \(numbersURL)")
+            
             return targetUrl
             
         } catch ExportErrors.failedToConvertData {
@@ -97,14 +73,14 @@ class ExpenseExportManager: ExporterProtocol {
         }
         
     }
-
+    
     // Method to fetch expenses in a given date range
     private func fetchExpensesFromDatabase(context: ModelContext) throws -> [ExpenseData] {
         return try ExpenseDataManager().fetchExpenses(from: expenseExport.reportStartDate,
                                                       to: expenseExport.reportFinishDate,
                                                       context: context)
     }
-
+    
     // Method to convert expenses to JSON
     private func convertExpensesToJSON(_ expenses: [ExpenseData]) -> [String: Any] {
         var totalExpense = 0.0
@@ -117,7 +93,7 @@ class ExpenseExportManager: ExporterProtocol {
             formatter.dateFormat = "MMMM" // Month name
             return formatter.string(from: expense.date)
         }
-
+        
         for (month, expensesInMonth) in groupedByMonth {
             var monthTotalExpense = 0.0
             var categories: [[String: Any]] = []
@@ -157,7 +133,7 @@ class ExpenseExportManager: ExporterProtocol {
                 "total_expense": monthTotalExpense
             ]
         }
-
+        
         return [
             "total_expense": totalExpense,
             "currency": currency,
