@@ -250,11 +250,14 @@ struct FeatureItemView: View {
 
 struct SubscriptionRow: View {
     let subscription: SubscriptionObj
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 5) {
-                Text(subscription.title)
-                    .font(.headline)
+                HStack {
+                    Text(subscription.title)
+                        .font(.headline) 
+                }
                 
                 Text(subscription.priceDuration)
                     .font(.subheadline)
@@ -269,8 +272,23 @@ struct SubscriptionRow: View {
             
             Spacer()
             
-            Text(String(format: "%.2f$", NSDecimalNumber(decimal: subscription.totalPrice).doubleValue))
-                .font(.headline)
+            VStack {
+                // Добавляем "Best Choice" для годовой подписки
+                if subscription.title.lowercased().contains("1 year") {
+                    Text("Best Choice")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundColor(.blue)
+                        .padding(5)
+                        .background(Color.blue.opacity(0.1))
+                        .cornerRadius(5)
+                }
+                
+                Text(String(format: "%.2f$", NSDecimalNumber(decimal: subscription.totalPrice).doubleValue))
+                    .font(.headline)
+            }
+            
+            
         }
         .frame(height: UIScreen.main.bounds.height * 0.08)
         .padding()
