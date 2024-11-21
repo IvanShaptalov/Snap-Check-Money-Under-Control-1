@@ -100,9 +100,11 @@ class AppConfig {
     static var dailyUpURL = URL(string: "https://apps.apple.com/us/app/daily-up/id6475350565")!
     
     
+    
     // MARK: - EULA & PrivacyPolicy
     static var termsOfUseURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
-    static var privacyPolicyURL = URL(string: "https://t.me/snapCheckPrivacyPolicy")!
+    static var eulaURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+
     
     
     // MARK: - RevenueCat
@@ -170,9 +172,7 @@ extension AppConfig {
                     Assing.url(&AppConfig.triviaURL, remote(forKey: "triviaURL").stringValue)
                     
                     Assing.url(&AppConfig.dailyUpURL, remote(forKey: "dailyUpURL").stringValue)
-                    
-                    Assing.url(&AppConfig.privacyPolicyURL, remote(forKey: "privacyPolicyURL").stringValue)
-                    
+                                        
                     Assing.url(&AppConfig.appURL, remote(forKey: "appURL").stringValue)
                     
                     Assing.url(&AppConfig.contactUsURL, remote(forKey: "contactUsURL").stringValue)
@@ -185,8 +185,8 @@ extension AppConfig {
                     
                     NSLog("AppConfig.isShowAds: \(AppConfig.isShowAds)")
                     // MARK: - 😻 RevenueCat offering
-                    Assing.list(&AppConfig.rcOfferingIds, remote(forKey: "revenueCatOfferingId").stringValue)
-                    NSLog("😻 offering ids: \(AppConfig.rcOfferingIds)")
+                    Assing.list(&AppConfig.rcOfferingIds, remote(forKey: "revenueCatOfferingIds").stringValue)
+                    NSLog("😻 offering id: \(AppConfig.rcOfferingIds)")
                     
                     Assing.list(&AppConfig.daysAndTimesStr, FirebaseConfig.shared.remoteConfig.configValue(forKey: "daysAndTimesStr").stringValue)
                     // after assing

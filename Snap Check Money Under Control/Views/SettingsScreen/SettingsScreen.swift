@@ -7,9 +7,8 @@ struct SettingsScreen: View {
     @StateObject var viewModel = SettingsScreenViewModel()
     @Environment(\.openURL) private var openURL
     @State private var showingPaywall = false // State variable to control the paywall
-    @State private var proposeDiscountedPaywall = false
-    @State private var discountedPaywall = false
     @State private var showingCategories = false
+    @State private var showPrivacyPolicy = false
     @State private var selectedCurrency: Currency = AppConfig.mainCurrency {
         didSet {
             AnalyticsManager.shared.logEvent(eventType: .currencyChanged)
@@ -85,8 +84,8 @@ struct SettingsScreen: View {
                             openURL(AppConfig.termsOfUseURL)
                         }
                         
-                        SectionButton(title: "Privacy Policy") {
-                            openURL(AppConfig.privacyPolicyURL)
+                        Button("Privacy Policy") {
+                            showPrivacyPolicy = true
                         }
                     }
                 }
@@ -97,6 +96,9 @@ struct SettingsScreen: View {
             
             CreatorWords()
             
+        }
+        .sheet(isPresented: $showPrivacyPolicy) {
+            PrivacyPolicyView()
         }
         .alert(isPresented: $viewModel.showingAlert) {
             Alert(
@@ -119,37 +121,16 @@ struct SettingsScreen: View {
             MailView(isShowing: self.$viewModel.isShowingMailView, result: self.$viewModel.result)
         }
         .sheet(isPresented: $showingPaywall) {
-            PaywallView(subType: "default").onDisappear {
+            PaywallView(subType: AppConfig.rcOfferingIds.first ?? "default").onDisappear {
                 // 1 second delay for request to revenue cat - not propose discount to user that already purchased normal version
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     if !MonetizationConfig.isPremiumAccount {
                         NSLog("no premium and paywall dismissed - show discount")
-                        proposeDiscountedPaywall = true
                         AnalyticsManager.shared.logEvent(eventType: .discountProProposed)
                     }
                 }
             }
         }
-        .sheet(isPresented: $discountedPaywall) {
-
-            return PaywallView(subType: "sale")
-        }
-        .confirmationDialog("Discount for You!", isPresented: $proposeDiscountedPaywall, actions: {
-            Button("Apply Discount") {
-                // Применить скидку
-                discountedPaywall = true // После применения скидки показываем предложение
-                NSLog("Discount applied!")
-                AnalyticsManager.shared.logEvent(eventType: .discountProOpened)
-
-            }
-            Button("Not Now", role: .cancel) {
-                // Отказаться от скидки
-                discountedPaywall = false // Скрыть предложение о скидке
-                NSLog("Discount not applied")
-                AnalyticsManager.shared.logEvent(eventType: .discountProNotNow)
-
-            }
-        })
         .sheet(isPresented: $showingCategories) {
             ExpenseCategorySettingsView()
         }

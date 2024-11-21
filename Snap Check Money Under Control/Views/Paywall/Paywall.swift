@@ -7,82 +7,95 @@ struct PaywallView: View {
     @State private var isProcessingPurchase = false
     @State private var showPurchaseSuccess = false
     @State private var errorMessage: ErrorWrapper? = nil
+    @State private var showPrivacyPolicy = false
     @State var subType: String
     
     var body: some View {
-        VStack(spacing: 20) {
-            // Header
-            Text(MonetizationConfig.isPremiumAccount ? "Already Pro 😎" : subType == "sale" ? "💰 Discounted Pro" : "Upgrade to Pro")
-                .font(.largeTitle)
-                .bold()
-                .padding(.top, 20)
-            
-            // Premium Features
-            PremiumFeaturesView()
-                .padding(.bottom, 20)
-            
-            // Subscription Options
-            if subscriptions.isEmpty {
-                Spacer()
-                ProgressView()
-                Spacer()
-            } else {
-                ForEach(subscriptions, id: \.title) { subscription in
-                    if subscription.package == selectedPackage {
-                        SubscriptionRow(subscription: subscription)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                selectedPackage = subscription.package
-                            }
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.cyan, lineWidth: 2)
-                            )
-                            .background(Color(uiColor: UIColor.secondarySystemBackground))
-                            .cornerRadius(10)
-                        
-                        
-                    }
-                    else {
-                        SubscriptionRow(subscription: subscription)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                withAnimation {
+        ScrollView {
+            VStack(spacing: 20) {
+                // Header
+                Text(MonetizationConfig.isPremiumAccount ? "Already Pro 😎" : subType == "sale" ? "💰 Discounted Pro" : "Upgrade to Pro")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.top, 20)
+                
+                // Premium Features
+                PremiumFeaturesView()
+                    .padding(.bottom, 20)
+                
+                // Subscription Options
+                if subscriptions.isEmpty {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                } else {
+                    ForEach(subscriptions, id: \.title) { subscription in
+                        if subscription.package == selectedPackage {
+                            SubscriptionRow(subscription: subscription)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
                                     selectedPackage = subscription.package
                                 }
-                            }
-                            .background(Color(uiColor: UIColor.secondarySystemBackground))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.cyan, lineWidth: 2)
+                                )
+                                .background(Color(uiColor: UIColor.secondarySystemBackground))
+                                .cornerRadius(10)
+                            
+                            
+                        }
+                        else {
+                            SubscriptionRow(subscription: subscription)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    withAnimation {
+                                        selectedPackage = subscription.package
+                                    }
+                                }
+                                .background(Color(uiColor: UIColor.secondarySystemBackground))
+                                .cornerRadius(10)
+                        }
+                    }
+                }
+                
+                // Purchase Button
+                Button(action: makePurchase) {
+                    if isProcessingPurchase {
+                        ProgressView()
+                    } else {
+                        Text("Subscribe Now")
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
                             .cornerRadius(10)
                     }
                 }
-            }
-            
-            // Purchase Button
-            Button(action: makePurchase) {
-                if isProcessingPurchase {
-                    ProgressView()
-                } else {
-                    Text("Subscribe Now")
-                        .bold()
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                .padding(.top)
+                
+                // Restore Purchases
+                Button("Restore Purchases", action: restorePurchases)
+                    .padding(.top, 5)
+                
+                Button("Privacy Policy") {
+                    showPrivacyPolicy = true
                 }
-            }
-            .padding(.top)
-            
-            // Restore Purchases
-            Button("Restore Purchases", action: restorePurchases)
-                .padding(.top, 5)
-            
-            // Privacy Policy Link
-            Link("Privacy Policy", destination: AppConfig.privacyPolicyURL)
                 .padding(.top, 5)
                 .foregroundColor(.blue)
-            
-            Spacer()
+                
+                Link("Terms of use", destination: AppConfig.eulaURL)
+                    .padding(.top, 5)
+                    .foregroundColor(.blue)
+                
+                
+                
+                Spacer()
+            }
+        }
+        .sheet(isPresented: $showPrivacyPolicy){
+            PrivacyPolicyView()
         }
         .padding()
         .onAppear {
@@ -114,7 +127,7 @@ struct PaywallView: View {
     // Load subscriptions from RevenueCatService
     private func loadSubscriptions() {
         if RevenueCatService.offerings.isEmpty {
-            RevenueCatService.getOfferingById(ids: ["default", "sale"]) { result in
+            RevenueCatService.getOfferingById(ids: AppConfig.rcOfferingIds) { result in
                 switch result {
                 case .success(let offerings):
                     var allSubscriptions: [SubscriptionObj] = []
@@ -248,7 +261,7 @@ struct SubscriptionRow: View {
                     .foregroundColor(.secondary)
                 
                 if subscription.isFreeTrial {
-                    Text("Free Trial Available")
+                    Text("3 days Free Trial")
                         .font(.caption)
                         .foregroundColor(.green)
                 }

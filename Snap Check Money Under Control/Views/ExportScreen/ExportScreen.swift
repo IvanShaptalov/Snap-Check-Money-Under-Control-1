@@ -201,7 +201,7 @@ struct ExportScreen: View {
             }
         }
         .sheet(isPresented: $showPayWall) {
-            PaywallView(subType: "default")
+            PaywallView(subType: AppConfig.rcOfferingIds.last ?? "sale")
                 .onDisappear {
                     viewModel.showActionSheet = false
                 }

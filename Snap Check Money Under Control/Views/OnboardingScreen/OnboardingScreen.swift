@@ -1,6 +1,5 @@
 import SwiftUI
 
-
 struct OnboardingScreen: View {
     let title: String
     let description: String
@@ -74,30 +73,23 @@ struct OnboardingView: View {
     var body: some View {
         TabView(selection: $viewModel.currentIndex) {
             ForEach(0..<viewModel.screens.count, id: \.self) { index in
-                viewModel.screens[index]
-                    .tag(index)
-                    .contentShape(Rectangle()).gesture(DragGesture())
+                AnyView(
+                    viewModel.screens[index]
+                        .tag(index)
+                        .contentShape(Rectangle())
+                        .gesture(DragGesture())
+                )
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .overlay(
             
             VStack {
-                if ![viewModel.paywallIndex, viewModel.discountIndex].contains(viewModel.currentIndex) {
+                if ![viewModel.paywallIndex].contains(viewModel.currentIndex) {
                     Spacer()
                     HStack {
                         Spacer()
-                        if viewModel.currentIndex == viewModel.respectIndex {
-                            Button {
-                                withAnimation {
-                                    viewModel.next()
-                                }
-                            } label: {
-                                Text("Get discount 💰")
-                                    .font(.title2)
-                                    .padding()
-                            }
-                        } else if viewModel.currentIndex < viewModel.screens.count - 1 {
+                        if viewModel.currentIndex < viewModel.screens.count - 1 {
                             Button {
                                 withAnimation {
                                     viewModel.next()
@@ -136,8 +128,7 @@ struct OnboardingView: View {
                     
                     HStack {
                         Spacer() // для выравнивания кнопки по правому краю
-                        if (showButton && viewModel.currentIndex == viewModel.paywallIndex) ||
-                            (showDiscountButton && viewModel.currentIndex == viewModel.discountIndex)  {
+                        if (showButton && viewModel.currentIndex == viewModel.paywallIndex){
                             Button(action: {
                                 if viewModel.currentIndex == viewModel.paywallIndex && MonetizationConfig.isPremiumAccount {
                                     NSLog("clicked")

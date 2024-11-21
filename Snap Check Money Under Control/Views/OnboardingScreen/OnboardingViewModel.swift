@@ -11,9 +11,7 @@ import SwiftUI
 class OnboardingViewModel: ObservableObject {
     @Published var currentIndex = 0
     var paywallIndex = 4
-    var respectIndex = 5
-    var discountIndex = 6
-    var journeyIndex = 7
+    var journeyIndex = 5
     
 
     let screens: [some View] = [
@@ -41,15 +39,7 @@ class OnboardingViewModel: ObservableObject {
             imageName: "currency" // Используем системное изображение
         )),
 
-        AnyView(PaywallView(subType: "default")),
-        
-        AnyView(OnboardingScreen(
-            title: "Smart Choice 💰",
-            description: "By waiting, you've made a smart decision! You are now eligible for a special discount. Enjoy your savings and make the most of your expense tracking.",
-            imageName: "leprecon" // Используем системное изображение для похвалы
-        )),
-
-        AnyView(PaywallView(subType: "sale")),
+        AnyView(PaywallView(subType: AppConfig.rcOfferingIds.first ?? "default")),
         
         AnyView(OnboardingScreen(
             title: "Your Journey to Financial Independence",
@@ -62,13 +52,8 @@ class OnboardingViewModel: ObservableObject {
         NSLog("next index: \(currentIndex)")
         analyze()
         if currentIndex < screens.count - 1 {
-            if currentIndex + 1 == respectIndex && !MonetizationConfig.isPremiumAccount {
-                NSLog("next index: \(currentIndex)")
-                currentIndex += 1
-                return
-            }
             // skip discount + respect
-            if currentIndex + 1 == respectIndex && MonetizationConfig.isPremiumAccount {
+            if currentIndex + 1 == paywallIndex && MonetizationConfig.isPremiumAccount {
                 currentIndex = journeyIndex
                 NSLog("to journey index: \(currentIndex)")
                 

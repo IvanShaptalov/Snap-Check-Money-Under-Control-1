@@ -5,7 +5,7 @@
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-4618505570484622~3215954802</string>
 	<key>NSUserNotificationUsageDescription</key>
-	<string>We use notifications to remind you to log your receipts.</string>
+	<string>We use notifications to remind you to scan your receipts so you can keep your expense records up-to-date and manage your finances efficiently.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
