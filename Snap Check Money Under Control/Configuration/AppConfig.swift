@@ -127,7 +127,6 @@ class AppConfig {
 }
 
 
-
 class FirebaseConfig {
     static let shared = FirebaseConfig()
 

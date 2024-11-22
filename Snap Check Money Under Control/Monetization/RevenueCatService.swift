@@ -118,10 +118,12 @@ class RevenueCatService {
             
             for id in ids {
                 if let rawPackages = offerings?.offering(identifier: id)?.availablePackages {
+                    AnalyticsManager.shared.logEvent(eventType: .subscription_loaded)
                     NSLog("✅📦 fetch packages from identifier: \(id) ")
                     let packages = convertPackages(rawPackages)
                     convertedOfferings[id] = packages
                 } else {
+                    AnalyticsManager.shared.logEvent(eventType: .error_subscription_not_loaded)
                     NSLog("error ❌📦 while fetching packages from identifier: \(id) ")
                 }
             }

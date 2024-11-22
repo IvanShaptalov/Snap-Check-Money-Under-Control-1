@@ -71,5 +71,10 @@ enum EventType: String {
     onboard_premium_5 = "onboard_premium_5",  // +
     onboard_premium_cancelled_leprecon_6 = "onboard_premium_cancelled_leprecon_6",  // +
     onboard_premium_discount_7 = "onboard_premium_discount_7",  // +
-    onboard_start_journey_8 = "onboard_start_journey_8"  // +
+    onboard_start_journey_8 = "onboard_start_journey_8",  // +
+    
+    
+    // critical
+    error_subscription_not_loaded = "error_subscription_not_loaded",
+    subscription_loaded = "subscription_loaded"    
 }
