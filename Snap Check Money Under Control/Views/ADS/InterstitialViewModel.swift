@@ -14,7 +14,7 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
             NSLog("Interstitial ads start loading 💰")
             do {
                 interstitialAd = try await GADInterstitialAd.load(
-                    withAdUnitID: "ca-app-pub-3940256099942544/4411468910", request: GADRequest())
+                    withAdUnitID: AppConfig.ad_id, request: GADRequest())
                 interstitialAd?.fullScreenContentDelegate = self
                 NSLog("Loaded 💰")
             } catch {
