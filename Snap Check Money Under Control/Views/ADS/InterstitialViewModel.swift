@@ -3,7 +3,9 @@ import GoogleMobileAds
 class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
     private var interstitialAd: GADInterstitialAd?
     
+    
     func loadAd() async {
+        interstitialAd = nil
         guard AppConfig.isShowAds == 1 else {
             NSLog("ads loading disabled from firebase remote config")
             return
@@ -16,7 +18,7 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
                 interstitialAd = try await GADInterstitialAd.load(
                     withAdUnitID: AppConfig.ad_id, request: GADRequest())
                 interstitialAd?.fullScreenContentDelegate = self
-                NSLog("Loaded 💰")
+                NSLog("Loaded 💰, id : \(AppConfig.ad_id)")
             } catch {
                 NSLog("Failed to load interstitial ad with error: \(error.localizedDescription)")
             }

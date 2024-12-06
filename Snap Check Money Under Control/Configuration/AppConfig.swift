@@ -115,6 +115,7 @@ class AppConfig {
     static var isShowAds = 1
     
     static var ad_id = "ca-app-pub-3940256099942544/4411468910"
+    static var test_ad_id = "ca-app-pub-3940256099942544/4411468910"
     
     // MARK: - SomeAPI
     static var someApiKey = "someApi"

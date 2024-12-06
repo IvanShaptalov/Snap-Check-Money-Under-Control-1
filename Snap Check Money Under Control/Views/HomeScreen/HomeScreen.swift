@@ -25,6 +25,22 @@ struct HomeScreen: View {
         ImagePicker(image: $homeScreenVM.inputImage, sourceType: homeScreenVM.sourceType)
     }
     
+    private func loadAdRecursively() async {
+        print("\(AppConfig.ad_id)==\(AppConfig.test_ad_id)")
+        if AppConfig.ad_id == AppConfig.test_ad_id {
+            // Используем Task для асинхронного вызова
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Task {
+                    await loadAdRecursively()
+                }
+                print("Recursive escaping 👆")
+            }
+        }
+        await intAdsVm.loadAd()
+
+        print("Recursive ad loaded 💰")
+    }
+    
     var body: some View {
         VStack {
             
@@ -47,7 +63,7 @@ struct HomeScreen: View {
             NotificationManager.requestNotificationPermission()
         }
         .task {
-            await intAdsVm.loadAd()
+            await loadAdRecursively()
         }
         .actionSheet(isPresented: $homeScreenVM.showActionSheetFromCreating) {
             actionSheetCheckAdding
