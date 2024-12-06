@@ -86,6 +86,21 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
 }
     
 func loadAdRecursively() async {
-        
+        print("\(AppConfig.ad_id)==\(AppConfig.test_ad_id)")
+        if AppConfig.ad_id == AppConfig.test_ad_id {
+            // Используем Task для асинхронного вызова
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Task {
+                    await loadAdRecursively()
+                }
+                
+            }
+        } else {
+print("Recursive escaping 👆")
+await loadAd()
+
+        print("Recursive ad loaded 💰")
 }
+        
+    }
 }
