@@ -75,6 +75,7 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
         
         interstitialAd.present(fromRootViewController: nil)
         AnalyticsManager.shared.logEvent(eventType: .ad_showed)
+        await loadAd()
 
     }
     
