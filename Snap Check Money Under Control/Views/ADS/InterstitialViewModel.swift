@@ -4,7 +4,7 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
     private var interstitialAd: GADInterstitialAd?
     
     
-    func loadAd() async {
+    private func loadAd() async {
         interstitialAd = nil
         guard AppConfig.isShowAds == 1 else {
             NSLog("ads loading disabled from firebase remote config")
@@ -59,7 +59,7 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
         interstitialAd = nil
     }
     
-    func showAd() {
+    private func showAd() {
         guard AppConfig.isShowAds == 1 else {
             NSLog("ads disabled from firebase remote config ‼️")
             return
@@ -75,8 +75,17 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
         
         interstitialAd.present(fromRootViewController: nil)
         AnalyticsManager.shared.logEvent(eventType: .ad_showed)
-        await loadAd()
+        
+
 
     }
+
+    func showAndLoadNextAd() async {
+        showAd()
+        await loadAdRecursively()
+}
     
+func loadAdRecursively() async {
+        
+}
 }
