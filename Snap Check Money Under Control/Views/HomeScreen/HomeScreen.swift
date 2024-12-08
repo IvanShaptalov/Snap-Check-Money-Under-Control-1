@@ -78,9 +78,6 @@ struct HomeScreen: View {
                     if showInterstitialAds {
                         NSLog("ads 🤮")
                         intAdsVm.showAd()
-                        Task {
-                            await intAdsVm.loadAdRecursively()
-                        }
                     } else {
                         NSLog("review 🤌")
                         ReviewService.requestReview()

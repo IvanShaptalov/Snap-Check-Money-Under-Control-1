@@ -57,6 +57,10 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
         NSLog("\(#function) called")
         // Clear the interstitial ad.
         interstitialAd = nil
+        Task {
+            NSLog("Closed ad, loading new ad🤮")
+            await loadAd()
+        }
     }
     
     func showAd() {
