@@ -32,7 +32,7 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
     
     func adDidRecordClick(_ ad: GADFullScreenPresentingAd) {
         AnalyticsManager.shared.logEvent(eventType: .ad_clicked)
-
+        
         NSLog("\(#function) called")
     }
     
@@ -53,13 +53,13 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
     
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         AnalyticsManager.shared.logEvent(eventType: .ad_cancelled)
-
+        
         NSLog("\(#function) called")
         // Clear the interstitial ad.
         interstitialAd = nil
     }
     
-    private func showAd() {
+    func showAd() {
         guard AppConfig.isShowAds == 1 else {
             NSLog("ads disabled from firebase remote config ‼️")
             return
@@ -76,31 +76,25 @@ class InterstitialViewModel: NSObject, GADFullScreenContentDelegate {
         interstitialAd.present(fromRootViewController: nil)
         AnalyticsManager.shared.logEvent(eventType: .ad_showed)
         
-
-
+        
+        
     }
-
-    func showAndLoadNextAd() async {
-        showAd()
-        await loadAdRecursively()
-}
     
-func loadAdRecursively() async {
+    func loadAdRecursively() async {
         print("\(AppConfig.ad_id)==\(AppConfig.test_ad_id)")
         if AppConfig.ad_id == AppConfig.test_ad_id {
             // Используем Task для асинхронного вызова
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 Task {
-                    await loadAdRecursively()
+                    await self.loadAdRecursively()
                 }
                 
             }
         } else {
-print("Recursive escaping 👆")
-await loadAd()
-
-        print("Recursive ad loaded 💰")
-}
-        
+            print("Recursive escaping 👆")
+            await loadAd()
+            
+            print("Recursive ad loaded 💰")
+        }
     }
 }

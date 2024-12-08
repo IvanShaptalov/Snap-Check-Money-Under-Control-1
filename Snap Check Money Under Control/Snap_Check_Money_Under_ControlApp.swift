@@ -12,6 +12,7 @@ struct SnapCheckMoneyUnderControlApp: App {
         NSLog("App Started ⚙️")
         
         // Конфигурация Firebase
+        FirebaseConfiguration.shared.setLoggerLevel(.min)
         FirebaseApp.configure()
         
         // Настройка конфигурации приложения (должно быть вызвано перед другими установками)

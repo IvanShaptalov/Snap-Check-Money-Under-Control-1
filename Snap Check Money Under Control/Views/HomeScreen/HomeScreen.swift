@@ -34,7 +34,7 @@ struct HomeScreen: View {
             
             PieChart(expenses: expenses)
                 .frame(width: UIScreen.main.bounds.width * 0.8 ,height: UIScreen.main.bounds.height * 0.22, alignment: .center)
-                
+            
             ExpenseListView(expenses: $expenses) { expense in
                 editExpense(expense)
             } onDeleteExpense: { expenseToDelete in
@@ -49,7 +49,7 @@ struct HomeScreen: View {
             NotificationManager.requestNotificationPermission()
         }
         .task {
-            await intAdsVM.loadAdRecursively()
+            await intAdsVm.loadAdRecursively()
         }
         .actionSheet(isPresented: $homeScreenVM.showActionSheetFromCreating) {
             actionSheetCheckAdding
@@ -77,7 +77,10 @@ struct HomeScreen: View {
                 } else {
                     if showInterstitialAds {
                         NSLog("ads 🤮")
-                        intAdsVm.showAndLoadNextAd()
+                        intAdsVm.showAd()
+                        Task {
+                            await intAdsVm.loadAdRecursively()
+                        }
                     } else {
                         NSLog("review 🤌")
                         ReviewService.requestReview()
@@ -192,13 +195,13 @@ struct HomeScreen: View {
                 homeScreenVM.sourceType = .camera
                 homeScreenVM.showImagePicker = true
                 AnalyticsManager.shared.logEvent(eventType: .createCheckFromCamera)
-
+                
             },
             .default(Text("Photo Library")) {
                 homeScreenVM.sourceType = .photoLibrary
                 homeScreenVM.showImagePicker = true
                 AnalyticsManager.shared.logEvent(eventType: .createCheckFromLibrary)
-
+                
             },
             .default(Text("Create Manually")) {
                 homeScreenVM.showCreateExpenceSheet = true
@@ -244,13 +247,13 @@ struct HomeScreen: View {
             addOrUpdateExpenses(newExpenses)
             hideCreatingSheet()
             showInterstitialAds = true
-
+            
         }
         
         viewModel.onCancel = {
             hideCreatingSheet()
             showInterstitialAds = true
-
+            
         }
         
         // Pass the ViewModel to the `ExpensesSheetView`
