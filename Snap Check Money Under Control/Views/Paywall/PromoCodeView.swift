@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PromoCodeView: View {
     @State private var promoCode: String = AppConfig.currentPromocode
+    @State private var tmpPromoCode: String = AppConfig.currentPromocode
     @State private var showAlert: Bool = false
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
@@ -28,14 +29,15 @@ struct PromoCodeView: View {
             Spacer()
 
 
-            TextField("Enter promo code", text: $promoCode)
+            TextField("Enter promo code", text: $tmpPromoCode)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(.allCharacters)
-                .onChange(of: promoCode) { _, newValue in
-                    promoCode = newValue.uppercased()
+                .onChange(of: tmpPromoCode) { _, newValue in
+                    tmpPromoCode = newValue.uppercased()
                 }
             
             Button(action: {
+                promoCode = tmpPromoCode
                 if AppConfig.promocodes.contains(promoCode.lowercased()) {
                     alertTitle = "🎉 Success!"
                     alertMessage = "Promo code applied successfully. You are now Pro!"

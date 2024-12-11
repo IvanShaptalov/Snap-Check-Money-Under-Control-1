@@ -70,19 +70,3 @@ struct RotatingNewsFeedView: View {
         return size.width
     }
 }
-
-struct ContentView: View {
-    var body: some View {
-        let newsData = [
-            ("Breaking News: This is an example of a very long news headline that needs scrolling.", "https://example.com"),
-            ("Short News Item", nil),
-            ("Another very long headline to showcase the scrolling effect properly in the news ticker.", "https://example.com/2")
-        ]
-        
-        return RotatingNewsFeedView(newsItems: newsData)
-    }
-}
-
-#Preview {
-    ContentView()
-}
