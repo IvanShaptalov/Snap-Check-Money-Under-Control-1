@@ -1,9 +1,3 @@
-//
-//  RotatingNewsFeedView.swift
-//  Snap Check Money Under Control
-//
-//  Created by PowerMac on 11.12.2024.
-//
 import SwiftUI
 
 struct RotatingNewsFeedView: View {
@@ -58,9 +52,11 @@ struct RotatingNewsFeedView: View {
                     }
             }
         } else {
+            // Center the text when it fits within the width
             Text(text)
                 .font(.headline)
                 .lineLimit(1)
+                .frame(maxWidth: .infinity, alignment: .center) // Ensures centering
         }
     }
     
