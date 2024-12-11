@@ -3,6 +3,82 @@ import FirebaseRemoteConfigInternal
 
 
 class AppConfig {
+    static let adjustCheckTitle = "📜 adjustment for check"
+    
+    static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+    
+    static var contactUsMail: String = "wellbeing.vantage@icloud.com"
+    static var contactUsMailMessageBody =
+         """
+            <p>SnapCheck feedback: What Improve?</p>
+            <p>We appreciate your thoughts and suggestions!</p>
+            <p>Please share any features you would like to see or improvements that can enhance your experience.</p>
+            <p>Thank you for your feedback!</p>
+            """
+    
+    static var contactUsURL = URL(string: "https://www.instagram.com/wellbeingvantage/")!
+    
+    // MARK: - APPS
+    static var aiBirthdayURL = URL(string: "https://apps.apple.com/us/app/ai-birthday-reminder-calendar/id6477883190")!
+    static var triviaURL = URL(string: "https://apps.apple.com/ua/app/guess-the-song-in-music-trivia/id6503480745")!
+    // TODO change appURL to real and add it in firebase as appURL
+    static var appURL = URL(string: "https://apps.apple.com/us/app/ai-birthday-reminder-calendar/id6477883190")!
+    static var dailyUpURL = URL(string: "https://apps.apple.com/us/app/daily-up/id6475350565")!
+    
+    
+    
+    // MARK: - EULA & PrivacyPolicy
+    static var termsOfUseURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+    static var eulaURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+    
+    // MARK: - PROMOCODESLIST
+    static var promocodes: [String] = []
+    static var expiredPromocodes: [String] = ["Summer"]
+    static var currentPromocode: String = UserDefaults.standard.string(forKey: AppStorageKeys.currentPromocodeKey) ?? "" {
+        didSet {
+            NSLog("CurrentPromocode")
+            UserDefaults.standard.set(currentPromocode, forKey: AppStorageKeys.currentPromocodeKey)
+            RevenueCatService.setPremiumViaPromocode()
+        }
+    }
+    
+    
+    // MARK: - RevenueCat
+    static var revenuecat_project_apple_api_key = "appl_dDdGjupmvVZBgJEvVIMALJsNwqJ"
+    
+    static var rcOfferingIds = ["default"]
+    
+    static var isShowAds = 1
+    
+    static var ad_id = "ca-app-pub-3940256099942544/4411468910"
+    static var test_ad_id = "ca-app-pub-3940256099942544/4411468910"
+    
+    // MARK: - SomeAPI
+    static var someApiKey = "someApi"
+    static var someApiID = "sk-proj-mJa7V567HzfyNfoHO8UcT3BlbkFJwATX5N2Nyn5TAjB3xX6q" // gpt
+    
+    static var daysAndTimesStr: [String] = [
+        "Monday-08:30",   // Monday at 08:30
+        "Tuesday-11:40",  // Tuesday at 11:40
+        "Thursday-18:30", // Thursday at 18:30
+        "Sunday-19:00"    // Sunday at 19:00
+    ]
+    
+    static var mainCurrency: Currency {
+        get {
+            // Получаем сохранённую валюту из UserDefaults
+            if let savedCurrency = UserDefaults.standard.string(forKey: AppStorageKeys.currencyKey),
+               let currency = Currency(rawValue: savedCurrency) {
+                return currency
+            }
+            // Если нет сохраненной валюты, возвращаем значение по умолчанию
+            return .usd
+        }
+        set {
+            // Сохраняем новую валюту в UserDefaults
+            UserDefaults.standard.set(newValue.rawValue, forKey: AppStorageKeys.currencyKey)
+        }
+    }
     
     static func getBasicCategories() -> [String] {
             // Получаем сохранённые категории из UserDefaults
@@ -35,26 +111,6 @@ class AppConfig {
         }
     }
     
-    static let adjustCheckTitle = "📊 Adjustment for scanned check"
-    
-    static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-    
-    static var mainCurrency: Currency {
-        get {
-            // Получаем сохранённую валюту из UserDefaults
-            if let savedCurrency = UserDefaults.standard.string(forKey: AppStorageKeys.currencyKey),
-               let currency = Currency(rawValue: savedCurrency) {
-                return currency
-            }
-            // Если нет сохраненной валюты, возвращаем значение по умолчанию
-            return .usd
-        }
-        set {
-            // Сохраняем новую валюту в UserDefaults
-            UserDefaults.standard.set(newValue.rawValue, forKey: AppStorageKeys.currencyKey)
-        }
-    }
-    
     static func updateMainCurrency(to currency: Currency) {
         mainCurrency = currency
     }
@@ -80,53 +136,6 @@ class AppConfig {
         AnalyticsManager.shared.logEvent(eventType: .showFormatEdited)
         showYearFormat.toggle()
     }
-    
-    static var contactUsMail: String = "wellbeing.vantage@icloud.com"
-    static var contactUsMailMessageBody =
-         """
-            <p>SnapCheck feedback: What Improve?</p>
-            <p>We appreciate your thoughts and suggestions!</p>
-            <p>Please share any features you would like to see or improvements that can enhance your experience.</p>
-            <p>Thank you for your feedback!</p>
-            """
-    
-    static var contactUsURL = URL(string: "https://www.instagram.com/wellbeingvantage/")!
-    
-    // MARK: - APPS
-    static var aiBirthdayURL = URL(string: "https://apps.apple.com/us/app/ai-birthday-reminder-calendar/id6477883190")!
-    static var triviaURL = URL(string: "https://apps.apple.com/ua/app/guess-the-song-in-music-trivia/id6503480745")!
-    // TODO change appURL to real and add it in firebase as appURL
-    static var appURL = URL(string: "https://apps.apple.com/us/app/ai-birthday-reminder-calendar/id6477883190")!
-    static var dailyUpURL = URL(string: "https://apps.apple.com/us/app/daily-up/id6475350565")!
-    
-    
-    
-    // MARK: - EULA & PrivacyPolicy
-    static var termsOfUseURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
-    static var eulaURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
-
-    
-    
-    // MARK: - RevenueCat
-    static var revenuecat_project_apple_api_key = "appl_dDdGjupmvVZBgJEvVIMALJsNwqJ"
-    
-    static var rcOfferingIds = ["default"]
-    
-    static var isShowAds = 1
-    
-    static var ad_id = "ca-app-pub-3940256099942544/4411468910"
-    static var test_ad_id = "ca-app-pub-3940256099942544/4411468910"
-    
-    // MARK: - SomeAPI
-    static var someApiKey = "someApi"
-    static var someApiID = "sk-proj-mJa7V567HzfyNfoHO8UcT3BlbkFJwATX5N2Nyn5TAjB3xX6q" // gpt
-    
-    static var daysAndTimesStr: [String] = [
-        "Monday-08:30",   // Monday at 08:30
-        "Tuesday-11:40",  // Tuesday at 11:40
-        "Thursday-18:30", // Thursday at 18:30
-        "Sunday-19:00"    // Sunday at 19:00
-    ]
 }
 
 
@@ -186,6 +195,11 @@ extension AppConfig {
                     Assing.number(&AppConfig.isShowAds, Int(remote(forKey: "isShowAds").stringValue) ?? 1)  // show ads by default
                     
                     Assing.string(&AppConfig.ad_id, remote(forKey: "ad_id").stringValue)
+                    
+                    Assing.list(&AppConfig.promocodes, remote(forKey: "promocodes").stringValue)
+                    Assing.list(&AppConfig.expiredPromocodes, remote(forKey: "expiredPromocodes").stringValue)
+                    
+                    NSLog("🏷️ promocodes set: \(AppConfig.promocodes)")
                     
                     NSLog("ad_id: \(AppConfig.ad_id)")
                     

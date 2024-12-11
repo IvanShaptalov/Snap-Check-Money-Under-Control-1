@@ -9,6 +9,7 @@ struct SettingsScreen: View {
     @State private var showingPaywall = false // State variable to control the paywall
     @State private var showingCategories = false
     @State private var showPrivacyPolicy = false
+    @State private var showPromoCodeMenu = false
     @State private var selectedCurrency: Currency = AppConfig.mainCurrency {
         didSet {
             AnalyticsManager.shared.logEvent(eventType: .currencyChanged)
@@ -27,6 +28,10 @@ struct SettingsScreen: View {
                     Section(header: Text("Pro Version")) {
                         SectionButton(title: "Manage subscription") {
                             showingPaywall.toggle() // Open paywall when tapped
+                        }
+                        
+                        SectionButton(title: "Promocodes") {
+                            showPromoCodeMenu = true
                         }
                     }
                     
@@ -73,6 +78,8 @@ struct SettingsScreen: View {
                     
                     
                     
+                    
+                    
                     Section(header: Text("Ivan's apps")) {
                         AppLinks(url: AppConfig.triviaURL, imageName: "MusicTrivia", title: "Music Trivia")
                         AppLinks(url: AppConfig.aiBirthdayURL, imageName: "AIBirthday", title: "AI Birthday Reminder")
@@ -99,6 +106,9 @@ struct SettingsScreen: View {
         }
         .sheet(isPresented: $showPrivacyPolicy) {
             PrivacyPolicyView()
+        }
+        .sheet(isPresented: $showPromoCodeMenu) {
+            PromoCodeView()
         }
         .alert(isPresented: $viewModel.showingAlert) {
             Alert(

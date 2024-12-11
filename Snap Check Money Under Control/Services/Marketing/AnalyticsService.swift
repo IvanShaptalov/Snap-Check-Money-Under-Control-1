@@ -76,5 +76,9 @@ enum EventType: String {
     
     // critical
     error_subscription_not_loaded = "error_subscription_not_loaded",
-    subscription_loaded = "subscription_loaded"    
+    subscription_loaded = "subscription_loaded",
+    
+    
+    // promocodes
+    pro_via_promocode = "pro_via_promocode"
 }

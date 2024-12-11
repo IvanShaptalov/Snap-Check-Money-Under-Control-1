@@ -12,4 +12,5 @@ class AppStorageKeys {
     static let currencyKey = "mainCurrencyKey"
     static let showYearFormatKey = "showYearFormatKey"
     static let categoriesKey = "basicCategoriesKey"
+    static let currentPromocodeKey = "currentPromocodeKey"
 }

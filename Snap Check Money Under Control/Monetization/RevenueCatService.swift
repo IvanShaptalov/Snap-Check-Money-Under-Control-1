@@ -65,14 +65,29 @@ class RevenueCatService {
         let hasPremium = !customerInfo!.entitlements.active.isEmpty
         self.hasPremium = hasPremium
         MonetizationConfig.isPremiumAccount = hasPremium
-        NSLog("👑 premium: \(MonetizationConfig.isPremiumAccount)")
+        NSLog("👑ℹ️ premium: \(MonetizationConfig.isPremiumAccount)")
         return hasPremium
     }
     
     // MARK: - Check premium account
     static func getCustomerInfo(){
-        Purchases.shared.getCustomerInfo { (customerInfo, error) in
-            _ = updatePremiumStatus(customerInfo: customerInfo)
+        setPremiumViaPromocode()
+        // check if not premium via promocode
+        if !MonetizationConfig.isPremiumAccount {
+            NSLog("👑‼️ premium via promocode not set , check customer info")
+            Purchases.shared.getCustomerInfo { (customerInfo, error) in
+                _ = updatePremiumStatus(customerInfo: customerInfo)
+            }
+        }
+        
+        
+
+    }
+    
+    static func setPremiumViaPromocode() {
+        NSLog("👑✅ premium via promocode set: \(AppConfig.promocodes.contains(AppConfig.currentPromocode.lowercased()))")
+        if AppConfig.promocodes.contains(AppConfig.currentPromocode.lowercased()) {
+            MonetizationConfig.isPremiumAccount = true
         }
     }
     
