@@ -16,6 +16,9 @@ class AppConfig {
             <p>Thank you for your feedback!</p>
             """
     
+    // MARK: - NEWS
+    static var newsList: [String] = ["Enjoy using Snap Check? Rate us⭐️😋", "https://apps.apple.com/app/id6737919509?action=write-review", "Tired of seeing ads? Consider get Snap Check Premium", "nil"]
+    
     static var contactUsURL = URL(string: "https://www.instagram.com/wellbeingvantage/")!
     
     // MARK: - APPS
@@ -199,6 +202,8 @@ extension AppConfig {
                     Assing.list(&AppConfig.promocodes, remote(forKey: "promocodes").stringValue)
                     Assing.list(&AppConfig.expiredPromocodes, remote(forKey: "expiredPromocodes").stringValue)
                     
+                    Assing.list(&AppConfig.newsList, remote(forKey: "newsList").stringValue)
+                    NSLog("NewsList: \(AppConfig.newsList)")
                     NSLog("🏷️ promocodes set: \(AppConfig.promocodes)")
                     
                     NSLog("ad_id: \(AppConfig.ad_id)")

@@ -8,7 +8,7 @@ struct PromoCodeView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text(AppConfig.promocodes.contains(promoCode.lowercased()) ? "Promocode activated 🤩" : "Get Pro via Promocode 😎")
+            Text(AppConfig.promocodes.contains(promoCode.lowercased()) || MonetizationConfig.isPremiumAccount ? "Already Pro 😎" : "Get Pro via Promocode 🤩")
                 .font(.title)
                 .padding(.bottom, 10)
             

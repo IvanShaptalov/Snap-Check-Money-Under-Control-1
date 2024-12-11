@@ -1,0 +1,88 @@
+//
+//  RotatingNewsFeedView.swift
+//  Snap Check Money Under Control
+//
+//  Created by PowerMac on 11.12.2024.
+//
+import SwiftUI
+
+struct RotatingNewsFeedView: View {
+    @State private var currentIndex = 0
+    @State private var scrollOffset: CGFloat = 0
+    let newsItems: [(String, String?)]
+    let timer = Timer.publish(every: 12.4, on: .main, in: .common).autoconnect()
+    
+    var body: some View {
+        HStack {
+            GeometryReader { geometry in
+                if let link = newsItems[currentIndex].1, let url = URL(string: link) {
+                    Link(destination: url) {
+                        scrollableText(newsItems[currentIndex].0, width: geometry.size.width)
+                            .foregroundColor(.gray)
+                    }
+                } else {
+                    scrollableText(newsItems[currentIndex].0, width: geometry.size.width)
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+        .padding(.all, 0)
+        .onReceive(timer) { _ in
+            scrollOffset = 0 // Сбросить прокрутку
+            withAnimation {
+                currentIndex = (currentIndex + 1) % newsItems.count
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func scrollableText(_ text: String, width: CGFloat) -> some View {
+        let textWidth = textWidth(for: text, font: UIFont.preferredFont(forTextStyle: .headline))
+        let shouldScroll = textWidth > width
+        
+        if shouldScroll {
+            ScrollView(.horizontal, showsIndicators: false) {
+                Text(text)
+                    .font(.headline)
+                    .lineLimit(1)
+                    .offset(x: -scrollOffset)
+                    .onAppear {
+                        let scrollDuration = 10.0 // Длительность прокрутки
+                        let totalDistance = textWidth - width
+                        
+                        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
+                            withAnimation(.linear(duration: scrollDuration)) {
+                                scrollOffset = totalDistance
+                            }
+                        }
+                    }
+            }
+        } else {
+            Text(text)
+                .font(.headline)
+                .lineLimit(1)
+        }
+    }
+    
+    private func textWidth(for text: String, font: UIFont) -> CGFloat {
+        let attributes = [NSAttributedString.Key.font: font]
+        let size = text.size(withAttributes: attributes)
+        return size.width
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        let newsData = [
+            ("Breaking News: This is an example of a very long news headline that needs scrolling.", "https://example.com"),
+            ("Short News Item", nil),
+            ("Another very long headline to showcase the scrolling effect properly in the news ticker.", "https://example.com/2")
+        ]
+        
+        return RotatingNewsFeedView(newsItems: newsData)
+    }
+}
+
+#Preview {
+    ContentView()
+}

@@ -12,6 +12,7 @@ struct HomeScreen: View {
     @StateObject var expenseManagerVM = ExpenseManagerViewModel()
     @State var tmpExpensesFromJson: [ExpenseData] = []
     @State private var intAdsVm = InterstitialViewModel()
+    @State private var loaded: Bool = false
     @State var expenses: [ExpenseData] = [
     ].sorted(by: { $0.date > $1.date })
     @State private var showInterstitialAds = false
@@ -29,8 +30,16 @@ struct HomeScreen: View {
     
     var body: some View {
         VStack {
-            
+            if !AppConfig.newsList.isEmpty && !MonetizationConfig.isPremiumAccount && loaded {
+                RotatingNewsFeedView(newsItems: convertToNewsItems(from: AppConfig.newsList))
+                    .frame(width: UIScreen.main.bounds.width * 0.9 ,height: UIScreen.main.bounds.height * 0.05, alignment: .top)
+            } else {
+                Spacer()
+                    .frame(width: UIScreen.main.bounds.width * 0.9 ,height: UIScreen.main.bounds.height * 0.05, alignment: .top)
+            }
+                        
             MonthOrYearSpents(isShowYear: $homeScreenVM.isShowYear, totalSpent: totalSpent)
+            
             
             PieChart(expenses: expenses)
                 .frame(width: UIScreen.main.bounds.width * 0.8 ,height: UIScreen.main.bounds.height * 0.22, alignment: .center)
@@ -50,6 +59,11 @@ struct HomeScreen: View {
         }
         .task {
             await intAdsVm.loadAdRecursively()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                withAnimation {
+                    loaded = true
+                }
+            }
         }
         .actionSheet(isPresented: $homeScreenVM.showActionSheetFromCreating) {
             actionSheetCheckAdding
