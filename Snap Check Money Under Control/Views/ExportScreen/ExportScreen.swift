@@ -174,7 +174,7 @@ struct ExportScreen: View {
             }
 //            .playbackMode(.playing(.toFrame(100, loopMode: .playOnce)))
             .looping()
-            .frame(width: 300, height: 200)
+            .frame(width: 300, height: 300)
             
             Spacer()
             
