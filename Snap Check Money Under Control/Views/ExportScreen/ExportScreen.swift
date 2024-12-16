@@ -1,7 +1,6 @@
 import SwiftUI
+import Lottie
 
-
-import SwiftUI
 
 struct ExportScreen: View {
     @Environment(\.modelContext) private var modelContext
@@ -86,92 +85,139 @@ struct ExportScreen: View {
             NSLog("alert")
             return Alert(title: Text("Error"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
         }
-        
     }
+    
     
     private func exportOrPaywall() -> some View {
         VStack {
             // Добавление сводки с текущими настройками отчета
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 20) {
                 // Заголовок сводки
-                Text("Report Summary")
-                    .font(.title)
+                Text("📄 Report Summary")
+                    .font(.largeTitle)
                     .fontWeight(.bold)
-                    .foregroundColor(.blue)
                     .padding(.top, 20)
                     .onAppear {
                         AnalyticsManager.shared.logEvent(eventType: .startExport)
                     }
                 
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 16) {
                     // Название отчета
-                    HStack {
-                        Image(systemName: "doc.text")
+                    HStack(alignment: .center, spacing: 10) {
+                        Image(systemName: "doc.text.fill")
                             .foregroundColor(.blue)
-                        Text("Report Name: \(viewModel.reportName.isEmpty ? "No name provided" : viewModel.reportName)")
-                            .font(.title3)
-                            .lineLimit(1)
+                            .font(.title2)
+                        Text("Report Name:")
+                            .font(.headline)
                             .foregroundColor(.primary)
+                        Spacer()
+                        Text(viewModel.reportName.isEmpty ? "No name provided" : viewModel.reportName)
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
                     }
                     
                     // Тип сортировки
-                    HStack {
-                        Image(systemName: "arrow.up.arrow.down.circle")
+                    HStack(alignment: .center, spacing: 10) {
+                        Image(systemName: "arrow.up.arrow.down.circle.fill")
                             .foregroundColor(.blue)
-                        Text("Sort By: \(viewModel.selectedSortType.rawValue)")
-                            .font(.title3)
-                            .lineLimit(1)
+                            .font(.title2)
+                        Text("Sort By:")
+                            .font(.headline)
                             .foregroundColor(.primary)
+                        Spacer()
+                        Text(viewModel.selectedSortType.rawValue)
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
                     }
                     
                     // Категории
-                    HStack {
-                        Image(systemName: "tag")
+                    HStack(alignment: .center, spacing: 10) {
+                        Image(systemName: "tag.fill")
                             .foregroundColor(.blue)
-                        Text("Categories: \(viewModel.selectedCategories.isEmpty ? "None" : viewModel.selectedCategories.joined(separator: ", "))")
-                            .font(.title3)
-                            .lineLimit(10)
+                            .font(.title2)
+                        Text("Categories:")
+                            .font(.headline)
                             .foregroundColor(.primary)
+                        Spacer()
+                        
+                        if viewModel.selectedCategories.isEmpty {
+                            Text("None")
+                                .font(.body)
+                                .foregroundColor(.secondary)
+                        } else {
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 8) {
+                                    ForEach(viewModel.selectedCategories, id: \.self) { category in
+                                        Text(category)
+                                            .font(.caption)
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 6)
+                                            .background(Capsule().fill(Color.blue.opacity(0.2)))
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                            }
+                            
+                        }
                     }
                 }
                 .padding()
-                .shadow(radius: 5)
-                .padding([.horizontal, .bottom], 10)
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGroupedBackground)))
+                .shadow(color: .gray.opacity(0.4), radius: 5, x: 0, y: 2)
             }
-            .padding([.top, .horizontal])
+            .padding([.horizontal, .top])
+            
+            LottieView {
+                try await DotLottieFile.asset(named: "track")
+            }
+//            .playbackMode(.playing(.toFrame(100, loopMode: .playOnce)))
+            .looping()
+            .frame(width: 300, height: 200)
+            
             Spacer()
-            if let file = fileURL{
-                // Безопасно извлекаем и показываем ShareLink, если fileURL не nil
+            
+            if let file = fileURL {
+                // Показываем кнопку ShareLink, если есть файл
                 if MonetizationConfig.isPremiumAccount {
                     ShareLink(item: file.url) {
-                        
-                        Text("Share Report")
-                            .bold()
-                            .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                        
-                    }.onAppear {
+                        HStack {
+                            Image(systemName: "square.and.arrow.up.fill")
+                            Text("Share Report")
+                        }
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                    }
+                    .onAppear {
                         AnalyticsManager.shared.logEvent(eventType: .exportExpenses)
                     }
+                    .padding(.horizontal)
                 } else {
                     Button {
                         showPayWall = true
                     } label: {
-                        Text("Share Report")
-                            .bold()
-                            .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        HStack {
+                            Image(systemName: "lock.fill")
+                            Text("Share Report")
+                        }
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
                     }
+                    .padding(.horizontal)
                 }
-                
             } else {
-                ProgressView()
+                ProgressView("Exporting...")
+                    .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                    .padding()
             }
         }
         .onAppear {
@@ -191,8 +237,6 @@ struct ExportScreen: View {
                     alertError = .init(message: "File not found")
                     return
                 }
-                
-                // Сохраняем файл URL в состоянии
                 self.fileURL = .init(url: fileURL)
                 print(self.fileURL?.url ?? "File URL not found")
             } catch {
@@ -206,6 +250,7 @@ struct ExportScreen: View {
                     viewModel.showActionSheet = false
                 }
         }
+        .padding(.bottom, 20)
     }
 }
 

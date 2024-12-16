@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8D4279862CEB89DC0049943B /* CoreXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = 8D4279852CEB89DC0049943B /* CoreXLSX */; };
+		8D5E270C2D1053D400AD9878 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8D5E270B2D1053D400AD9878 /* Lottie */; };
 		8D92F7CD2CE26E2000288423 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 8D92F7CC2CE26E2000288423 /* GoogleMobileAds */; };
 		8DC4598F2CE00DCB002322B9 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC4598E2CE00DCB002322B9 /* FirebaseAnalytics */; };
 		8DC459912CE00DCB002322B9 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459902CE00DCB002322B9 /* FirebaseAppCheck */; };
@@ -40,6 +41,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D92F7CD2CE26E2000288423 /* GoogleMobileAds in Frameworks */,
+				8D5E270C2D1053D400AD9878 /* Lottie in Frameworks */,
 				8DC4599B2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community in Frameworks */,
 				8DC459972CE00DCB002322B9 /* FirebaseDatabase in Frameworks */,
 				8DC459A22CE00DE1002322B9 /* RevenueCat in Frameworks */,
@@ -107,6 +109,7 @@
 				8DC459A32CE00DE1002322B9 /* RevenueCatUI */,
 				8D92F7CC2CE26E2000288423 /* GoogleMobileAds */,
 				8D4279852CEB89DC0049943B /* CoreXLSX */,
+				8D5E270B2D1053D400AD9878 /* Lottie */,
 			);
 			productName = "Snap Check Money Under Control";
 			productReference = 8D8010202CDD3DE300B957C2 /* Snap Check Money Under Control.app */;
@@ -141,6 +144,7 @@
 				8DC459A02CE00DE1002322B9 /* XCRemoteSwiftPackageReference "purchases-ios" */,
 				8D92F7CB2CE26E2000288423 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				8D4279842CEB89DC0049943B /* XCRemoteSwiftPackageReference "CoreXLSX" */,
+				8D5E270A2D1053D400AD9878 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8D8010212CDD3DE300B957C2 /* Products */;
@@ -298,7 +302,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Snap Check Money Under Control/Preview Content\"";
 				DEVELOPMENT_TEAM = 8HZT3TR2ZJ;
 				ENABLE_PREVIEWS = YES;
@@ -318,7 +322,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.4;
+				MARKETING_VERSION = 1.3.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "Wellbeing-Vantage.Snap-Check-Money-Under-Control";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -337,7 +341,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Snap Check Money Under Control/Preview Content\"";
 				DEVELOPMENT_TEAM = 8HZT3TR2ZJ;
 				ENABLE_PREVIEWS = YES;
@@ -357,7 +361,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.4;
+				MARKETING_VERSION = 1.3.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "Wellbeing-Vantage.Snap-Check-Money-Under-Control";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -402,6 +406,14 @@
 				minimumVersion = 0.14.2;
 			};
 		};
+		8D5E270A2D1053D400AD9878 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
+		};
 		8D92F7CB2CE26E2000288423 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
@@ -433,6 +445,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8D4279842CEB89DC0049943B /* XCRemoteSwiftPackageReference "CoreXLSX" */;
 			productName = CoreXLSX;
+		};
+		8D5E270B2D1053D400AD9878 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8D5E270A2D1053D400AD9878 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		8D92F7CC2CE26E2000288423 /* GoogleMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;
