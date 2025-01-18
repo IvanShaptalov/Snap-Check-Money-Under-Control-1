@@ -50,7 +50,7 @@ struct CategoryCell: View {
             
             Spacer() // Добавляем гибкий отступ между текстом и суммой
             
-            Text("\(amount, specifier: "%.0f") PLN") // Отображение суммы
+            Text("\(amount, specifier: "%.0f")") // Отображение суммы
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundColor(.primary)
