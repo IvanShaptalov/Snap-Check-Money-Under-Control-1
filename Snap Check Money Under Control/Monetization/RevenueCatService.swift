@@ -157,7 +157,9 @@ class RevenueCatService {
             let storeProduct = pack.storeProduct
             let offering = storeProduct.introductoryDiscount?.subscriptionPeriod.value
             let isFreeTrial = offering != nil
-            subs.append(SubscriptionObj(title: storeProduct.localizedTitle, discount: 0,  priceDuration: "\(storeProduct.pricePerMonth ?? 1)$ per month", package: pack, totalPrice: storeProduct.price, isFamilyShareable: storeProduct.isFamilyShareable, isFreeTrial: isFreeTrial))
+            let currencyCode = pack.storeProduct.currencyCode ?? "usd"
+            NSLog(currencyCode)
+            subs.append(SubscriptionObj(title: storeProduct.localizedTitle, discount: 0,  priceDuration: "\(storeProduct.pricePerMonth ?? 1) \(currencyCode) per month", package: pack, totalPrice: storeProduct.price, isFamilyShareable: storeProduct.isFamilyShareable, isFreeTrial: isFreeTrial, currency: currencyCode))
         }
         return subs
     }
@@ -179,8 +181,9 @@ class SubscriptionObj {
     var totalPrice: Decimal
     var isFamilyShareable: Bool
     var isFreeTrial: Bool
+    var currency: String
     
-    init(title: String, discount: Int, priceDuration: String, package: RevenueCat.Package, totalPrice: Decimal, isFamilyShareable: Bool, isFreeTrial: Bool) {
+    init(title: String, discount: Int, priceDuration: String, package: RevenueCat.Package, totalPrice: Decimal, isFamilyShareable: Bool, isFreeTrial: Bool, currency: String) {
         self.title = title
         self.discount = discount
         self.priceDuration = priceDuration
@@ -188,5 +191,6 @@ class SubscriptionObj {
         self.totalPrice = totalPrice
         self.isFamilyShareable = isFamilyShareable
         self.isFreeTrial = isFreeTrial
+        self.currency = currency
     }
 }

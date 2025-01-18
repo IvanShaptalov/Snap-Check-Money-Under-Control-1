@@ -11,14 +11,9 @@
 		8D5E270C2D1053D400AD9878 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8D5E270B2D1053D400AD9878 /* Lottie */; };
 		8D92F7CD2CE26E2000288423 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 8D92F7CC2CE26E2000288423 /* GoogleMobileAds */; };
 		8DC4598F2CE00DCB002322B9 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC4598E2CE00DCB002322B9 /* FirebaseAnalytics */; };
-		8DC459912CE00DCB002322B9 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459902CE00DCB002322B9 /* FirebaseAppCheck */; };
 		8DC459932CE00DCB002322B9 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459922CE00DCB002322B9 /* FirebaseCore */; };
-		8DC459952CE00DCB002322B9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459942CE00DCB002322B9 /* FirebaseCrashlytics */; };
 		8DC459972CE00DCB002322B9 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459962CE00DCB002322B9 /* FirebaseDatabase */; };
-		8DC459992CE00DCB002322B9 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459982CE00DCB002322B9 /* FirebaseFirestoreCombine-Community */; };
-		8DC4599B2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC4599A2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community */; };
 		8DC4599D2CE00DCB002322B9 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC4599C2CE00DCB002322B9 /* FirebaseRemoteConfig */; };
-		8DC4599F2CE00DCB002322B9 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC4599E2CE00DCB002322B9 /* FirebaseStorageCombine-Community */; };
 		8DC459A22CE00DE1002322B9 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459A12CE00DE1002322B9 /* RevenueCat */; };
 		8DC459A42CE00DE1002322B9 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459A32CE00DE1002322B9 /* RevenueCatUI */; };
 /* End PBXBuildFile section */
@@ -42,17 +37,12 @@
 			files = (
 				8D92F7CD2CE26E2000288423 /* GoogleMobileAds in Frameworks */,
 				8D5E270C2D1053D400AD9878 /* Lottie in Frameworks */,
-				8DC4599B2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community in Frameworks */,
 				8DC459972CE00DCB002322B9 /* FirebaseDatabase in Frameworks */,
 				8DC459A22CE00DE1002322B9 /* RevenueCat in Frameworks */,
 				8DC459A42CE00DE1002322B9 /* RevenueCatUI in Frameworks */,
-				8DC459912CE00DCB002322B9 /* FirebaseAppCheck in Frameworks */,
-				8DC459952CE00DCB002322B9 /* FirebaseCrashlytics in Frameworks */,
-				8DC459992CE00DCB002322B9 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				8DC459932CE00DCB002322B9 /* FirebaseCore in Frameworks */,
 				8D4279862CEB89DC0049943B /* CoreXLSX in Frameworks */,
 				8DC4598F2CE00DCB002322B9 /* FirebaseAnalytics in Frameworks */,
-				8DC4599F2CE00DCB002322B9 /* FirebaseStorageCombine-Community in Frameworks */,
 				8DC4599D2CE00DCB002322B9 /* FirebaseRemoteConfig in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,14 +87,9 @@
 			name = "Snap Check Money Under Control";
 			packageProductDependencies = (
 				8DC4598E2CE00DCB002322B9 /* FirebaseAnalytics */,
-				8DC459902CE00DCB002322B9 /* FirebaseAppCheck */,
 				8DC459922CE00DCB002322B9 /* FirebaseCore */,
-				8DC459942CE00DCB002322B9 /* FirebaseCrashlytics */,
 				8DC459962CE00DCB002322B9 /* FirebaseDatabase */,
-				8DC459982CE00DCB002322B9 /* FirebaseFirestoreCombine-Community */,
-				8DC4599A2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community */,
 				8DC4599C2CE00DCB002322B9 /* FirebaseRemoteConfig */,
-				8DC4599E2CE00DCB002322B9 /* FirebaseStorageCombine-Community */,
 				8DC459A12CE00DE1002322B9 /* RevenueCat */,
 				8DC459A32CE00DE1002322B9 /* RevenueCatUI */,
 				8D92F7CC2CE26E2000288423 /* GoogleMobileAds */,
@@ -461,45 +446,20 @@
 			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
-		8DC459902CE00DCB002322B9 /* FirebaseAppCheck */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAppCheck;
-		};
 		8DC459922CE00DCB002322B9 /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCore;
-		};
-		8DC459942CE00DCB002322B9 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
 		};
 		8DC459962CE00DCB002322B9 /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
 		};
-		8DC459982CE00DCB002322B9 /* FirebaseFirestoreCombine-Community */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseFirestoreCombine-Community";
-		};
-		8DC4599A2CE00DCB002322B9 /* FirebaseFunctionsCombine-Community */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseFunctionsCombine-Community";
-		};
 		8DC4599C2CE00DCB002322B9 /* FirebaseRemoteConfig */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
-		};
-		8DC4599E2CE00DCB002322B9 /* FirebaseStorageCombine-Community */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseStorageCombine-Community";
 		};
 		8DC459A12CE00DE1002322B9 /* RevenueCat */ = {
 			isa = XCSwiftPackageProductDependency;

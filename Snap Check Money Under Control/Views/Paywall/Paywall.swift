@@ -63,6 +63,12 @@ struct PaywallView: View {
                 Button(action: makePurchase) {
                     if isProcessingPurchase {
                         ProgressView()
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     } else {
                         Text("Subscribe Now")
                             .bold()
@@ -163,21 +169,28 @@ struct PaywallView: View {
             }
             
             RevenueCatService.makePurchase(package: package) { status in
-                isProcessingPurchase = false
+                
                 switch status {
                 case .Success:
                     showPurchaseSuccess = true
+                    isProcessingPurchase = false
+
                 case .PurchaseCancelled:
                     NSLog("Puchase was cancelled")
-                    
+                    isProcessingPurchase = false
+
                     AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
                 case .PurchaseNotAllowedError:
                     errorMessage = ErrorWrapper(message:"Purchase not allowed on this device.")
                     AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
+                    isProcessingPurchase = false
+
                     
                 case .PurchaseInvalidError:
                     errorMessage = ErrorWrapper(message:"Invalid purchase. Please try again.")
                     AnalyticsManager.shared.logEvent(eventType: .proPurchaseFailed)
+                    isProcessingPurchase = false
+
                     
                 default:
                     NSLog("defaull : all ok")
@@ -284,7 +297,7 @@ struct SubscriptionRow: View {
                         .cornerRadius(5)
                 }
                 
-                Text(String(format: "%.2f$", NSDecimalNumber(decimal: subscription.totalPrice).doubleValue))
+                Text(String(format: "%.2f \(subscription.currency)", NSDecimalNumber(decimal: subscription.totalPrice).doubleValue))
                     .font(.headline)
             }
             
