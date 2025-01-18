@@ -29,4 +29,9 @@ extension Date {
     var isWeekend: Bool {
         calendar.isDateInWeekend(self)
     }
+    
+    static func currentYear() -> Int {
+        let calendar = Calendar.current
+        return calendar.component(.year, from: Date())
+    }
 }

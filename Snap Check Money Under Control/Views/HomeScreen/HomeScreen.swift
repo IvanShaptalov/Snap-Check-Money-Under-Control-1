@@ -16,6 +16,7 @@ struct HomeScreen: View {
     @State var expenses: [ExpenseData] = [
     ].sorted(by: { $0.date > $1.date })
     @State private var showInterstitialAds = false
+    @State private var  currentYear = AppConfig.selectedShowYear
     var totalSpent: Double {
         withAnimation {
             expenses.map { $0.amount }.reduce(0, +)
@@ -26,24 +27,14 @@ struct HomeScreen: View {
         ImagePicker(image: $homeScreenVM.inputImage, sourceType: homeScreenVM.sourceType)
     }
     
-    
-    
     var body: some View {
         VStack {
-            if !AppConfig.newsList.isEmpty && !MonetizationConfig.isPremiumAccount && loaded {
-                RotatingNewsFeedView(newsItems: convertToNewsItems(from: AppConfig.newsList))
-                    .frame(width: UIScreen.main.bounds.width * 0.9 ,height: UIScreen.main.bounds.height * 0.05, alignment: .top)
-            } else {
-                Spacer()
-                    .frame(width: UIScreen.main.bounds.width * 0.9 ,height: UIScreen.main.bounds.height * 0.05, alignment: .top)
-            }
-                        
-            MonthOrYearSpents(isShowYear: $homeScreenVM.isShowYear, totalSpent: totalSpent)
+
+            MonthOrYearSpents(isShowYear: $homeScreenVM.isShowYear, totalSpent: totalSpent, currentYear: $currentYear)
+                .frame(height: 100)
             
-            
-            PieChart(expenses: expenses)
-                .frame(width: UIScreen.main.bounds.width * 0.8 ,height: UIScreen.main.bounds.height * 0.22, alignment: .center)
-            
+            CategoryView(expenses: expenses)
+         
             ExpenseListView(expenses: $expenses) { expense in
                 editExpense(expense)
             } onDeleteExpense: { expenseToDelete in
@@ -118,6 +109,9 @@ struct HomeScreen: View {
         .onChange(of: homeScreenVM.isShowYear) {_, newYear in
             loadExpenses()
         }
+        .onChange(of: currentYear) {_, newCurrentYear in
+            loadExpenses()
+        }
         .alert(item: Binding<ErrorWrapper?>.combine($chatVM.errorMessage, $textRecognitionVM.errorMessage)) { errorWrapper in
             NSLog("alert")
             return Alert(title: Text("Error"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
@@ -126,7 +120,9 @@ struct HomeScreen: View {
     }
     
     func loadExpenses() {
-        expenses = expenseManagerVM.loadExpenses(modelContext: modelContext, dateRange: AppConfig.showYearFormat ? .currentYear : .currentMonth).sorted(by: {$0.date > $1.date})
+        expenses = expenseManagerVM.loadExpenses(modelContext: modelContext,
+                                                 dateRange: AppConfig.showYearFormat ? .currentYear : .currentMonth,
+                                                 selectedYear: AppConfig.selectedShowYear).sorted(by: {$0.date > $1.date})
     }
     
     func decodeAndAddExpenses(from newResult: ChatGPTRequest.ChatMessage?, to expenses: inout [ExpenseData]) {

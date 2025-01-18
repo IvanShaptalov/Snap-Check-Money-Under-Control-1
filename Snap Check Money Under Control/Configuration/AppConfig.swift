@@ -9,7 +9,7 @@ class AppConfig {
     
     static var contactUsMail: String = "wellbeing.vantage@icloud.com"
     static var contactUsMailMessageBody =
-         """
+            """
             <p>SnapCheck feedback: What Improve?</p>
             <p>We appreciate your thoughts and suggestions!</p>
             <p>Please share any features you would like to see or improvements that can enhance your experience.</p>
@@ -66,6 +66,19 @@ class AppConfig {
         "Thursday-18:30", // Thursday at 18:30
         "Sunday-19:00"    // Sunday at 19:00
     ]
+    
+    static var selectedShowYear: Int {
+        get {
+            let fromStorage = Int(UserDefaults.standard.integer(forKey: AppStorageKeys.selectedYear))
+            NSLog("get year fromStorage: \(fromStorage)")
+
+            return fromStorage != 0 ? fromStorage : Date.currentYear()
+        }
+        set {
+            NSLog("set year to Storage: \(newValue)")
+            UserDefaults.standard.set(newValue, forKey: AppStorageKeys.selectedYear)
+        }
+    }
     
     static var mainCurrency: Currency {
         get {

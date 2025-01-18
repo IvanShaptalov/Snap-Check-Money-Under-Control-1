@@ -36,10 +36,10 @@ class ExpenseManagerViewModel: ObservableObject {
         }
     }
     
-    func loadExpenses(modelContext: ModelContext, dateRange: ExpenseDateRange) -> [ExpenseData] {
+    func loadExpenses(modelContext: ModelContext, dateRange: ExpenseDateRange, selectedYear: Int? = nil) -> [ExpenseData] {
         let calendar = Calendar.current
         let startDate: Date
-        let endDate = Date() // По умолчанию до текущей даты
+        var endDate = Date() // По умолчанию до текущей даты
         addTutorialExpenses(modelContext: modelContext)
         
         switch dateRange {
@@ -49,8 +49,16 @@ class ExpenseManagerViewModel: ObservableObject {
             let components = calendar.dateComponents([.year, .month], from: Date())
             startDate = calendar.date(from: components) ?? Date.distantPast
         case .currentYear:
-            let components = calendar.dateComponents([.year], from: Date())
-            startDate = calendar.date(from: components) ?? Date.distantPast
+            if let selectedYear = selectedYear {
+                // Если выбранный год задан, создаём диапазон для него
+                startDate = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1)) ?? Date.distantPast
+                endDate = calendar.date(from: DateComponents(year: selectedYear + 1, month: 1, day: 1))?.addingTimeInterval(-1) ?? Date()
+            }
+            else {
+                let components = calendar.dateComponents([.year], from: Date())
+                startDate = calendar.date(from: components) ?? Date.distantPast
+            }
+            
         }
         
         do {
