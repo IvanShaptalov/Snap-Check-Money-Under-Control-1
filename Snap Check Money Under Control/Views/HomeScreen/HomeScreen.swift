@@ -162,6 +162,7 @@ struct HomeScreen: View {
     }
     
     func addOrUpdateExpenses(_ newExpenses: [ExpenseData]) {
+        
         expenseManagerVM.addOrUpdateExpense(newExpenses, modelContext: modelContext)
         loadExpenses()
     }

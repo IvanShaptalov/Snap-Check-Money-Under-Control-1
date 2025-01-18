@@ -113,6 +113,9 @@ struct PaywallView: View {
                 if subType == "sale" {
                     AnalyticsManager.shared.logEvent(eventType: .discountProProposed)
                 }
+                if MonetizationConfig.isPremiumAccount == false {
+                    makePurchase()
+                }
             }
         }
         .alert(item: $errorMessage) { errorWrapper in
@@ -128,6 +131,7 @@ struct PaywallView: View {
                 }
             }
         }
+        
     }
     
     // Load subscriptions from RevenueCatService
