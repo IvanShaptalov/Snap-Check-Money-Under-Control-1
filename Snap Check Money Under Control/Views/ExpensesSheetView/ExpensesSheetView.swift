@@ -108,7 +108,7 @@ struct ExpensesSheetView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Expenses: \(totalAmount(), specifier: "%.2f") \((viewModel.expensesForSave.first?.currency ?? .usd).rawValue)")
+            .navigationTitle("Expenses: \(totalAmount(), specifier: "%.2f") \((viewModel.expensesForSave.first?.currency ?? AppConfig.mainCurrency).rawValue)")
             .navigationBarItems(leading: Button(action: {
                 viewModel.updateDates()
             }) {

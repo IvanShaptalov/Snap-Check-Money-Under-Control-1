@@ -172,7 +172,6 @@ struct ExportScreen: View {
             LottieView {
                 try await DotLottieFile.asset(named: "track")
             }
-//            .playbackMode(.playing(.toFrame(100, loopMode: .playOnce)))
             .looping()
             .frame(width: 300, height: 300)
             

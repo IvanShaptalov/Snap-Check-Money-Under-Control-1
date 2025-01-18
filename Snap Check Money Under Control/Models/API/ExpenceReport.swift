@@ -21,7 +21,7 @@ struct ExpenseReport: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         store = try container.decode(String.self, forKey: .store)
-        totalPrice = try container.decode(Double.self, forKey: .totalPrice)
+        totalPrice = abs(try container.decode(Double.self, forKey: .totalPrice))
         currency = try container.decode(String.self, forKey: .currency)
         items = try container.decode([Item].self, forKey: .items)
 

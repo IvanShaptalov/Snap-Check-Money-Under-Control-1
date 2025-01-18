@@ -6,9 +6,22 @@ struct ExpenseData: Identifiable, Codable {
     var id = UUID().uuidString
     var title: String
     var date: Date
-    var amount: Double
+    var amount: Double {
+        didSet {
+            amount = abs(amount)
+        }
+    }
     var currency: Currency
     var category: String
+    
+    init(id: String = UUID().uuidString, title: String, date: Date, amount: Double, currency: Currency, category: String) {
+        self.id = id
+        self.title = title
+        self.date = date
+        self.amount = abs(amount)
+        self.currency = currency
+        self.category = category
+    }
 }
 
 
@@ -25,7 +38,7 @@ class ExpenseEntity: Identifiable {
         self.id = data.id
         self.title = data.title
         self.date = data.date
-        self.amount = data.amount
+        self.amount = abs(data.amount)
         self.currencyString = data.currency.rawValue
         self.category = data.category
     }
