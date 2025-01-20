@@ -166,7 +166,7 @@ struct ExpensesSheetView: View {
         .alert(item: Binding<ErrorWrapper?>.combine($alertAjustingMessage, $alertExpensesInOtherYear)) { errorWrapper in
             NSLog("alert")
             if errorWrapper.message == alertExpensesInOtherYear?.message {
-                return Alert(title: Text("Info"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK"), action: viewModel.handleSave))
+                return Alert(title: Text("Info"), message: Text(errorWrapper.message), primaryButton: .default(Text("Save"), action: viewModel.handleSave), secondaryButton: .cancel(Text("Back")))
             }
             return Alert(title: Text("Info"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
         }
