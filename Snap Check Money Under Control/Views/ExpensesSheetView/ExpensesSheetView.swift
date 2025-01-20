@@ -2,10 +2,12 @@ import SwiftUI
 
 struct ExpensesSheetView: View {
     @ObservedObject var viewModel: ExpensesSheetViewModel
+
+    @State private var alertAjustingMessage: ErrorWrapper?
     
-    // Для управления состоянием алерта
-    @State private var showAdjustingAlert: Bool = false
-    @State private var alertAjustingMessage: String = ""
+    @State private var alertExpensesInOtherYear: ErrorWrapper?
+    
+    
     
     var body: some View {
         NavigationView {
@@ -91,7 +93,12 @@ struct ExpensesSheetView: View {
                     Spacer()
                     
                     Button(action: {
-                        viewModel.handleSave()
+                        let isOtherYear = viewModel.checkExpensesInOtherThatCurrentYear()
+                        if isOtherYear {
+                            alertExpensesInOtherYear = ErrorWrapper(message: "Some of the Expenses will be added to other year, not \(Date.currentYear())")
+                        } else {
+                            viewModel.handleSave()
+                        }
                     }) {
                         Text("Save")
                             .font(.headline) // Установите шрифт
@@ -155,15 +162,19 @@ struct ExpensesSheetView: View {
             // Present AddExpenseView with the configured ViewModel
             return AddExpenseView(viewModel: expViewModel)
         }
-        .alert(isPresented: $showAdjustingAlert) {
-            Alert(title: Text("Check Adjustment"), message: Text(alertAjustingMessage), dismissButton: .default(Text("OK")))
+
+        .alert(item: Binding<ErrorWrapper?>.combine($alertAjustingMessage, $alertExpensesInOtherYear)) { errorWrapper in
+            NSLog("alert")
+            if errorWrapper.message == alertExpensesInOtherYear?.message {
+                return Alert(title: Text("Info"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK"), action: viewModel.handleSave))
+            }
+            return Alert(title: Text("Info"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
         }
     }
     
     func showAdjustmentAlert() {
         if viewModel.scannedTotalAmount != nil {
-            alertAjustingMessage = "This adjustment is to make sure the total amount matches what you scanned. The scanned amount is \(viewModel.scannedTotalAmount ?? totalAmount()). The amounts for the individual items may not add up exactly, so we add this adjustment to correct it."
-            showAdjustingAlert = true
+            alertAjustingMessage = ErrorWrapper(message:"This adjustment is to make sure the total amount matches what you scanned. The scanned amount is \(viewModel.scannedTotalAmount ?? totalAmount()). The amounts for the individual items may not add up exactly, so we add this adjustment to correct it.")
         }
     }
     

@@ -20,6 +20,13 @@ class ExpensesSheetViewModel: ObservableObject {
         }
     }
     
+    func checkExpensesInOtherThatCurrentYear() -> Bool {
+        let currentYear = Date.currentYear()
+        return expensesForSave.contains(where: {
+            Calendar.current.component(.year, from: $0.date) != currentYear
+        })
+    }
+    
     func getMostPopularCategory(expenses: [ExpenseData]) -> String {
         var categoryCount: [String: Int] = [:]
         
@@ -107,6 +114,7 @@ class ExpensesSheetViewModel: ObservableObject {
     }
     
     func handleSave() {
+
         onSave?(expensesForSave)
         expensesForSave = []
         scannedTotalAmount = nil
