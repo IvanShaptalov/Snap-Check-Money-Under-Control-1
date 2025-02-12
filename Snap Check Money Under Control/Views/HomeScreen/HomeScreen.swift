@@ -29,12 +29,12 @@ struct HomeScreen: View {
     
     var body: some View {
         VStack {
-
+            
             MonthOrYearSpents(isShowYear: $homeScreenVM.isShowYear, totalSpent: totalSpent, currentYear: $currentYear)
                 .frame(height: 100)
             
             CategoryView(expenses: expenses)
-         
+            
             ExpenseListView(expenses: $expenses) { expense in
                 editExpense(expense)
             } onDeleteExpense: { expenseToDelete in
@@ -116,6 +116,15 @@ struct HomeScreen: View {
             NSLog("alert")
             return Alert(title: Text("Error"), message: Text(errorWrapper.message), dismissButton: .default(Text("OK")))
         }
+        .overlay {
+            if let uiImage = homeScreenVM.inputImage {
+                
+                if chatVM.isLoading && chatVM.errorMessage == nil && textRecognitionVM.errorMessage == nil {
+                    ScanAnimationView(uiImage: uiImage)
+                }
+            }
+            
+        }
         
     }
     
@@ -136,9 +145,11 @@ struct HomeScreen: View {
         if let resultData = resultContent.data(using: .utf8) {
             // Decode the data into ExpenseReport
             let decoder = JSONDecoder()
+
+            let cleanedData = JsonDecoder.cleanJSON(resultData) ?? resultData
             do {
                 // Decode into ExpenseReport
-                let expenseReport = try decoder.decode(ExpenseReport.self, from: resultData)
+                let expenseReport = try decoder.decode(ExpenseReport.self, from: cleanedData)
                 
                 // Convert ExpenseReport to an array of Expense
                 let newExpenses = expenseReport.items.map { item in
@@ -156,6 +167,8 @@ struct HomeScreen: View {
             NSLog("Ошибка преобразования строки в данные")
         }
     }
+    
+    
     
     func addOrUpdateExpenses(_ newExpenses: [ExpenseData]) {
         
@@ -181,18 +194,18 @@ struct HomeScreen: View {
     
     private var floatingButton: some View {
         GeometryReader { geometry in
-            if chatVM.isLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                    .frame(width: 60, height: 60) // Размер ProgressView
-                    .background(Color.blue) // Цвет фона
-                    .clipShape(Circle()) // Круглая форма
-                    .shadow(radius: 5) // Тень для эффекта подъема
-                    .position(x: geometry.size.width - 50, y: geometry.size.height - 100) // Позиционирование
-            } else {
+//            if chatVM.isLoading {
+//                ProgressView()
+//                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+//                    .frame(width: 60, height: 60) // Размер ProgressView
+//                    .background(Color.blue) // Цвет фона
+//                    .clipShape(Circle()) // Круглая форма
+//                    .shadow(radius: 5) // Тень для эффекта подъема
+//                    .position(x: geometry.size.width - 50, y: geometry.size.height - 100) // Позиционирование
+//            } else {
                 FloatingActionButton(showActionSheet: $homeScreenVM.showActionSheetFromCreating) // Кнопка
                     .position(x: geometry.size.width - 50, y: geometry.size.height - 100) // Позиционирование
-            }
+//            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity) // Занять всё пространство
     }

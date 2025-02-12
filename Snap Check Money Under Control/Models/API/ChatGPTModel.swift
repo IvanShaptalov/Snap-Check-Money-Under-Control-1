@@ -15,7 +15,9 @@ class ChatViewModel: ObservableObject {
 
     func addMessage(_ message: ChatGPTRequest.ChatMessage) {
         messages.append(message)
-        fetchResponse(for: message)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
+            self?.fetchResponse(for: message)
+        }
     }
 
     private func fetchResponse(for message: ChatGPTRequest.ChatMessage) {
