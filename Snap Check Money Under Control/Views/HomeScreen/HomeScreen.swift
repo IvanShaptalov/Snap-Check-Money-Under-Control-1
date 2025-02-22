@@ -153,7 +153,7 @@ struct HomeScreen: View {
                 
                 // Convert ExpenseReport to an array of Expense
                 let newExpenses = expenseReport.items.map { item in
-                    ExpenseData(title: item.title, date: expenseReport.date, amount: item.price, currency: Currency.from(string: expenseReport.currency), category: item.category)
+                    ExpenseData(title: item.title, date: expenseReport.date.changeFromFutureToNow(), amount: item.price, currency: Currency.from(string: expenseReport.currency), category: item.category)
                 }
                 scannedTotalAmount = expenseReport.totalPrice
                 // Add new expenses to editing and show action sheet

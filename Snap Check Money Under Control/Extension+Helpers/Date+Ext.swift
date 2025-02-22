@@ -34,4 +34,20 @@ extension Date {
         let calendar = Calendar.current
         return calendar.component(.year, from: Date())
     }
+    
+    /// Функция проверяет, является ли переданная дата будущей.
+    /// Если дата в будущем, она заменяется на текущий момент.
+    /// В противном случае возвращается без изменений.
+    func changeFromFutureToNow(_ date: Date) -> Date {
+        let now = Date()
+        return date > now ? now : date
+    }
+    
+    /// Функция проверяет, является ли переданная дата будущей.
+    /// Если дата в будущем, она заменяется на текущий момент.
+    /// В противном случае возвращается без изменений.
+    func changeFromFutureToNow() -> Date {
+        let now = Date()
+        return self > now ? now : self
+    }
 }
