@@ -49,14 +49,14 @@ struct ExportScreen: View {
                     HStack {
                         Text("Start Date")
                         Spacer()
-                        Text(DateFormatter.localizedString(from: viewModel.startDate, dateStyle: .short, timeStyle: .none))
+                        Text(viewModel.startDate.glancebleDate(divider: " "))
                             .foregroundColor(.gray)
                     }
                     
                     HStack {
                         Text("End Date")
                         Spacer()
-                        Text(DateFormatter.localizedString(from: viewModel.endDate, dateStyle: .short, timeStyle: .none))
+                        Text(viewModel.endDate.glancebleDate(divider: " "))
                             .foregroundColor(.gray)
                     }
                     

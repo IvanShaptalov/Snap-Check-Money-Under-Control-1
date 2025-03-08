@@ -13,7 +13,7 @@ struct ExpenseListView: View {
                 // Вычисляем общую сумму трат за месяц
                 let totalSpent = groupedExpensesByMonth[month]?.reduce(0) { $0 + $1.amount } ?? 0.0
                 
-                Section(header: Text("\(monthHeader(for: month)) \( AppConfig.showYearFormat ? " - \(String(format: "%.2f", totalSpent))" : "")")
+                Section(header: Text("\(monthHeader(for: month))\( AppConfig.showYearFormat ? ": \(String(format: "%.2f", totalSpent))" : "")")
                     .font(.headline)
                     .foregroundColor(.primary)) {
                         ForEach(groupedExpensesByMonth[month] ?? []) { expense in

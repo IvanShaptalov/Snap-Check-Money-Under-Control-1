@@ -8,7 +8,7 @@ struct FunnyExportNames {
     
     
     static func generateExportName() -> String {
-        return Date.now.glancebleDate() + "_\(generateFunnyAdjective())_Export"
+        return Date.now.glancebleDate(divider: " ") + " \(generateFunnyAdjective()) Export"
     }
 }
 

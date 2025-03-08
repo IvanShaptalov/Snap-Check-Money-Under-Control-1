@@ -52,9 +52,9 @@ extension Date {
     }
     
     
-    func glancebleDate() -> String {
+    func glancebleDate(divider: String) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd_MMMM_yyyy"
+        formatter.dateFormat = "dd\(divider)MMMM\(divider)yyyy"
         formatter.locale = Locale(identifier: "en_US")
         return formatter.string(from: self)
     }
