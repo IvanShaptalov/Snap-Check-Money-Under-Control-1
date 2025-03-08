@@ -30,7 +30,7 @@ class JsonToNumbersManager {
         // Перебираем все расходы и группируем по месяцам и категориям
         for expense in sortedExpenses {
             // Получаем месяц в формате "YYYY-MM"
-            let month = getMonthString(from: expense.date)
+            let month = getMonthAndYearString(from: expense.date)
             
             // Инициализация словаря для месяца, если его еще нет
             if monthlyData[month] == nil {
@@ -82,7 +82,7 @@ class JsonToNumbersManager {
             // Проверяем, включена ли категория
             if includedCategories.contains(expense.category) {
                 // Получаем месяц в формате "MMMM"
-                let month = getMonthString(from: expense.date)
+                let month = getMonthAndYearString(from: expense.date)
                 monthlyData[month, default: []].append(expense)
             }
         }
@@ -147,12 +147,14 @@ class JsonToNumbersManager {
         return formatter.string(from: date)
     }
 
-    // Вспомогательная функция для получения месяца
-    private func getMonthString(from date: Date) -> String {
+    // Вспомогательная функция для получения месяца и года
+    private func getMonthAndYearString(from date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM" // Формат месяца: "November"
+        formatter.dateFormat = "MMMM yyyy" // Формат месяца и года: "November 2024"
         return formatter.string(from: date)
     }
+
+    
     
 
     func convertRowsToData(header: [String], rows: [[String: Any]]) -> Data? {
