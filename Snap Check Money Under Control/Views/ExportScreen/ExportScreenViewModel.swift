@@ -1,12 +1,23 @@
 import SwiftUI
 
 
+struct FunnyExportNames {
+    private static func generateFunnyAdjective() -> String {
+        return ["Super", "Ultra", "Hyper", "Mega", "Gigantic", "Radiant", "Radical", "Supercalifragilisticexpialidocious"].randomElement() ?? "Flexible"
+    }
+    
+    
+    static func generateExportName() -> String {
+        return Date.now.glancebleDate() + "_\(generateFunnyAdjective())_Export"
+    }
+}
+
 // ViewModel для ExportView
 class ExportViewModel: ObservableObject {
     @Published var showActionSheet = false
     @Published var showDateSelectionSheet = false
     @Published var showCategorySelectionSheet = false
-    @Published var reportName: String = ""
+    @Published var reportName: String = FunnyExportNames.generateExportName()
     @Published var selectedSortType: ExportSortType = .items
     @Published var selectedCategories: [String] = AppConfig.getBasicCategories()
     @Published var startDate: Date = {

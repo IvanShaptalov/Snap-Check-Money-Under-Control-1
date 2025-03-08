@@ -50,4 +50,12 @@ extension Date {
         let now = Date()
         return self > now ? now : self
     }
+    
+    
+    func glancebleDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd_MMMM_yyyy"
+        formatter.locale = Locale(identifier: "en_US")
+        return formatter.string(from: self)
+    }
 }
