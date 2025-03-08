@@ -2,6 +2,7 @@ import CoreXLSX
 import Foundation
 import CoreGraphics
 import UIKit
+import Collections
 
 
 
@@ -23,9 +24,11 @@ class JsonToNumbersManager {
     }
     // MARK: - AS CATEGORIES
     func convertAsCategories(_ expenses: [ExpenseData], includedCategories: [String]) -> Data? {
-        let sortedExpenses = expenses.sorted(by: {$0.date < $1.date})
+        let sortedExpenses = expenses.sorted(by: {$0.date > $1.date})
         // Словарь для хранения данных по месяцам и категориям
-        var monthlyData: [String: [String: Double]] = [:] // Ключ - месяц, Значение - категории и суммы
+        var monthlyData: OrderedDictionary<String, OrderedDictionary<String, Double>> = [:]
+ // Ключ - месяц, Значение - категории и суммы
+        
         
         // Перебираем все расходы и группируем по месяцам и категориям
         for expense in sortedExpenses {
@@ -76,6 +79,7 @@ class JsonToNumbersManager {
     private func convertAsItems(_ expenses: [ExpenseData], includedCategories: [String]) -> Data? {
         // Словарь для хранения данных по месяцам и расходам
         var monthlyData: [String: [ExpenseData]] = [:]
+        
 
         // Группируем все расходы по месяцам, фильтруя по включенным категориям
         for expense in expenses {
@@ -106,7 +110,7 @@ class JsonToNumbersManager {
             var total: Double = 0
 
             // Сортируем расходы по дате в порядке возрастания
-            let sortedExpenses = expenses.sorted { $0.date < $1.date }
+            let sortedExpenses = expenses.sorted { $0.date > $1.date }
 
             // Добавляем строку с названием месяца и пустыми значениями для других столбцов
             rows.append(["Month": month, "Date": " ", "Item": " ", "Item Price": " ", "Total": " "])

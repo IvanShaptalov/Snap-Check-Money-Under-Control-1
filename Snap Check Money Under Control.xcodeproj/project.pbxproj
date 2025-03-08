@@ -10,6 +10,7 @@
 		8D4279862CEB89DC0049943B /* CoreXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = 8D4279852CEB89DC0049943B /* CoreXLSX */; };
 		8D5E270C2D1053D400AD9878 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8D5E270B2D1053D400AD9878 /* Lottie */; };
 		8D92F7CD2CE26E2000288423 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 8D92F7CC2CE26E2000288423 /* GoogleMobileAds */; };
+		8D9D26982D7CC71300D60C29 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 8D9D26972D7CC71300D60C29 /* Collections */; };
 		8DC4598F2CE00DCB002322B9 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC4598E2CE00DCB002322B9 /* FirebaseAnalytics */; };
 		8DC459932CE00DCB002322B9 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459922CE00DCB002322B9 /* FirebaseCore */; };
 		8DC459972CE00DCB002322B9 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 8DC459962CE00DCB002322B9 /* FirebaseDatabase */; };
@@ -37,6 +38,7 @@
 			files = (
 				8D92F7CD2CE26E2000288423 /* GoogleMobileAds in Frameworks */,
 				8D5E270C2D1053D400AD9878 /* Lottie in Frameworks */,
+				8D9D26982D7CC71300D60C29 /* Collections in Frameworks */,
 				8DC459972CE00DCB002322B9 /* FirebaseDatabase in Frameworks */,
 				8DC459A22CE00DE1002322B9 /* RevenueCat in Frameworks */,
 				8DC459A42CE00DE1002322B9 /* RevenueCatUI in Frameworks */,
@@ -95,6 +97,7 @@
 				8D92F7CC2CE26E2000288423 /* GoogleMobileAds */,
 				8D4279852CEB89DC0049943B /* CoreXLSX */,
 				8D5E270B2D1053D400AD9878 /* Lottie */,
+				8D9D26972D7CC71300D60C29 /* Collections */,
 			);
 			productName = "Snap Check Money Under Control";
 			productReference = 8D8010202CDD3DE300B957C2 /* Snap Check Money Under Control.app */;
@@ -130,6 +133,7 @@
 				8D92F7CB2CE26E2000288423 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				8D4279842CEB89DC0049943B /* XCRemoteSwiftPackageReference "CoreXLSX" */,
 				8D5E270A2D1053D400AD9878 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				8D9D26962D7CC71300D60C29 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8D8010212CDD3DE300B957C2 /* Products */;
@@ -407,6 +411,14 @@
 				minimumVersion = 11.12.0;
 			};
 		};
+		8D9D26962D7CC71300D60C29 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.4;
+			};
+		};
 		8DC4598D2CE00DCB002322B9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -440,6 +452,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8D92F7CB2CE26E2000288423 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
 			productName = GoogleMobileAds;
+		};
+		8D9D26972D7CC71300D60C29 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8D9D26962D7CC71300D60C29 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
 		};
 		8DC4598E2CE00DCB002322B9 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
