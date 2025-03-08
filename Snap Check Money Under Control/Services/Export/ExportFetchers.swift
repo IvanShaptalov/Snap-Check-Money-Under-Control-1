@@ -35,7 +35,6 @@ class ExpenseExportManager: ExporterProtocol {
         // Fetch expenses from the database
         do {
             let expenses = try fetchExpensesFromDatabase(context: context)
-            
             // Convert expenses to JSON format
             
             // Create filename with the specified format

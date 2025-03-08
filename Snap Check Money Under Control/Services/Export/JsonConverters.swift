@@ -49,6 +49,7 @@ class JsonToNumbersManager {
         // Массив строк для таблицы, первая строка — это заголовки
         var rows: [[String: Any]] = [header.reduce(into: [:]) { $0[$1] = nil }]
         
+        
         // Перебираем данные по месяцам
         for (month, categories) in monthlyData {
             var row: [String: Any] = ["Month": month]
@@ -72,7 +73,6 @@ class JsonToNumbersManager {
     }
     
     // MARK: - AS ITEMS
-    // MARK: - AS ITEMS
     private func convertAsItems(_ expenses: [ExpenseData], includedCategories: [String]) -> Data? {
         // Словарь для хранения данных по месяцам и расходам
         var monthlyData: [String: [ExpenseData]] = [:]
@@ -92,9 +92,17 @@ class JsonToNumbersManager {
 
         // Массив строк для таблицы, первая строка — это заголовки
         var rows: [[String: Any]] = [header.reduce(into: [:]) { $0[$1] = "" }]
-
+        
+        let sortedMonthlyData = monthlyData.sorted { (first, second) in
+            guard let firstExpenseDate = first.value.first?.date,
+                  let secondExpenseDate = second.value.first?.date else {
+                return false
+            }
+            return firstExpenseDate > secondExpenseDate
+        }
+        
         // Перебираем данные по месяцам
-        for (month, expenses) in monthlyData {
+        for (month, expenses) in sortedMonthlyData {
             var total: Double = 0
 
             // Сортируем расходы по дате в порядке возрастания
