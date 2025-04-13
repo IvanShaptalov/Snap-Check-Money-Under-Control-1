@@ -10,6 +10,7 @@ struct SettingsScreen: View {
     @State private var showingCategories = false
     @State private var showPrivacyPolicy = false
     @State private var showPromoCodeMenu = false
+    @State private var showWishKit = false
     @State private var selectedCurrency: Currency = AppConfig.mainCurrency {
         didSet {
             AnalyticsManager.shared.logEvent(eventType: .currencyChanged)
@@ -34,6 +35,7 @@ struct SettingsScreen: View {
                             showPromoCodeMenu = true
                         }
                     }
+                    
                     
                     Section(header: Text("App Configuration")) {
                         Picker("Currency", selection: $selectedCurrency) {
@@ -60,6 +62,11 @@ struct SettingsScreen: View {
                     }
                     
                     Section(header: Text("Feedback")) {
+                        
+                        SectionButton(title: "Feature Requests") {
+                            showWishKit = true
+                        }
+                        
                         SectionButton(title: "Rate Snap Check") {
                             openURL(AppConfig.appURL)
                             AnalyticsManager.shared.logEvent(eventType: .rateDirectlyOpened)
@@ -109,6 +116,9 @@ struct SettingsScreen: View {
         }
         .sheet(isPresented: $showPromoCodeMenu) {
             PromoCodeView()
+        }
+        .sheet(isPresented: $showWishKit) {
+            WishKitList()
         }
         .alert(isPresented: $viewModel.showingAlert) {
             Alert(

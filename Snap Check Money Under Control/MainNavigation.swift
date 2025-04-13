@@ -14,8 +14,10 @@ struct MainNavigation: View {
                     HomeScreen()
                 case 1:
                     ExportScreen()
-                case 2:
+                case 3:
                     SettingsScreen()
+                case 2:
+                    WishKitList()
                 default:
                     HomeScreen()
                 }
@@ -46,11 +48,23 @@ struct MainNavigation: View {
                         selectedTab = 2
                     }) {
                         VStack {
+                            Image(systemName: "lightbulb.min.badge.exclamationmark").imageScale(.large)
+                            
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    
+                    Button(action: {
+                        selectedTab = 3
+                    }) {
+                        VStack {
                             Image(systemName: "gear").imageScale(.large)
                             
                         }
                     }
                     .frame(maxWidth: .infinity)
+                    
+                    
                 }
                 .padding()
                 .background(Color(.systemGray6))

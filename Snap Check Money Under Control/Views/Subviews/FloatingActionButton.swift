@@ -13,7 +13,8 @@ struct FloatingActionButton: View {
             }
         }) {
             Image(systemName: imageName) // Use a "+" icon
-                .font(.title)
+                .font(.title3)
+                .frame(width: 28, height: 28)
                 .padding()
                 .background(Color.blue)
                 .foregroundColor(.white)

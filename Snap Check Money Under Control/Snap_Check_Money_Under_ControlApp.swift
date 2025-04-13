@@ -3,6 +3,7 @@ import SwiftData
 import FirebaseCore
 import RevenueCat
 import GoogleMobileAds
+import WishKit
 
 @main
 struct SnapCheckMoneyUnderControlApp: App {
@@ -21,6 +22,11 @@ struct SnapCheckMoneyUnderControlApp: App {
         // Настройка RevenueCat
         Purchases.logLevel = .info
         Purchases.configure(withAPIKey: AppConfig.revenuecat_project_apple_api_key)
+        WishKit.configure(with: AppConfig.wishKitApi)
+        
+        WishKit.theme.primaryColor = Color(cgColor: UIColor.systemBlue.cgColor)
+        WishKit.theme.tertiaryColor = .init(light: Color(cgColor: UIColor.white.cgColor),
+                                            dark: Color(cgColor: UIColor.black.cgColor))
         
         // Запуск Google Mobile Ads
         

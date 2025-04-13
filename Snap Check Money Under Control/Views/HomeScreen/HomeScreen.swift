@@ -204,7 +204,7 @@ struct HomeScreen: View {
 //                    .position(x: geometry.size.width - 50, y: geometry.size.height - 100) // Позиционирование
 //            } else {
                 FloatingActionButton(showActionSheet: $homeScreenVM.showActionSheetFromCreating) // Кнопка
-                    .position(x: geometry.size.width - 50, y: geometry.size.height - 100) // Позиционирование
+                    .position(x: geometry.size.width - 50, y: geometry.size.height - 73) // Позиционирование
 //            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity) // Занять всё пространство

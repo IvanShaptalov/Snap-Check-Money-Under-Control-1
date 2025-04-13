@@ -20,7 +20,7 @@ struct ExportScreen: View {
     private var floatingButton: some View {
         GeometryReader { geometry in
             FloatingActionButton(showActionSheet: $viewModel.showActionSheet, imageName: "square.and.arrow.up")
-                .position(x: geometry.size.width - 50, y: geometry.size.height - 100)
+                .position(x: geometry.size.width - 50, y: geometry.size.height - 73)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

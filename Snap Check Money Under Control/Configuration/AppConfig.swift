@@ -34,6 +34,8 @@ class AppConfig {
     static var termsOfUseURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
     static var eulaURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
     
+    static var wishKitApi = "64AAA932-1155-434C-8D28-B7E21B6B22CA"
+    
     // MARK: - PROMOCODESLIST
     static var promocodes: [String] = []
     static var expiredPromocodes: [String] = ["Summer"]
